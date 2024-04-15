@@ -1,3 +1,5 @@
+const POPUP = 3000; // Duración de la notificación en milisegundo
+
 class Notification {
     constructor(message, type) {
         this.message = message;
@@ -6,13 +8,13 @@ class Notification {
         this.createNotification();
     }
     createNotification() {
-        const cuenco = document.getElementById("cuenco");
+        const mensajes = document.getElementById("mensajes");
         const notification = document.createElement('div');
         notification.classList.add('notification', this.type);
         notification.innerText = this.message;
 
-        // Insertar la notificación al principio del div "cuenco"
-        cuenco.insertBefore(notification, cuenco.firstChild);
+        // Insertar la notificación al principio del div "mensajes"
+        mensajes.insertBefore(notification, mensajes.firstChild);
 
         setTimeout(() => {
             this.removeNotification(notification);
@@ -34,26 +36,26 @@ class Notification {
 
 // Función para crear una notificación
 function createNotification(day, marked) {
-    const cuenco = document.getElementById("cuenco");
+    const mensajes = document.getElementById("mensajes");
     const notification = document.createElement('div');
     notification.classList.add('notification');
 
     // Mensaje dependiendo de si el día está siendo marcado o desmarcado
     if (marked) {
-        notification.innerText = `Día ${day} marcado!`;
+        notification.innerText = `Día ${day} marcado.`;
         notification.classList.add('success'); // Si está marcado, usar el color verde
     } else {
-        notification.innerText = `Día ${day} desmarcado!`;
+        notification.innerText = `Día ${day} desmarcado.`;
         notification.classList.add('error'); // Si está desmarcado, usar el color naranja
     }
 
-    // Insertar la notificación al principio del div "cuenco"
-    cuenco.insertBefore(notification, cuenco.firstChild);
+    // Insertar la notificación al principio del div "mensajes"
+    mensajes.insertBefore(notification, mensajes.firstChild);
 
     // Eliminar la notificación después de 3 segundos
     setTimeout(() => {
         notification.remove();
-    }, 3000);
+    }, POPUP);
 }
 
 // Obtener todos los elementos con la clase "day" (días del calendario)
