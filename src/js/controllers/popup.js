@@ -2,7 +2,7 @@
 const DURACION_NOTIFICACION = 3000; // 3000 milisegundos = 3 segundos
 
 // Variable para controlar la posición vertical de las notificaciones
-let verticalPosition = 40; // Empezar en 20px desde la parte superior
+let verticalPosition = 60; // Empezar en 20px desde la parte superior
 const MAX_VERTICAL_POSITION = 600; // Reiniciar la posición vertical después de alcanzar los 300px
 
 // Función para mostrar la notificación
@@ -28,7 +28,7 @@ function mostrarNotificacion(estado) {
     notificacion.style.padding = '8px 12px'; // Ajustar el relleno
     notificacion.style.color = 'white'; // Establecer el color de texto
     notificacion.style.borderRadius = '4px'; // Añadir esquinas redondeadas
-    notificacion.style.fontSize = '14px'; // Ajustar el tamaño de fuente
+    notificacion.style.fontSize = '16px'; // Ajustar el tamaño de fuente
     notificacion.style.fontWeight = 'bold'; // Hacer el texto en negrita
     notificacion.style.position = 'fixed'; // Fijar la posición
     notificacion.style.top = verticalPosition + 'px'; // Establecer la posición vertical
@@ -37,7 +37,7 @@ function mostrarNotificacion(estado) {
     notificacion.style.transition = 'top 0.3s ease-out'; // Añadir transición suave al cambiar la posición
 
     // Incrementar la posición vertical para la próxima notificación
-    verticalPosition += notificacion.offsetHeight + 40; // Altura de la notificación más espacio entre ellas
+    verticalPosition += notificacion.offsetHeight + 44; // Altura de la notificación más espacio entre ellas
 
     // Reiniciar la posición vertical si se alcanza la posición máxima
     if (verticalPosition > MAX_VERTICAL_POSITION) {
