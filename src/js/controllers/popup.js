@@ -51,7 +51,7 @@ function mostrarNotificacion(estado) {
     // Agregar la notificación al divnotificacion
     divNotificacion.appendChild(notificacion);
 
-    // Quitar la notificación después de unos segundos (opcional)
+    // Quitar la notificación después de unos segundos
     setTimeout(function () {
         divNotificacion.removeChild(notificacion);
     }, DURACION_NOTIFICACION);
