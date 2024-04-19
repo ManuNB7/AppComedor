@@ -7,7 +7,7 @@ const NOTIFICACION_HEIGHT = 55; // Altura fija en píxeles
 
 // Variable para controlar la posición vertical de las notificaciones
 let verticalPosition = 80; // Empezar en 20px desde la parte superior
-const MAX_VERTICAL_POSITION = 600; // Reiniciar la posición vertical después de alcanzar los 300px
+const MAX_VERTICAL_POSITION = 800; // Reiniciar la posición vertical después de alcanzar los 300px
 
 // Variable para almacenar los meses marcados
 let mesesMarcados = [];
