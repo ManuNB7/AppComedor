@@ -3,7 +3,7 @@ const DURACION_NOTIFICACION = 3000; // 3000 milisegundos = 3 segundos
 // Ancho fijo para las notificaciones
 const NOTIFICACION_WIDTH = 220; // Ancho fijo en píxeles
 // Altura fija para las notificaciones
-const NOTIFICACION_HEIGHT = 45; // Altura fija en píxeles
+const NOTIFICACION_HEIGHT = 55; // Altura fija en píxeles
 
 // Variable para controlar la posición vertical de las notificaciones
 let verticalPosition = 80; // Empezar en 20px desde la parte superior
