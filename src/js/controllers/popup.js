@@ -25,15 +25,10 @@ function mostrarNotificacion(estado, checkboxId) {
         if (checkboxId.startsWith('fecha')) {
             // Si es una fecha, obtener el día del ID del checkbox
             var dia = checkboxId.slice(-2); // Extraer los dos últimos caracteres correspondientes al día
-
             notificacion.textContent = `Ha marcado día ${dia}.`;
         } else if (checkboxId.startsWith('mes')) {
-            // Si es un mes, obtener el nombre del mes del ID del checkbox
-            var mes = checkboxId.substr(4); // Extraer el nombre del mes del ID del checkbox
-            if (!mesesMarcados.includes(mes)) {
-                mesesMarcados.push(mes); // Agregar el mes a la lista de meses marcados
-            }
-            notificacion.textContent = `Ha marcado el mes de.`;
+            // Si es un mes, simplemente indicar que se ha marcado un mes
+            notificacion.textContent = `Ha marcado un mes.`;
         } else {
             // Si no es ni una fecha ni un mes, interpretarlo como una semana marcada
             notificacion.textContent = `Ha marcado una semana.`;
@@ -42,15 +37,11 @@ function mostrarNotificacion(estado, checkboxId) {
     } else if (estado === 'desmarcada') {
         if (checkboxId.startsWith('fecha')) {
             // Si es una fecha, obtener el día del ID del checkbox
-            var dia = checkboxId.slice(-2); // Extraer los dos últimos caracteres correspondientes al día
+            var dia = checkboxId.slice(-2); // Extraer los dos caracteres correspondientes al día
             notificacion.textContent = `Ha desmarcado día ${dia}.`;
         } else if (checkboxId.startsWith('mes')) {
-            // Si es un mes, obtener el nombre del mes del ID del checkbox
-            var mes = checkboxId.substr(4); // Extraer el nombre del mes del ID del checkbox
-            if (mesesMarcados.includes(mes)) {
-                mesesMarcados = mesesMarcados.filter(item => item !== mes); // Eliminar el mes de la lista de meses marcados
-            }
-            notificacion.textContent = `Ha desmarcado el mes.`;
+            // Si es un mes, simplemente indicar que se ha desmarcado un mes
+            notificacion.textContent = `Ha desmarcado un mes.`;
         } else {
             // Si no es ni una fecha ni un mes, interpretarlo como una semana marcada
             notificacion.textContent = `Ha desmarcado una semana.`;
@@ -91,8 +82,13 @@ function mostrarNotificacion(estado, checkboxId) {
     // Quitar la notificación después de unos segundos
     setTimeout(function () {
         divNotificacion.removeChild(notificacion);
+        // Reiniciar la posición vertical si no hay más notificaciones presentes
+        if (!divNotificacion.firstChild) {
+            verticalPosition = 80;
+        }
     }, DURACION_NOTIFICACION);
 }
+
 
 // Función para manejar el clic del botón
 function botonClicado() {
@@ -109,11 +105,10 @@ function checkboxCambiado(event) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    var contadorSemanas = 100; // Contador inicial de semanas
+    var contadorSemanas = 10000; // Contador inicial de semanas
 
     function capturarCheckboxes() {
         var checkboxes = document.querySelectorAll('tbody input[type=checkbox]');
-        console.log("Cantidad de checkboxes encontrados:", checkboxes.length);
         checkboxes.forEach(function (checkbox) {
             checkbox.addEventListener('change', botonClicado);
             checkbox.addEventListener('change', checkboxCambiado); // Agregar manejo de cambio para desmarcar también
@@ -125,11 +120,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (contadorSemanas === 0) {
             // Detener el bucle
             clearInterval(intervalo);
-            console.log("El contador de semanas ha llegado a cero");
             return;
         }
         contadorSemanas--;
-        console.log("Contador de semanas actualizado:", contadorSemanas);
     }
 
     // Iniciar el bucle
@@ -149,6 +142,5 @@ document.addEventListener('DOMContentLoaded', function () {
     semanaSiguienteBtn.addEventListener('click', function() {     
         // Restablecer el contador de semanas al hacer clic en el botón
         contadorSemanas = 100;
-        console.log("Contador de semanas restablecido:", contadorSemanas);
     });
 });
