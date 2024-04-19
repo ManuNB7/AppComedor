@@ -24,7 +24,8 @@ function mostrarNotificacion(estado, checkboxId) {
     if (estado === 'marcada') {
         if (checkboxId.startsWith('fecha')) {
             // Si es una fecha, obtener el día del ID del checkbox
-            var dia = checkboxId.substr(16, 2); // Extraer los dos caracteres correspondientes al día
+            var dia = checkboxId.slice(-2); // Extraer los dos últimos caracteres correspondientes al día
+
             notificacion.textContent = `Ha marcado día ${dia}.`;
         } else if (checkboxId.startsWith('mes')) {
             // Si es un mes, obtener el nombre del mes del ID del checkbox
@@ -41,7 +42,7 @@ function mostrarNotificacion(estado, checkboxId) {
     } else if (estado === 'desmarcada') {
         if (checkboxId.startsWith('fecha')) {
             // Si es una fecha, obtener el día del ID del checkbox
-            var dia = checkboxId.substr(16, 2); // Extraer los dos caracteres correspondientes al día
+            var dia = checkboxId.slice(-2); // Extraer los dos últimos caracteres correspondientes al día
             notificacion.textContent = `Ha desmarcado día ${dia}.`;
         } else if (checkboxId.startsWith('mes')) {
             // Si es un mes, obtener el nombre del mes del ID del checkbox
