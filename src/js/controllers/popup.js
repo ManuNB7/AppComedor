@@ -9,23 +9,51 @@ const NOTIFICACION_HEIGHT = 45; // Altura fija en píxeles
 let verticalPosition = 80; // Empezar en 20px desde la parte superior
 const MAX_VERTICAL_POSITION = 600; // Reiniciar la posición vertical después de alcanzar los 300px
 
+// Variable para almacenar los meses marcados
+let mesesMarcados = [];
+
 // Función para mostrar la notificación
 function mostrarNotificacion(estado, checkboxId) {
     // Obtener el elemento divnotificacion
     var divNotificacion = document.getElementById('divnotificacion');
-
-    // Obtener solo el día del ID del checkbox
-    var dia = checkboxId.substr(16, 2); // Extraer los dos caracteres correspondientes al día
 
     // Crear un elemento de notificación
     var notificacion = document.createElement('div');
 
     // Establecer el texto de acuerdo al estado de la casilla
     if (estado === 'marcada') {
-        notificacion.textContent = `Ha marcado día ${dia}.`;
+        if (checkboxId.startsWith('fecha')) {
+            // Si es una fecha, obtener el día del ID del checkbox
+            var dia = checkboxId.substr(16, 2); // Extraer los dos caracteres correspondientes al día
+            notificacion.textContent = `Ha marcado día ${dia}.`;
+        } else if (checkboxId.startsWith('mes')) {
+            // Si es un mes, obtener el nombre del mes del ID del checkbox
+            var mes = checkboxId.substr(4); // Extraer el nombre del mes del ID del checkbox
+            if (!mesesMarcados.includes(mes)) {
+                mesesMarcados.push(mes); // Agregar el mes a la lista de meses marcados
+            }
+            notificacion.textContent = `Ha marcado el mes de.`;
+        } else {
+            // Si no es ni una fecha ni un mes, interpretarlo como una semana marcada
+            notificacion.textContent = `Ha marcado una semana.`;
+        }
         notificacion.style.background = 'linear-gradient(to right, #2C95FF, #53D7FF)'; // Gradiente de azul a verde
     } else if (estado === 'desmarcada') {
-        notificacion.textContent = `Ha desmarcado día ${dia}.`;
+        if (checkboxId.startsWith('fecha')) {
+            // Si es una fecha, obtener el día del ID del checkbox
+            var dia = checkboxId.substr(16, 2); // Extraer los dos caracteres correspondientes al día
+            notificacion.textContent = `Ha desmarcado día ${dia}.`;
+        } else if (checkboxId.startsWith('mes')) {
+            // Si es un mes, obtener el nombre del mes del ID del checkbox
+            var mes = checkboxId.substr(4); // Extraer el nombre del mes del ID del checkbox
+            if (mesesMarcados.includes(mes)) {
+                mesesMarcados = mesesMarcados.filter(item => item !== mes); // Eliminar el mes de la lista de meses marcados
+            }
+            notificacion.textContent = `Ha desmarcado el mes.`;
+        } else {
+            // Si no es ni una fecha ni un mes, interpretarlo como una semana marcada
+            notificacion.textContent = `Ha desmarcado una semana.`;
+        }
         notificacion.style.background = 'linear-gradient(to right, #FFC3A0, #FF6F91)'; // Gradiente de rojo claro a naranja
     } else {
         return;
