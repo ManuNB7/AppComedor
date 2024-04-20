@@ -96,11 +96,15 @@ export class VistaGestionDiaria extends Vista {
             let thTipo = document.createElement('th');
             thTipo.textContent = 'Tipo de usuario';
 
+            let tupper = document.createElement('th');
+            tupper.textContent = 'TUPPER';
+
             let thIncidencias = document.createElement('th');
             thIncidencias.textContent = 'Incidencias';
 
             trInfo.appendChild(thUsuarios);
             trInfo.appendChild(thTipo);
+            trInfo.appendChild(tupper);
             trInfo.appendChild(thIncidencias);
 
             this.thead.appendChild(trInfo);
@@ -154,9 +158,17 @@ export class VistaGestionDiaria extends Vista {
             }
                 
             tdIncidencia.appendChild(textarea);
-
+            let tdTuppers = document.createElement('td');
+            let checkboxTuppers = document.createElement('input');
+            checkboxTuppers.type = 'checkbox';
+            // Aquí puedes establecer el estado del checkbox si el usuario trae tuppers o no.
+            // Por ejemplo, si usuario.traeTuppers es un valor booleano en tus datos.
+            // checkboxTuppers.checked = usuario.traeTuppers;
+            tdTuppers.appendChild(checkboxTuppers);
+    
             tr.appendChild(tdNombre);
             tr.appendChild(tdCurso);
+            tr.appendChild(tdTuppers);
             tr.appendChild(tdIncidencia);
 
             this.tbody.appendChild(tr);

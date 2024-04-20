@@ -1,5 +1,4 @@
 <?php
-
     /**
      * Router del API REST de la aplicación
      * Su responsabilidad es procesar la petición HTTP para decidir a qué controlador llamar (routing).
@@ -14,9 +13,8 @@
         ini_set('display_errors', 1);
         ini_set('display_startup_errors', 1);
         error_reporting(E_ALL);
-     
     }
-  
+
     try {
         // Inyección de dependencias
         require_once('./services/bd.php');
@@ -24,7 +22,7 @@
         BD::$host = $config['host_bd'];
         BD::$usuario = $config['usuario_bd'];
         BD::$clave = $config['clave_bd'];
-    
+
         // Peticiones especiales de depuración
         if ($config['debug']) {
             if ($_SERVER['QUERY_STRING'] == 'cargarBDPruebas') {
@@ -136,6 +134,7 @@
 
             case 'dias':
                 require_once('./controllers/dias.php');
+        				 Dias::$hora_limite = $config['hora_limite'];
                 $controlador = new Dias();
                 break;
 
@@ -154,27 +153,27 @@
                 die();
         }
         if ($controlador) {
-            switch($metodo) {
-                case 'GET':
-                    $controlador->get($pathParams, $queryParams, $usuario);
-                    die();
+					switch($metodo) {
+							case 'GET':
+									$controlador->get($pathParams, $queryParams, $usuario);
+									die();
 
-                case 'POST':
-                    $controlador->post($pathParams, $queryParams, $body, $usuario);
-                    die();
+							case 'POST':
+									$controlador->post($pathParams, $queryParams, $body, $usuario);
+									die();
 
-                case 'DELETE':
-                    $controlador->delete($pathParams, $queryParams, $usuario);
-                    die();
+							case 'DELETE':
+									$controlador->delete($pathParams, $queryParams, $usuario);
+									die();
 
-                case 'PUT':
-                    $controlador->put($pathParams, $queryParams, $body, $usuario);
-                    die();
+							case 'PUT':
+									$controlador->put($pathParams, $queryParams, $body, $usuario);
+									die();
 
-                default:
-                    header('HTTP/1.1 501 Not Implemented');
-                    die();
-            }
+							default:
+									header('HTTP/1.1 501 Not Implemented');
+									die();
+					}
         }
         else {
             header('HTTP/1.1 501 Not Implemented');
@@ -199,4 +198,4 @@
         echo $excepcion;
         die();
     }
-?>
+
