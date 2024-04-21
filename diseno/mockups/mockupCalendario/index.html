@@ -7,50 +7,31 @@
     <title>Panel padres</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-nrph6YLJ8+J6Bk2LzzfzFMvOpzNWP4U1lOdwV7lAEkkZPl5sn9Rt2o+b71L2NF6wXnusyKdgClqrlxllfl7PzA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <style>
-        .calendar {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            border: 1px solid #dee2e6;
-            border-radius: 0.25rem;
-        }
-        .day {
-            border: 1px solid #dee2e6;
-            padding: 0.75rem;
-            text-align: center;
-        }
-        .reserved-day {
-            background-color: blue;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Panel padres</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#">Inicio</a>
+    <nav id="menuPadres" class="topnav">
+        <ul>
+            <li class="icon">
+                <img src="./img/icons/menu.svg" alt="Menú"/>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Gestión de hijos</a>
+            <li>
+                <img src="./img/icons/home.svg" alt="Inicio"/>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Modificación datos personales</a>
+            <li>
+                <img src="./img/icons/person.svg" alt="Gestión de hijos"/>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Resumen mensual</a>
+            <li>
+                <img src="./img/icons/edit.svg" alt="Gestión de tu cuenta"/>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Cerrar sesión</a>
+            <li class="active">
+                <img src="./img/icons/edit.svg" alt="Gestión mensual"/>
+            </li>
+            <li>
+                <img src="./img/icons/logout.svg" alt="Cerrar sesión"/>
             </li>
         </ul>
-    </div>
-</nav>
+    </nav>
 <div class="alert alert-info info-note" role="alert">
     Aquí se mostrarán los días en los que se ha hecho reserva.
 </div>
