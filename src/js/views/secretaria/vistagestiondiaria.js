@@ -185,16 +185,33 @@ export class VistaGestionDiaria extends Vista {
     }
     insertarTupper(id, checkbox) {
         let valor = checkbox ? 1 : 0;
-        console.log(valor)
+        console.log(valor);
+    
+        // Obtener el contenido del campo de fecha
+        const fechaTexto = document.getElementById('fechaDia').textContent;
+    
+        // Dividir la cadena de texto en partes para obtener el día, el mes y el año
+        const partesFecha = fechaTexto.split('/');
+        const dia = partesFecha[0];
+        const mes = partesFecha[1];
+        const anio = partesFecha[2];
+    
+        // Formar la nueva fecha con el formato deseado (dd-mm-yyyy)
+        const fechaFormateada = `${anio}-${mes}-${dia}`;
+    
+        // Crear el objeto de datos
         const datos = {
             'idPersona': id,
             'tupper': valor,
-            'dia': this.fechaActual.getDate() + '-' + (this.fechaActual.getMonth()+1) + '-' + this.fechaActual.getFullYear(),
+            'dia': fechaFormateada // Utilizamos la fecha formateada
         };
     
-
+        console.log(datos);
+    
+        // Llamar al método para insertar en la base de datos, pasando los datos
         this.controlador.insertarTupper(datos);
     }
+    
 
 
     /**
