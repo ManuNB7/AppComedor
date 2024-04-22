@@ -60,6 +60,7 @@ export class Rest {
 	  }
 
 	  // Construimos la petición
+	  
 	  return fetch(Rest._construirURL(path, pathParams), opciones) // Hacemos la petición
 		.then(respuesta => {
 		  // Control de Errores

@@ -161,19 +161,41 @@ export class VistaGestionDiaria extends Vista {
             let tdTuppers = document.createElement('td');
             let checkboxTuppers = document.createElement('input');
             checkboxTuppers.type = 'checkbox';
-            // Aquí puedes establecer el estado del checkbox si el usuario trae tuppers o no.
-            // Por ejemplo, si usuario.traeTuppers es un valor booleano en tus datos.
-            // checkboxTuppers.checked = usuario.traeTuppers;
+            
             tdTuppers.appendChild(checkboxTuppers);
-    
+          
             tr.appendChild(tdNombre);
             tr.appendChild(tdCurso);
             tr.appendChild(tdTuppers);
+            checkboxTuppers.addEventListener('change', (event) => this.marcarTupper(usuario.id, event.target.checked));
+
             tr.appendChild(tdIncidencia);
 
             this.tbody.appendChild(tr);
+
+       
         }
     }
+    marcarTupper(IdUsuario, valor) {
+        if (valor) {
+            this.insertarTupper(IdUsuario, valor);
+        } else {
+            console.log(`El usuario ${IdUsuario}  no marcó el tupper.`);
+        }
+    }
+    insertarTupper(id, checkbox) {
+        let valor = checkbox ? 1 : 0;
+        console.log(valor)
+        const datos = {
+            'idPersona': id,
+            'tupper': valor,
+            'dia': this.fechaActual.getDate() + '-' + (this.fechaActual.getMonth()+1) + '-' + this.fechaActual.getFullYear(),
+        };
+    
+
+        this.controlador.insertarTupper(datos);
+    }
+
 
     /**
      * Devuelve el tipo de cuenta que tiene el usuario.
@@ -300,4 +322,5 @@ export class VistaGestionDiaria extends Vista {
         super.mostrar(ver);
         if (ver) this.inicializar();    // Al volver a mostrar la vista, refrescar listado.
     }
+  
 }

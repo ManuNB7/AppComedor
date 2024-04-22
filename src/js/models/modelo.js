@@ -178,6 +178,9 @@ export class Modelo {
     insertarIncidencia(datos) {
         return Rest.put('secretaria', ['incidencia'], datos, false);
     }
+    insertarTupper(datos) {
+        return Rest.put('secretaria', ['tupper'], datos, false);
+    }
 
     obtenerListadoPadres(busqueda){
         const queryParams = new Map();

@@ -30,7 +30,11 @@
                         DAOUsuario::insertarIncidencia($datos);
                         header('HTTP/1.1 200 OK');
                         break;
-
+                        case 'tupper':
+                            DAOUsuario::insertarTupper($datos);
+                            header('HTTP/1.1 200 OK');
+                            break;
+    
                     default:
                         header('HTTP/1.1 501 Not Implemented');
                         break;

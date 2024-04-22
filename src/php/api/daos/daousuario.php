@@ -92,6 +92,19 @@
 
             BD::actualizar($sql, $params);
         }
+        public static function insertarTupper($datos) {
+            $sql = 'UPDATE dias SET campo_tupper = :campo_tupper WHERE idPersona = :idPersona AND dia >= :dia';
+            
+    
+
+            $params = array(
+                'idPersona' => $datos->idPersona,
+                'campo_tupper' => $datos->tupper,
+                'dia' => $datos->dia
+            );
+
+            BD::actualizar($sql, $params);
+        }
 
         /**
          * Eliminar padre.

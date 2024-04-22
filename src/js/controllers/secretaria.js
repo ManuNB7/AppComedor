@@ -102,6 +102,13 @@ class ControladorSecretaria {
          })
     }
 
+    insertarTupper(datos) {
+        this.modelo.insertarTupper(datos)
+         .catch(e => {
+             console.error(e);
+         })
+    }
+
     /**
      * Obtiene los usuarios que van al comedor de una fecha.
      * @param {String} fecha String de la fecha.
