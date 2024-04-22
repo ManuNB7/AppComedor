@@ -123,6 +123,20 @@ export class Modelo {
     }
 
     /**
+ * Llamada para obtener los días marcados del comedor para un mes específico.
+ * @param {Number} year Año.
+ * @param {Number} month Mes.
+ * @returns {Promise} Devuelve la promesa asociada a la petición.
+ */
+obtenerDiasMarcadosComedor(year, month) {
+    const queryParams = new Map();
+    queryParams.set('year', year);
+    queryParams.set('month', month);
+    return Rest.get('comedor', ['diasMarcados'], queryParams);
+}
+
+
+    /**
      * Llamada para obtener usuarios apuntados al comedor en la fecha.
      * @param {String} fecha String de la fecha. 
      * @returns {Promise} Devuelve la promesa asociada a la petición.
