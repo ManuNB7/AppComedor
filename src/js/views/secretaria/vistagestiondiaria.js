@@ -202,7 +202,7 @@ export class VistaGestionDiaria extends Vista {
         if (valor) {
             this.insertarTupper(IdUsuario, valor);
         } else {
-            console.log(`El usuario ${IdUsuario}  no marcó el tupper.`);
+            this.insertarTupper(IdUsuario, valor);
         }
     }
     insertarTupper(id, checkbox) {
