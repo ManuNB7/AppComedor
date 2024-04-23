@@ -81,6 +81,9 @@
                     case 'padres':
                         $this->obtenerListadoPadres($queryParams['busqueda']);
                         break;
+                        case 'tupper':
+                            $this->obtenerTupper($queryParams['fecha']);
+                            break;
 
                     case 'q19':
                         $this->obtenerQ19($queryParams['mes']);
@@ -152,6 +155,19 @@
             header('Content-type: application/json; charset=utf-8');
             header('HTTP/1.1 200 OK');
             echo json_encode($incidencias);
+            die();
+        }
+
+        
+        function obtenerTupper($date) {
+            $fecha = new DateTime($date);
+            $fecha = $fecha->format('Y-m-d');
+            
+            $tupper = DAOUsuario::obtenerTupper($fecha);
+
+            header('Content-type: application/json; charset=utf-8');
+            header('HTTP/1.1 200 OK');
+            echo json_encode($tupper);
             die();
         }
           /**

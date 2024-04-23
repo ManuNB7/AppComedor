@@ -14,6 +14,7 @@ export class VistaGestionDiaria extends Vista {
 
         this.usuarios = null;
         this.incidencias = null;
+        this.tupper = null;
 
         this.btnDiaAnterior = this.div.getElementsByClassName('btn-prev')[0];
         this.btnDiaSiguiente = this.div.getElementsByClassName('btn-next')[0];
@@ -43,6 +44,13 @@ export class VistaGestionDiaria extends Vista {
         if (this.usuarios) this.controlador.obtenerIncidencias(this.fechaActual);
         else this.iniciarTabla();
     }
+    cargarTupper(usuarios) {
+        
+        this.usuarios = usuarios;
+        if (this.usuarios) this.controlador.obtenerTupper(this.fechaActual);
+        else this.iniciarTabla();
+    }
+
 
     /**
      * Obtener incidencias y empezar a generar la tabla.
@@ -52,7 +60,11 @@ export class VistaGestionDiaria extends Vista {
         this.incidencias = incidencias;
         this.iniciarTabla();
     }
-
+    cargarTuppers(tupper) {
+        this.tupper = tupper;
+        console.log(tupper)
+        this.iniciarTabla();
+    }
     /**
      * Generar tabla por partes.
      */
@@ -148,6 +160,7 @@ export class VistaGestionDiaria extends Vista {
                         textarea.value = incidencia.incidencia;
                 }
             }
+          
 
             // Bloquear edición si la fecha de hoy es superior.
             if (fechaHoy.valueOf() > this.fechaActual.valueOf()) {
@@ -172,8 +185,17 @@ export class VistaGestionDiaria extends Vista {
             tr.appendChild(tdIncidencia);
 
             this.tbody.appendChild(tr);
-
-       
+            console.log(usuario)
+            if (this.tupper) {
+                for (const check of this.tupper) {
+                    
+                    if (check.idPersona == usuario.id && check.campo_tupper == true) {
+                       
+                        checkboxTuppers.checked = true; 
+                    } 
+                }
+            }
+            
         }
     }
     marcarTupper(IdUsuario, valor) {
@@ -206,7 +228,7 @@ export class VistaGestionDiaria extends Vista {
             'dia': fechaFormateada // Utilizamos la fecha formateada
         };
     
-        console.log(datos);
+   
     
         // Llamar al método para insertar en la base de datos, pasando los datos
         this.controlador.insertarTupper(datos);

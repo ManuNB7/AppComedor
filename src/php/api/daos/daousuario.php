@@ -56,6 +56,13 @@
 
             return BD::seleccionar($sql, $params);
         }
+        public static function obtenerTupper($fecha) {
+            $sql = 'SELECT idPersona, campo_tupper FROM Dias';
+            $sql .= ' WHERE dia=:fecha';
+            $params = array('fecha' => $fecha);
+
+            return BD::seleccionar($sql, $params);
+        }
 
         /**
          * Obtener las incidencias de un mes.

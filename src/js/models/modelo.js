@@ -146,6 +146,13 @@ export class Modelo {
         return Rest.get('secretaria', [], queryParams);
     }
 
+    obtenerTupper(fecha) {
+        const queryParams = new Map();
+        queryParams.set('proceso', 'tupper');
+        queryParams.set('fecha', fecha.getDate() + '-' + (fecha.getMonth()+1) + '-' + fecha.getFullYear());
+        return Rest.get('secretaria', [], queryParams);
+    }
+
     /**
      * Llamada para obtener a los usuarios apuntados al comedor en un mes.
      * @param {Number} mes Nº del mes.

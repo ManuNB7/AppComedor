@@ -71,7 +71,15 @@ class ControladorSecretaria {
              console.error(e);
          })
     }
-    
+    obtenerTupper(fecha) {
+        this.modelo.obtenerTupper(fecha)
+         .then(tupper => {
+             this.vistaGestionDiaria.cargarTuppers(tupper);
+         })
+         .catch(e => {
+             console.error(e);
+         })
+    }
     /**
      * Obtiene las incidencias de un mes.
      * @param {Number} mes Mes.
@@ -117,6 +125,8 @@ class ControladorSecretaria {
         this.modelo.obtenerUsuariosApuntados(fecha)
          .then(usuarios => {
              this.vistaGestionDiaria.cargarIncidencias(usuarios);
+             this.vistaGestionDiaria.cargarTupper(usuarios)
+             
          })
          .catch(e => {
              console.error(e);
