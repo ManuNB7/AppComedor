@@ -31,6 +31,10 @@
                     &nbsp;Gestión de tu cuenta
                 </li>
                 <li>
+                    <img src="./img/icons/edit.svg" alt="Gestión mensual"/>
+                    &nbsp;Gestión mensual
+                </li>
+                <li>
                     <img src="./img/icons/logout.svg" alt="Cerrar sesión"/>
                     &nbsp;Cerrar sesión
                 </li>
@@ -212,6 +216,32 @@
             <div id="divErrorBorrado" class="w-75 p-1 container alert alert-danger text-center rounded my-2"></div>
         </div>
 
+        <div id="calendario">
+            <div class="alert alert-info info-note" role="alert">
+            Los días mostrados con fondo azul son los que tiene reservados para el comedor.
+        </div>
+        <br>
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <button id="prevMonth" class="btn btn-outline-secondary"><i class="fas fa-chevron-left"></i> Anterior</button>
+            </div>
+            <div class="col-auto">
+                <button id="nextMonth" class="btn btn-outline-secondary">Siguiente <i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+        <br>
+        <div class="col-auto">
+            <h4 id="monthYear" class="text-center"></h4>
+        </div>
+        <div class="container mt-4">
+            <div id="calendar-container" class="card">
+                <div class="card-body">
+                    <div class="calendar"></div>
+                </div>
+            </div>
+            
+        </div>
+        <br></div>
         <script type="module" src="./js/controllers/padres.js"></script>
     </body>
 </html>

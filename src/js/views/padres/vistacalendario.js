@@ -1,51 +1,44 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const calendarContainer = document.getElementById('calendar-container');
-    const prevMonthBtn = document.getElementById('prevMonth');
-    const nextMonthBtn = document.getElementById('nextMonth');
-    const monthYearHeader = document.getElementById('monthYear');
-    const hijos = obtenerHijos();
+import { Vista } from '../vista.js';
 
-    let currentDate = new Date();
-    let currentMonth = currentDate.getMonth();
-    let currentYear = currentDate.getFullYear();
+export class VistaCalendario extends Vista {
+    constructor() {
+        super();
+        this.calendarContainer = document.getElementById('calendar-container');
+        this.prevMonthBtn = document.getElementById('prevMonth');
+        this.nextMonthBtn = document.getElementById('nextMonth');
+        this.monthYearHeader = document.getElementById('monthYear');
+        this.hijos = obtenerHijos();
 
-    renderCalendars(currentYear, currentMonth);
+        let currentDate = new Date();
+        this.currentMonth = currentDate.getMonth();
+        this.currentYear = currentDate.getFullYear();
 
-    prevMonthBtn.addEventListener('click', () => {
-        currentMonth -= 1;
-        if (currentMonth < 0) {
-            currentYear -= 1;
-            currentMonth = 11;
-        }
-        renderCalendars(currentYear, currentMonth);
-    });
-    function obtenerHijos() {
-        return [
-            {
-                nombre: 'Hijo 1',
-                diasReservados: [1, 5, 15] // Ejemplo de días reservados para el primer hijo
-            },
-            {
-                nombre: 'Hijo 2',
-                diasReservados: [8, 10, 25] // Ejemplo de días reservados para el segundo hijo
-            },
-        ];
+        this.renderCalendars(this.currentYear, this.currentMonth);
+
+        this.prevMonthBtn.addEventListener('click', () => {
+            this.currentMonth -= 1;
+            if (this.currentMonth < 0) {
+                this.currentYear -= 1;
+                this.currentMonth = 11;
+            }
+            this.renderCalendars(this.currentYear, this.currentMonth);
+        });
+
+        this.nextMonthBtn.addEventListener('click', () => {
+            this.currentMonth += 1;
+            if (this.currentMonth > 11) {
+                this.currentYear += 1;
+                this.currentMonth = 0;
+            }
+            this.renderCalendars(this.currentYear, this.currentMonth);
+        });
     }
-    
-    nextMonthBtn.addEventListener('click', () => {
-        currentMonth += 1;
-        if (currentMonth > 11) {
-            currentYear += 1;
-            currentMonth = 0;
-        }
-        renderCalendars(currentYear, currentMonth);
-    });
 
-    function renderCalendars(year, month) {
-        calendarContainer.innerHTML = '';
+    renderCalendars(year, month) {
+        this.calendarContainer.innerHTML = '';
 
         // Renderizar calendario para cada hijo
-        hijos.forEach(hijo => {
+        this.hijos.forEach(hijo => {
             const childCalendar = document.createElement('div');
             childCalendar.classList.add('child-calendar');
 
@@ -82,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 day.textContent = i;
 
                 // Identificar fines de semana (Sábado y Domingo)
-                if (new Date(year, month, i).getDay() === 5 || new Date(year, month, i).getDay() === 6) { // Domingo o Sábado
+                if (new Date(year, month, i).getDay() === 6 || new Date(year, month, i).getDay() === 6) { // Domingo o Sábado
                     day.classList.add('weekend');
                 }
 
@@ -99,16 +92,30 @@ document.addEventListener('DOMContentLoaded', function () {
                 daysList.appendChild(day);
             }
             childCalendar.appendChild(daysList);
-            calendarContainer.appendChild(childCalendar);
+            this.calendarContainer.appendChild(childCalendar);
         });
     }
+}
 
-    // Función para determinar si un día es festivo
-    function esFestivo(year, month, day) {
-        // IMPLEMENTAR LISTA FESTIVOS
-        if (year === 2024 && month === 3 && day === 1) { // Verifica si es el 1 de mayo de 2024
-            return true;
-        }
-        return false;
-    }
+document.addEventListener('DOMContentLoaded', function () {
+    const vistaCalendario = new VistaCalendario();
 });
+
+// Función para determinar si un día es festivo
+function esFestivo(year, month, day) {
+    // IMPLEMENTAR LISTA FESTIVOS
+    if (year === 2024 && month === 3 && day === 1) { // Verifica si es el 1 de mayo de 2024
+        return true;
+    }
+    return false;
+}
+
+function obtenerHijos() {
+    // Implementar lógica para obtener la lista de hijos
+    // Puedes cargar esta lista desde una fuente externa o generarla dinámicamente
+    return [
+        { nombre: 'Hijo1', diasReservados: [1, 5, 10] },
+        { nombre: 'Hijo2', diasReservados: [2, 8, 15] },
+        // Agrega más hijos si es necesario
+    ];
+}

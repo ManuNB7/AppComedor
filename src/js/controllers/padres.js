@@ -3,6 +3,7 @@ import { VistaInicioPadres } from "../views/padres/vistainicio.js";
 import { VistaMenuPadres } from "../views/padres/vistamenu.js";
 import { VistaGestionHijos } from "../views/padres/vistagestionhijos.js";
 import { VistaModificarPadres } from "../views/padres/vistamodificar.js";
+import { VistaCalendario } from "../views/padres/vistacalendario.js";
 import { Rest } from "../services/rest.js";
 
 /**
@@ -37,10 +38,12 @@ class ControladorPadres {
         this.vistaInicio = new VistaInicioPadres(this, document.getElementById('inicioPadres'));
         this.vistaGestionHijos = new VistaGestionHijos(this, document.getElementById('gestionHijosPadres'));
         this.vistaModificacion = new VistaModificarPadres(this, document.getElementById('modificacionPadres'));
-        
+        this.vistaCalendario = new VistaCalendario(this, document.getElementById('calendario'));
+
         this.vistaModificacion.actualizarCampos(this.#usuario);
         this.vistaGestionHijos.actualizar(this.#usuario);
         this.vistaInicio.obtenerPadre(this.#usuario);
+        //this.vistaCalendario.obtenerPadre(this.#usuario);
         this.verVistaInicio();
     }
 
