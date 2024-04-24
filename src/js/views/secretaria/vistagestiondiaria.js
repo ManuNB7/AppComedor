@@ -62,7 +62,7 @@ export class VistaGestionDiaria extends Vista {
     }
     cargarTuppers(tupper) {
         this.tupper = tupper;
-        console.log(tupper)
+        console.log("esto son los tupper",tupper)
         this.iniciarTabla();
     }
     /**
