@@ -20,7 +20,7 @@
 
 				// Hora límite para modificaciones
         'hora_limite' => 14,
-        'precioTupper' => 0.50
+        'PrecioTupper' => 0.50
        
     );
     
