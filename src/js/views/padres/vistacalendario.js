@@ -7,7 +7,6 @@ export class VistaCalendario extends Vista {
         this.prevMonthBtn = document.getElementById('prevMonth');
         this.nextMonthBtn = document.getElementById('nextMonth');
         this.monthYearHeader = document.getElementById('monthYear');
-        this.hijos = obtenerHijos();
 
         let currentDate = new Date();
         this.currentMonth = currentDate.getMonth();
@@ -108,14 +107,4 @@ function esFestivo(year, month, day) {
         return true;
     }
     return false;
-}
-
-function obtenerHijos() {
-    // Implementar lógica para obtener la lista de hijos
-    // Puedes cargar esta lista desde una fuente externa o generarla dinámicamente
-    return [
-        { nombre: 'Hijo1', diasReservados: [1, 5, 10] },
-        { nombre: 'Hijo2', diasReservados: [2, 8, 15] },
-        // Agrega más hijos si es necesario
-    ];
 }
