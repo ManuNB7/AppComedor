@@ -1,8 +1,8 @@
 import { Vista } from '../vista.js'; 
 
 export class VistaCalendario extends Vista {
-    constructor() {
-        super();
+    constructor(controlador, div) {
+        super(controlador,div);
         this.calendarContainer = document.getElementById('calendar-container');
         this.prevMonthBtn = document.getElementById('prevMonth');
         this.nextMonthBtn = document.getElementById('nextMonth');
