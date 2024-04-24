@@ -3,7 +3,7 @@ import { Vista } from '../vista.js';
 export class VistaCalendario extends Vista {
     constructor(controlador, div) {
         super(controlador,div);
-        this.calendarContainer = document.getElementById('calendar-container');
+        this.calendarContainer = document.getElementById('calendarGestion-container');
         this.prevMonthBtn = document.getElementById('prevMonth');
         this.nextMonthBtn = document.getElementById('nextMonth');
         this.monthYearHeader = document.getElementById('monthYear');
@@ -93,6 +93,10 @@ export class VistaCalendario extends Vista {
             childCalendar.appendChild(daysList);
             this.calendarContainer.appendChild(childCalendar);
         });
+    }
+    mostrar(ver) {
+        super.mostrar(ver);
+        if (ver) this.renderCalendars();    // Al volver a mostrar la vista, refrescar calendario.
     }
 }
 

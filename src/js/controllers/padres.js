@@ -38,7 +38,7 @@ class ControladorPadres {
         this.vistaInicio = new VistaInicioPadres(this, document.getElementById('inicioPadres'));
         this.vistaGestionHijos = new VistaGestionHijos(this, document.getElementById('gestionHijosPadres'));
         this.vistaModificacion = new VistaModificarPadres(this, document.getElementById('modificacionPadres'));
-        this.vistaCalendario = new VistaCalendario(this, document.getElementById('calendario'));
+        this.vistaCalendario = new VistaCalendario(this, document.getElementById('calendarioGestion'));
 
         this.vistaModificacion.actualizarCampos(this.#usuario);
         this.vistaGestionHijos.actualizar(this.#usuario);
@@ -80,6 +80,7 @@ class ControladorPadres {
         this.vistaInicio.mostrar(true);
         this.vistaGestionHijos.mostrar(false);
         this.vistaModificacion.mostrar(false);
+        this.vistaCalendario.mostrar(false);
     }
 
     /**
@@ -89,6 +90,7 @@ class ControladorPadres {
         this.vistaInicio.mostrar(false);
         this.vistaGestionHijos.mostrar(true);
         this.vistaModificacion.mostrar(false);
+        this.vistaCalendario.mostrar(false);
     }
 
     /**
@@ -98,6 +100,17 @@ class ControladorPadres {
         this.vistaInicio.mostrar(false);
         this.vistaGestionHijos.mostrar(false);
         this.vistaModificacion.mostrar(true);
+        this.vistaCalendario.mostrar(false);
+    }
+
+    /**
+     * Cambia a la vista de modificación de datos personales.
+     */
+    verVistaCalendario() {
+        this.vistaInicio.mostrar(false);
+        this.vistaGestionHijos.mostrar(false);
+        this.vistaModificacion.mostrar(false);
+        this.vistaCalendario.mostrar(true);
     }
 
     /**
