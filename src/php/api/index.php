@@ -145,6 +145,7 @@
 
             case 'secretaria':
                 require_once('./controllers/secretaria.php');
+                Secretaria::$precioTupper = $config['PrecioTupper'];
                 $controlador = new Secretaria();
                 break;
 

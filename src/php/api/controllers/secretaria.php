@@ -5,6 +5,9 @@
      * Controlador de secretaría.
      */
     class Secretaria {
+        
+        public static $precioTupper = null;
+
         /**
          * Insertar/modificar incidencia.
          * @param array $pathParams No utilizado.
