@@ -8,7 +8,7 @@ export class VistaQ19 extends Vista {
 	#mes = null
 	#PRECIO_MENU = [7.5, 6.5]
 	#MESES = ['', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
-
+	#PRECIO_TUPPER = [0.60]
     /**
 	 *	Constructor de la clase.
 	 *	@param {ControladorSecretaria} controlador Controlador de la vista.
@@ -28,6 +28,7 @@ export class VistaQ19 extends Vista {
 				// Asociamos eventos
 				this.btnNuevoRegistro.onclick = this.crearNuevoRegistro.bind(this)
 				this.btnDescargar.onclick = this.descargar.bind(this)
+				
     }
 		
 		establecerAnchoColumnas(tabla){
@@ -119,10 +120,10 @@ export class VistaQ19 extends Vista {
 		let precio = this.#PRECIO_MENU[0]
 		if (/@fundacionloyola.es$/.test(recibo.correo))
 			precio = this.#PRECIO_MENU[1]
-		recibo.importe = recibo.dias * precio
+		recibo.importe = recibo.dias * precio + this.#PRECIO_TUPPER * recibo.dias_tupper
 		td.setAttribute('data-campo', 'importe')
 		this.datatable.activarCelda(td, null, this.actualizarCampo.bind(this, td), null)
-
+		console.log(recibo.dias)
 		td = document.createElement('td')
 		tr.append(td)
 		recibo.concepto = `Comedor EVG ${this.#MESES[this.#mes]}.`
@@ -190,5 +191,5 @@ export class VistaQ19 extends Vista {
 		}
 		return csv.join()
 	}
-
+	
 }
