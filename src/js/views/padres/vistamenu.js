@@ -10,12 +10,14 @@ export class VistaMenuPadres {
         this.liInicio = this.nav.getElementsByTagName('li')[1];
         this.liGestionHijos = this.nav.getElementsByTagName('li')[2];
         this.liModificacion = this.nav.getElementsByTagName('li')[3];
-        this.liCerrarSesion = this.nav.getElementsByTagName('li')[4];
+        this.liGestionCalendario = this.nav.getElementsByTagName('li')[4];
+        this.liCerrarSesion = this.nav.getElementsByTagName('li')[5];
         
         this.liHamburger.onclick = this.toggleMenu.bind(this);
         this.liInicio.onclick = this.inicio.bind(this);
         this.liGestionHijos.onclick = this.gestionHijos.bind(this);
         this.liModificacion.onclick = this.modificacion.bind(this);
+        this.liGestionCalendario.onclick = this.gestionCalendario.bind(this);
         this.liCerrarSesion.onclick = this.cerrarSesion.bind(this);
     }
 
@@ -27,7 +29,9 @@ export class VistaMenuPadres {
 
         this.liInicio.classList.add('active');
         this.liGestionHijos.classList.remove('active');
+        this.liGestionCalendario.classList.remove('active');
         this.liModificacion.classList.remove('active');
+        
     }
 
     /**
@@ -45,7 +49,9 @@ export class VistaMenuPadres {
 
         this.liInicio.classList.remove('active');
         this.liGestionHijos.classList.add('active');
+        this.liGestionCalendario.classList.remove('active');
         this.liModificacion.classList.remove('active');
+        
     }
 
     /**
@@ -56,7 +62,17 @@ export class VistaMenuPadres {
 
         this.liInicio.classList.remove('active');
         this.liGestionHijos.classList.remove('active');
+        this.liGestionCalendario.classList.remove('active');
         this.liModificacion.classList.add('active');
+    }
+
+    gestionCalendario() {
+        this.controlador.verVistaCalendario();
+
+        this.liInicio.classList.remove('active');
+        this.liGestionHijos.classList.remove('active');
+        this.liModificacion.classList.remove('active');
+        this.liGestionCalendario.classList.add('active');
     }
 
     /**
