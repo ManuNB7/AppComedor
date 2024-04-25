@@ -59,7 +59,18 @@ class ControladorPadres {
              console.error(e);
          })
     }
-
+    /**
+     * Devuelve array de días festivos a vista de gestión de hijos.
+     */
+    obtenerFestivosGestion(inicioMes, finMes) {
+        this.modelo.obtenerFestivosGestion(inicioMes, finMes)
+        .then(festivos => {
+            this.vistaCalendario.obtenerFestivos(festivos);
+        })
+        .catch(e => {
+            console.error(e);
+        })
+    }
     /**
      * Devuelve array de cursos a vista de gestión de hijos.
      */
@@ -229,6 +240,20 @@ class ControladorPadres {
     }
 
     /**
+     * Obtiene los días de comedor de los hijos.
+     * @param {Array} idHijos Array con los IDs de los hijos.
+     */
+    obtenerDiasComedorGestion(idHijos) {
+        this.modelo.obtenerDiasComedor(idHijos)
+         .then(dias => {
+            this.vistaCalendario.renderCalendars(dias);
+         })
+         .catch(e => {
+             console.error(e);
+         })
+    }
+
+    /**
      * Desmarcar día del comedor.
      * @param {Object} datos Datos del día.
      */
@@ -278,6 +303,20 @@ class ControladorPadres {
         this.modelo.dameHijos(id)
          .then(hijos => {
              this.vistaInicio.inicializar(hijos);
+         })
+         .catch(e => {
+             console.error(e)
+         })
+    }
+
+    /**
+     * Devuelve los hijos de un padre a la vista de inicio.
+     * @param {Number} id ID del padre. 
+     */
+    dameHijosCalendarioGestion(id) {
+        this.modelo.dameHijos(id)
+         .then(hijos => {
+             this.vistaCalendario.inicializar(hijos);
          })
          .catch(e => {
              console.error(e)
