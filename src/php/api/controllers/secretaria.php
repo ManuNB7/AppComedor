@@ -7,6 +7,7 @@
     class Secretaria {
         
         public static $precioTupper = null;
+        public static $precioMenu = null;
 
         /**
          * Insertar/modificar incidencia.
@@ -196,8 +197,9 @@
             header('Content-type: application/json; charset=utf-8');
             header('HTTP/1.1 200 OK');
             echo json_encode($q19);
+            
             die();
         }
 
     }
-?>
+
