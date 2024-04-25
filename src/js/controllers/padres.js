@@ -43,7 +43,7 @@ class ControladorPadres {
         this.vistaModificacion.actualizarCampos(this.#usuario);
         this.vistaGestionHijos.actualizar(this.#usuario);
         this.vistaInicio.obtenerPadre(this.#usuario);
-        //this.vistaCalendario.obtenerPadre(this.#usuario);
+        this.vistaCalendario.obtenerPadre(this.#usuario);
         this.verVistaInicio();
     }
 
