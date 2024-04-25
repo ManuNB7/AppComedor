@@ -104,7 +104,7 @@ class ControladorPadres {
     }
 
     /**
-     * Cambia a la vista de modificación de datos personales.
+     * Cambia a la vista de gestión mensual.
      */
     verVistaCalendario() {
         this.vistaInicio.mostrar(false);

@@ -2,7 +2,7 @@ import { Vista } from '../vista.js';
 
 export class VistaCalendario extends Vista {
     constructor(controlador, div) {
-        super(controlador,div);
+        super(controlador, div);
         this.calendarContainer = document.getElementById('calendarGestion-container');
         this.prevMonthBtn = document.getElementById('prevMonth');
         this.nextMonthBtn = document.getElementById('nextMonth');
@@ -32,6 +32,8 @@ export class VistaCalendario extends Vista {
             this.renderCalendars(this.currentYear, this.currentMonth);
         });
     }
+
+    
 
     renderCalendars(year, month) {
         this.calendarContainer.innerHTML = '';
@@ -96,13 +98,11 @@ export class VistaCalendario extends Vista {
     }
     mostrar(ver) {
         super.mostrar(ver);
-        if (ver) this.renderCalendars();    // Al volver a mostrar la vista, refrescar calendario.
+        if (ver) {
+            this.renderCalendars(this.currentYear, this.currentMonth);
+        }
     }
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-    const vistaCalendario = new VistaCalendario();
-});
 
 // Función para determinar si un día es festivo
 function esFestivo(year, month, day) {
