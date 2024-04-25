@@ -7,7 +7,6 @@ export class VistaCalendario extends Vista {
         this.prevMonthBtn = document.getElementById('prevMonth');
         this.nextMonthBtn = document.getElementById('nextMonth');
         this.monthYearHeader = document.getElementById('monthYear');
-        this.hijos = obtenerHijos();
         let currentDate = new Date();
         this.currentMonth = currentDate.getMonth();
         this.currentYear = currentDate.getFullYear();
@@ -32,14 +31,40 @@ export class VistaCalendario extends Vista {
             this.renderCalendars(this.currentYear, this.currentMonth);
         });
     }
-
+/**
+     * Devuelve los hijos de un padre a la vista de gestión de hijos.
+     * @param {Number} id ID del padre. 
+     */
+dameHijos(id) {
+    this.modelo.dameHijos(id)
+     .then(hijos => {
+         this.vistaGestionHijos.cargarListado(hijos);
+     })
+     .catch(e => {
+         console.error(e)
+     })
+}
     
+/**
+     * Obtiene los días de comedor de los hijos.
+     * @param {Array} idHijos Array con los IDs de los hijos.
+     */
+    obtenerDiasComedor(idHijos) {
+        console.log("ENTRANDO EN DIA")
+        this.modelo.obtenerDiasComedor(idHijos)
+        .then(dias => {
+            this.vistaInicio.montarCalendario(dias);
+        })
+        .catch(e => {
+            console.error(e);
+        })
+    }
 
     renderCalendars(year, month) {
         this.calendarContainer.innerHTML = '';
 
         // Renderizar calendario para cada hijo
-        this.hijos.forEach(hijo => {
+        
             const childCalendar = document.createElement('div');
             childCalendar.classList.add('child-calendar');
 
@@ -49,7 +74,7 @@ export class VistaCalendario extends Vista {
             const firstDayIndex = new Date(year, month, 1).getDay();
 
             const childMonthYearHeader = document.createElement('h2');
-            childMonthYearHeader.textContent = `${monthNames[month]} ${year} - ${hijo.nombre}`;
+            childMonthYearHeader.textContent = `${monthNames[month]} ${year}`;
             childCalendar.appendChild(childMonthYearHeader);
 
             const weekRow = document.createElement('div');
@@ -80,21 +105,11 @@ export class VistaCalendario extends Vista {
                     day.classList.add('weekend');
                 }
 
-                // Identificar días reservados y marcarlos
-                if (hijo.diasReservados.includes(i)) {
-                    day.classList.add('reserved-day');
-                }
-
-                // Identificar días festivos y marcarlos
-                if (esFestivo(year, month, i)) {
-                    day.classList.add('festivo');
-                }
-
                 daysList.appendChild(day);
             }
             childCalendar.appendChild(daysList);
             this.calendarContainer.appendChild(childCalendar);
-        });
+    
     }
     mostrar(ver) {
         super.mostrar(ver);
@@ -102,23 +117,4 @@ export class VistaCalendario extends Vista {
             this.renderCalendars(this.currentYear, this.currentMonth);
         }
     }
-}
-
-// Función para determinar si un día es festivo
-function esFestivo(year, month, day) {
-    // IMPLEMENTAR LISTA FESTIVOS
-    if (year === 2024 && month === 3 && day === 1) { // Verifica si es el 1 de mayo de 2024
-        return true;
-    }
-    return false;
-}
-
-function obtenerHijos() {
-    // Implementar lógica para obtener la lista de hijos
-    // Puedes cargar esta lista desde una fuente externa o generarla dinámicamente
-    return [
-        { nombre: 'Hijo1', diasReservados: [1, 5, 10] },
-        { nombre: 'Hijo2', diasReservados: [2, 8, 15] },
-        // Agrega más hijos si es necesario
-    ];
 }
