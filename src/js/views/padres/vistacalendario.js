@@ -11,11 +11,7 @@ export class VistaCalendario extends Vista {
         this.currentMonth = currentDate.getMonth();
         this.idPadre = 0;
         this.currentYear = currentDate.getFullYear();
-        this.hijos = [
-            { nombre: 'Juan', diasReservados: [2, 4, 15, 22] },
-            { nombre: 'María', diasReservados: [3, 10, 17, 24] },
-            { nombre: 'Pedro', diasReservados: [4, 11, 18, 25] }
-        ];
+        
 
         this.renderCalendars(this.currentYear, this.currentMonth);
 
@@ -53,6 +49,16 @@ export class VistaCalendario extends Vista {
         this.festivos = festivos;
         this.controlador.dameHijosCalendarioGestion(this.idPadre);
     }
+
+    /**
+     * Actualiza el listado.
+     * @param {Object} datos Datos del padre.
+     */
+    actualizar(datos) {
+        this.idUsuario = datos.id;
+        this.controlador.dameHijosGestion(this.idUsuario);
+    }
+
     /**
      * Recibir los hijos, y hacer llamada para obtener todos los días de comedor de los hijos.
      * @param {Array} hijos Array de los hijos.
@@ -73,11 +79,11 @@ export class VistaCalendario extends Vista {
     }
 
 
-    renderCalendars(year, month) {
+    renderCalendars(hijos) {
         this.calendarContainer.innerHTML = '';
-    
+        console.log(this.hijos)
         // Itera sobre cada hijo y renderiza un calendario para cada uno
-        hijos.forEach(hijo => {
+        this.hijos.forEach(hijo => {
             const childCalendar = document.createElement('div');
             childCalendar.classList.add('child-calendar');
     
