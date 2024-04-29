@@ -78,13 +78,11 @@ export class VistaCalendario extends Vista {
         }
     }
 
-
     renderCalendars(hijos) {
-        this.calendarContainer.innerHTML = '';
-        console.log(this.hijos)
-        // Itera sobre cada hijo y renderiza un calendario para cada uno
-        this.hijos.forEach(hijo => {
-            const childCalendar = document.createElement('div');
+        console.log(hijos)
+        if (hijos != null) {
+            for (const hijo of hijos) {
+                 const childCalendar = document.createElement('div');
             childCalendar.classList.add('child-calendar');
     
             const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
@@ -128,8 +126,9 @@ export class VistaCalendario extends Vista {
             }
             childCalendar.appendChild(daysList);
             this.calendarContainer.appendChild(childCalendar);
-        });
+        };
     }
+}
     
     mostrar(ver) {
         super.mostrar(ver);
