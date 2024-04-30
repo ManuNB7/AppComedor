@@ -234,6 +234,7 @@ class ControladorPadres {
         this.modelo.obtenerDiasComedor(idHijos)
          .then(dias => {
             this.vistaInicio.montarCalendario(dias);
+             
          })
          .catch(e => {
              console.error(e);
@@ -244,10 +245,12 @@ class ControladorPadres {
      * Obtiene los días de comedor de los hijos.
      * @param {Array} idHijos Array con los IDs de los hijos.
      */
+    
     obtenerDiasComedorGestion(idHijos) {
         this.modelo.obtenerDiasComedor(idHijos)
          .then(dias => {
             this.vistaCalendario.renderCalendars(dias);
+            console.log(dias)
          })
          .catch(e => {
              console.error(e);
@@ -322,6 +325,7 @@ class ControladorPadres {
          .catch(e => {
              console.error(e)
          })
+         
     }
 
     /**

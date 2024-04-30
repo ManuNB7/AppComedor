@@ -3,6 +3,7 @@ import { Vista } from '../vista.js';
 export class VistaCalendario extends Vista {
     constructor(controlador, div) {
         super(controlador, div);
+        
         this.calendarContainer = document.getElementById('calendarGestion-container');
         this.prevMonthBtn = document.getElementById('prevMonth');
         this.nextMonthBtn = document.getElementById('nextMonth');
@@ -11,8 +12,9 @@ export class VistaCalendario extends Vista {
         this.currentMonth = currentDate.getMonth();
         this.idPadre = 0;
         this.currentYear = currentDate.getFullYear();
-        
-
+        this.diasComedor = null;
+        this.festivos = null;
+        this.hijos = null;
         this.renderCalendars(this.hijos,this.currentYear, this.currentMonth);
 
         this.prevMonthBtn.addEventListener('click', () => {
@@ -21,7 +23,7 @@ export class VistaCalendario extends Vista {
                 this.currentYear -= 1;
                 this.currentMonth = 11;
             }
-            this.renderCalendars();
+            this.renderCalendars(); // No necesitas pasar this.hijos aquí
         });
         
         this.nextMonthBtn.addEventListener('click', () => {
@@ -30,9 +32,9 @@ export class VistaCalendario extends Vista {
                 this.currentYear += 1;
                 this.currentMonth = 0;
             }
-            this.renderCalendars(); 
+            this.renderCalendars(); // No necesitas pasar this.hijos aquí
         });
-        
+       
     }
 
     /**
@@ -52,12 +54,13 @@ export class VistaCalendario extends Vista {
     }
 
     /**
-     * Actualiza el listado.
+     * Actualiza los hijos.
      * @param {Object} datos Datos del padre.
      */
     actualizar(datos) {
         this.idUsuario = datos.id;
         this.controlador.dameHijosGestion(this.idUsuario);
+       
     }
 
     /**
@@ -65,21 +68,25 @@ export class VistaCalendario extends Vista {
      * @param {Array} hijos Array de los hijos.
      */
     inicializar(hijos) {
+        
         this.hijos = hijos;
         let idHijos = [];
 
         if (this.hijos.length > 0) {
             for (let hijo of this.hijos)  
                 idHijos.push(hijo.id);
-
+        
             this.controlador.obtenerDiasComedorGestion(idHijos);
+           
         }
         else {
-            this.renderCalendars(hijos);   // Iniciar calendario en blanco (no se mostrará).
+            this.renderCalendars(); 
         }
+       console.log(idHijos)
     }
 
     renderCalendars(hijos) {
+     
         if (hijos != null) {
             hijos.forEach(hijo => {
                 const childCalendar = document.createElement('div');
@@ -129,11 +136,6 @@ export class VistaCalendario extends Vista {
                         day.classList.add('weekend');
                     }
     
-                    // Marcar los días reservados por el hijo
-                    if (hijo.diasReservados.includes(i)) {
-                        day.classList.add('reserved');
-                    }
-    
                     daysList.appendChild(day);
                 }
                 childCalendar.appendChild(daysList);
@@ -141,8 +143,6 @@ export class VistaCalendario extends Vista {
             });
         }
     }
-    
-    
     
     
     
