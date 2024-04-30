@@ -98,7 +98,7 @@ export class VistaCalendario extends Vista {
             weekRow.classList.add('calendar', 'week-row');
             daysOfWeek.forEach(day => {
                 const weekDay = document.createElement('div');
-                weekDay.classList.add('day', 'week-day');
+                weekDay.classList.add('day', 'week-day');https://github.com/ManuNB7/AppComedor/blob/manuelSprint2/src/js/views/padres/vistacalendario.js
                 weekDay.textContent = day;
                 weekRow.appendChild(weekDay);
             });
@@ -133,7 +133,7 @@ export class VistaCalendario extends Vista {
     mostrar(ver) {
         super.mostrar(ver);
         if (ver) {
-            this.renderCalendars(this.currentYear, this.currentMonth);
+            this.renderCalendars(hijos);
         }
     }
 }
