@@ -21,7 +21,7 @@ export class VistaCalendario extends Vista {
                 this.currentYear -= 1;
                 this.currentMonth = 11;
             }
-            this.renderCalendars(); // No necesitas pasar this.hijos aquí
+            this.renderCalendars();
         });
         
         this.nextMonthBtn.addEventListener('click', () => {
@@ -30,7 +30,7 @@ export class VistaCalendario extends Vista {
                 this.currentYear += 1;
                 this.currentMonth = 0;
             }
-            this.renderCalendars(); // No necesitas pasar this.hijos aquí
+            this.renderCalendars(); 
         });
         
     }
@@ -80,24 +80,26 @@ export class VistaCalendario extends Vista {
     }
 
     renderCalendars(hijos) {
-        console.log(this.hijos);
         if (hijos != null) {
             hijos.forEach(hijo => {
                 const childCalendar = document.createElement('div');
                 childCalendar.classList.add('child-calendar');
     
-                // Agregar el nombre del hijo al título del calendario
+                // Obtener el nombre del mes actual
+                const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+                const currentDate = new Date();
+                const currentMonth = currentDate.getMonth();
+                const monthName = monthNames[currentMonth];
+    
+                // Agregar el nombre del hijo y el nombre del mes al título del calendario
                 const childMonthYearHeader = document.createElement('h2');
-                childMonthYearHeader.textContent = `${hijo.nombre}`;
+                childMonthYearHeader.textContent = `${hijo.nombre} - ${monthName} Calendario`;
                 childCalendar.appendChild(childMonthYearHeader);
     
-                const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-                const daysOfWeek = ['D','L', 'M', 'X', 'J', 'V', 'S']; // Domingo a Sábado
-                const currentDate = new Date(); // Fecha actual para obtener año y mes
+                const daysOfWeek = ['D', 'L', 'M', 'X', 'J', 'V', 'S']; // Domingo a Sábado
                 const year = currentDate.getFullYear(); // Año actual
-                const month = currentDate.getMonth(); // Mes actual (0-11)
-                const daysInMonth = new Date(year, month + 1, 0).getDate();
-                const firstDayIndex = new Date(year, month, 1).getDay();
+                const daysInMonth = new Date(year, currentMonth + 1, 0).getDate();
+                const firstDayIndex = new Date(year, currentMonth, 1).getDay();
     
                 const weekRow = document.createElement('div');
                 weekRow.classList.add('calendar', 'week-row');
@@ -108,15 +110,6 @@ export class VistaCalendario extends Vista {
                     weekRow.appendChild(weekDay);
                 });
                 childCalendar.appendChild(weekRow);
-            const weekRow = document.createElement('div');
-            weekRow.classList.add('calendar', 'week-row');
-            daysOfWeek.forEach(day => {
-                const weekDay = document.createElement('div');
-                weekDay.classList.add('day', 'week-day');https://github.com/ManuNB7/AppComedor/blob/manuelSprint2/src/js/views/padres/vistacalendario.js
-                weekDay.textContent = day;
-                weekRow.appendChild(weekDay);
-            });
-            childCalendar.appendChild(weekRow);
     
                 const daysList = document.createElement('div');
                 daysList.classList.add('calendar');
@@ -132,8 +125,13 @@ export class VistaCalendario extends Vista {
                     day.textContent = i;
     
                     // Identificar fines de semana (Sábado y Domingo)
-                    if (new Date(year, month, i).getDay() === 0 || new Date(year, month, i).getDay() === 6) { // Domingo o Sábado
+                    if (new Date(year, currentMonth, i).getDay() === 0 || new Date(year, currentMonth, i).getDay() === 6) { // Domingo o Sábado
                         day.classList.add('weekend');
+                    }
+    
+                    // Marcar los días reservados por el hijo
+                    if (hijo.diasReservados.includes(i)) {
+                        day.classList.add('reserved');
                     }
     
                     daysList.appendChild(day);
@@ -146,11 +144,13 @@ export class VistaCalendario extends Vista {
     
     
     
+    
+    
+    
     /*mostrar(ver) {
         super.mostrar(ver);
         if (ver) {
             this.renderCalendars(this.hijos);
-            this.renderCalendars(hijos);
         }
     }*/
 }
