@@ -13,7 +13,7 @@ export class VistaCalendario extends Vista {
         this.currentYear = currentDate.getFullYear();
         
 
-        this.renderCalendars(this.currentYear, this.currentMonth);
+        this.renderCalendars(this.hijos,this.currentYear, this.currentMonth);
 
         this.prevMonthBtn.addEventListener('click', () => {
             this.currentMonth -= 1;
@@ -21,17 +21,18 @@ export class VistaCalendario extends Vista {
                 this.currentYear -= 1;
                 this.currentMonth = 11;
             }
-            this.renderCalendars(this.currentYear, this.currentMonth);
+            this.renderCalendars(); // No necesitas pasar this.hijos aquí
         });
-
+        
         this.nextMonthBtn.addEventListener('click', () => {
             this.currentMonth += 1;
             if (this.currentMonth > 11) {
                 this.currentYear += 1;
                 this.currentMonth = 0;
             }
-            this.renderCalendars(this.currentYear, this.currentMonth);
+            this.renderCalendars(); // No necesitas pasar this.hijos aquí
         });
+        
     }
 
     /**
@@ -79,61 +80,67 @@ export class VistaCalendario extends Vista {
     }
 
     renderCalendars(hijos) {
-        console.log(hijos)
+        console.log(this.hijos);
         if (hijos != null) {
-            for (const hijo of hijos) {
-                 const childCalendar = document.createElement('div');
-            childCalendar.classList.add('child-calendar');
+            hijos.forEach(hijo => {
+                const childCalendar = document.createElement('div');
+                childCalendar.classList.add('child-calendar');
     
-            const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-            const daysOfWeek = ['L', 'M', 'X', 'J', 'V', 'S', 'D']; // Modificado para que comience en Domingo
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const firstDayIndex = new Date(year, month, 1).getDay();
+                // Agregar el nombre del hijo al título del calendario
+                const childMonthYearHeader = document.createElement('h2');
+                childMonthYearHeader.textContent = `${hijo.nombre}`;
+                childCalendar.appendChild(childMonthYearHeader);
     
-            const childMonthYearHeader = document.createElement('h2');
-            childMonthYearHeader.textContent = `${monthNames[month]} ${year}`;
-            childCalendar.appendChild(childMonthYearHeader);
+                const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+                const daysOfWeek = ['D','L', 'M', 'X', 'J', 'V', 'S']; // Domingo a Sábado
+                const currentDate = new Date(); // Fecha actual para obtener año y mes
+                const year = currentDate.getFullYear(); // Año actual
+                const month = currentDate.getMonth(); // Mes actual (0-11)
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                const firstDayIndex = new Date(year, month, 1).getDay();
     
-            const weekRow = document.createElement('div');
-            weekRow.classList.add('calendar', 'week-row');
-            daysOfWeek.forEach(day => {
-                const weekDay = document.createElement('div');
-                weekDay.classList.add('day', 'week-day');
-                weekDay.textContent = day;
-                weekRow.appendChild(weekDay);
-            });
-            childCalendar.appendChild(weekRow);
+                const weekRow = document.createElement('div');
+                weekRow.classList.add('calendar', 'week-row');
+                daysOfWeek.forEach(day => {
+                    const weekDay = document.createElement('div');
+                    weekDay.classList.add('day', 'week-day');
+                    weekDay.textContent = day;
+                    weekRow.appendChild(weekDay);
+                });
+                childCalendar.appendChild(weekRow);
     
-            const daysList = document.createElement('div');
-            daysList.classList.add('calendar');
-            for (let i = 0; i < firstDayIndex; i++) {
-                const emptyDay = document.createElement('div');
-                emptyDay.classList.add('day');
-                emptyDay.textContent = '';
-                daysList.appendChild(emptyDay);
-            }
-            for (let i = 1; i <= daysInMonth; i++) {
-                const day = document.createElement('div');
-                day.classList.add('day');
-                day.textContent = i;
-    
-                // Identificar fines de semana (Sábado y Domingo)
-                if (new Date(year, month, i).getDay() === 6 || new Date(year, month, i).getDay() === 6) { // Domingo o Sábado
-                    day.classList.add('weekend');
+                const daysList = document.createElement('div');
+                daysList.classList.add('calendar');
+                for (let i = 0; i < firstDayIndex; i++) {
+                    const emptyDay = document.createElement('div');
+                    emptyDay.classList.add('day');
+                    emptyDay.textContent = '';
+                    daysList.appendChild(emptyDay);
                 }
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const day = document.createElement('div');
+                    day.classList.add('day');
+                    day.textContent = i;
     
-                daysList.appendChild(day);
-            }
-            childCalendar.appendChild(daysList);
-            this.calendarContainer.appendChild(childCalendar);
-        };
-    }
-}
+                    // Identificar fines de semana (Sábado y Domingo)
+                    if (new Date(year, month, i).getDay() === 0 || new Date(year, month, i).getDay() === 6) { // Domingo o Sábado
+                        day.classList.add('weekend');
+                    }
     
-    mostrar(ver) {
-        super.mostrar(ver);
-        if (ver) {
-            this.renderCalendars(this.currentYear, this.currentMonth);
+                    daysList.appendChild(day);
+                }
+                childCalendar.appendChild(daysList);
+                this.calendarContainer.appendChild(childCalendar);
+            });
         }
     }
+    
+    
+    
+    /*mostrar(ver) {
+        super.mostrar(ver);
+        if (ver) {
+            this.renderCalendars(this.hijos);
+        }
+    }*/
 }
