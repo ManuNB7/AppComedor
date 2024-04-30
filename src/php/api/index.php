@@ -144,11 +144,17 @@
                 break;
 
             case 'secretaria':
-                require_once('./controllers/secretaria.php');
-                         Secretaria::$precioTupper = $config['PrecioTupper'];
-                         Secretaria::$precioMenu = $config['PRECIO_MENU'];
+                require_once('./controllers/secretaria.php');                       
                 $controlador = new Secretaria();
                 break;
+
+                case 'constantes':
+                require_once('./controllers/constantes.php');
+                Constantes::$precioTupper = $config['PrecioTupper'];
+                Constantes::$precioMenu = $config['PRECIO_MENU'];
+                    $controlador = new Constantes();
+                break;
+
 
             default:
                 header('HTTP/1.1 501 Not Implemented');

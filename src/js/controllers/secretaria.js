@@ -215,9 +215,32 @@ class ControladorSecretaria {
 			this.modelo.obtenerQ19(mes)
 			.then ( q19 => {
 				this.verVistaQ19()
+             
 				this.vistaQ19.iniciar(q19, mes)
 			} )
 		}
+        //pasar constantes a la vista ver si llegan primero 
+        
+        constanteTupper(){
+           
+            this.modelo.obtenerConstanteTupper()
+            .then ( c => {  
+				this.vistaQ19.inicializarTupper(c)
+			} )
+             .catch(e => {
+                 console.error(e);
+             })
+        }
+        constanteMenu(){
+           
+            this.modelo.obtenerConstanteMenu()
+            .then ( c => {  
+				this.vistaQ19.inicializarMenu(c)
+			} )
+             .catch(e => {
+                 console.error(e);
+             })
+        }
 }
 
 new ControladorSecretaria();

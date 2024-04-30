@@ -42,6 +42,7 @@ export class Rest {
 		  // No es json
 		  return respuesta.text()
 		})
+	
 	}
   
 	/**
@@ -139,6 +140,7 @@ export class Rest {
 		url = url.substring(0, url.length - 1)
 	  }
 	  url = encodeURI(url.replace('//', '/null/')) // aseguramos los parámetros nulos.
+	  console.log(url)
 	  return url
 	}
 }

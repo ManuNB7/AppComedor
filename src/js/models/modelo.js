@@ -222,5 +222,15 @@ export class Modelo {
         queryParams.set('mes', mes);
         return Rest.get('secretaria', [], queryParams);
     }
-
+    obtenerConstanteTupper() {
+        const queryParams = new Map();
+        queryParams.set('proceso', 'tupper');
+        return Rest.get('constantes', [],queryParams);
+    }
+    obtenerConstanteMenu() {
+        const queryParams = new Map();
+        queryParams.set('proceso', 'menu');
+        return Rest.get('constantes', [],queryParams);
+    }
+ 
 }

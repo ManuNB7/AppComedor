@@ -62,7 +62,7 @@ export class VistaGestionDiaria extends Vista {
     }
     cargarTuppers(tupper) {
         this.tupper = tupper;
-        console.log("esto son los tupper",tupper)
+      
         this.iniciarTabla();
     }
     /**
@@ -185,7 +185,7 @@ export class VistaGestionDiaria extends Vista {
             tr.appendChild(tdIncidencia);
 
             this.tbody.appendChild(tr);
-            console.log(usuario)
+          
             if (this.tupper) {
                 for (const check of this.tupper) {
                     
@@ -207,7 +207,7 @@ export class VistaGestionDiaria extends Vista {
     }
     insertarTupper(id, checkbox) {
         let valor = checkbox ? 1 : 0;
-        console.log(valor);
+    
     
         // Obtener el contenido del campo de fecha
         const fechaTexto = document.getElementById('fechaDia').textContent;
