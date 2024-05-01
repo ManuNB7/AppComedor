@@ -15,60 +15,44 @@ export class VistaCalendario extends Vista {
         this.diasComedor = null;
         this.festivos = null;
         this.hijos = null;
-        this.renderCalendars(this.hijos,this.currentYear, this.currentMonth);
+        this.renderCalendars();
 
         this.prevMonthBtn.addEventListener('click', () => {
-            this.currentMonth -= 1;
-            if (this.currentMonth < 0) {
-                this.currentYear -= 1;
-                this.currentMonth = 11;
-            }
-            this.renderCalendars(); // No necesitas pasar this.hijos aquí
+            this.changeMonth(-1);
         });
         
         this.nextMonthBtn.addEventListener('click', () => {
-            this.currentMonth += 1;
-            if (this.currentMonth > 11) {
-                this.currentYear += 1;
-                this.currentMonth = 0;
-            }
-            this.renderCalendars(); // No necesitas pasar this.hijos aquí
+            this.changeMonth(1);
         });
-       
     }
 
-    /**
-     * Hacer set del ID del padre, y pedir los hijos del padre al controlador.
-     * @param {Object} datos Datos del padre.
-     */
+    changeMonth(change) {
+        this.currentMonth += change;
+        if (this.currentMonth < 0) {
+            this.currentYear -= 1;
+            this.currentMonth = 11;
+        } else if (this.currentMonth > 11) {
+            this.currentYear += 1;
+            this.currentMonth = 0;
+        }
+        this.renderCalendars();
+    }
+
     obtenerPadre(datos) {
         this.idPadre = datos.id;
     }
-    /**
-     * Obtener los días festivos que haya en el mes actual.
-     * @param {Array} festivos 
-     */
+
     obtenerFestivos(festivos) {
         this.festivos = festivos;
         this.controlador.dameHijosCalendarioGestion(this.idPadre);
     }
 
-    /**
-     * Actualiza los hijos.
-     * @param {Object} datos Datos del padre.
-     */
     actualizar(datos) {
         this.idUsuario = datos.id;
         this.controlador.dameHijosGestion(this.idUsuario);
-       
     }
 
-    /**
-     * Recibir los hijos, y hacer llamada para obtener todos los días de comedor de los hijos.
-     * @param {Array} hijos Array de los hijos.
-     */
     inicializar(hijos) {
-        
         this.hijos = hijos;
         let idHijos = [];
 
@@ -77,12 +61,10 @@ export class VistaCalendario extends Vista {
                 idHijos.push(hijo.id);
         
             this.controlador.obtenerDiasComedorGestion(idHijos);
-           
         }
         else {
             this.renderCalendars(); 
         }
-       console.log(idHijos)
     }
 
     renderCalendars(hijos) {
@@ -142,15 +124,6 @@ export class VistaCalendario extends Vista {
                 this.calendarContainer.appendChild(childCalendar);
             });
         }
+    this.monthYearHeader.textContent = `${this.currentYear} - ${this.currentMonth + 1}`;
     }
-    
-    
-    
-    
-    /*mostrar(ver) {
-        super.mostrar(ver);
-        if (ver) {
-            this.renderCalendars(this.hijos);
-        }
-    }*/
 }
