@@ -46,11 +46,18 @@ export class VistaCalendario extends Vista {
         
     }
     obtenerDiasComedor(datos) {
-        // Extraer el idPersona y el día de los objetos en la lista de días de comedor
-        this.diasComedor = datos.map(item => {
-            return { idPersona: item.idPersona, dia: new Date(item.dia).getDate() };
-        });
+        // Verificar si datos es un array antes de intentar mapearlo
+        if (Array.isArray(datos)) {
+            // Extraer el idPersona y el día de los objetos en la lista de días de comedor
+            this.diasComedor = datos.map(item => {
+                return { idPersona: item.idPersona, dia: new Date(item.dia).getDate() };
+            });
+        } else {
+            // Si datos no es un array, asignar null a this.diasComedor o manejarlo según corresponda
+            this.diasComedor = null; // O cualquier otra lógica de manejo de errores
+        }
     }
+    
 
     obtenerFestivos(festivos) {
         this.festivos = festivos;
@@ -66,6 +73,8 @@ export class VistaCalendario extends Vista {
 
     renderCalendars(hijos) {
         if (hijos != null) {
+            let hasMarkedDays = false; // Variable para verificar si hay algún día marcado
+    
             hijos.forEach(hijo => {
                 const childCalendar = document.createElement('div');
                 childCalendar.classList.add('child-calendar');
@@ -81,10 +90,11 @@ export class VistaCalendario extends Vista {
                 childMonthYearHeader.textContent = `${hijo.nombre} - ${monthName} Calendario`;
                 childCalendar.appendChild(childMonthYearHeader);
     
-                const daysOfWeek = ['D', 'L', 'M', 'X', 'J', 'V', 'S']; // Domingo a Sábado
+                const daysOfWeek = ['L', 'M', 'X', 'J', 'V', 'S', 'D']; // Lunes a Domingo
                 const year = currentDate.getFullYear(); // Año actual
                 const daysInMonth = new Date(year, currentMonth + 1, 0).getDate();
                 const firstDayIndex = new Date(year, currentMonth, 1).getDay();
+                const adjustedFirstDayIndex = (firstDayIndex === 0) ? 6 : firstDayIndex - 1;
     
                 const weekRow = document.createElement('div');
                 weekRow.classList.add('calendar', 'week-row');
@@ -98,7 +108,7 @@ export class VistaCalendario extends Vista {
     
                 const daysList = document.createElement('div');
                 daysList.classList.add('calendar');
-                for (let i = 0; i < firstDayIndex; i++) {
+                for (let i = 0; i < adjustedFirstDayIndex; i++) {
                     const emptyDay = document.createElement('div');
                     emptyDay.classList.add('day');
                     emptyDay.textContent = '';
@@ -108,26 +118,44 @@ export class VistaCalendario extends Vista {
                     const day = document.createElement('div');
                     day.classList.add('day');
                     day.textContent = i;
-                    
-                    setTimeout(() => {
-                        // Identificar si el día está en la lista de días de comedor y aplicar estilo azul
-                        const comedorHijo = this.diasComedor.filter(item => item.idPersona === hijo.id && item.dia === i);
-                        if (comedorHijo.length > 0) {
-                            day.classList.add('blue-day');
-                        }
-                    }, 2000);
-                    
-                    // Identificar fines de semana (Sábado y Domingo)
-                    if (new Date(year, currentMonth, i).getDay() === 0 || new Date(year, currentMonth, i).getDay() === 6) { // Domingo o Sábado
+    
+                    // Identificar si el día es un sábado o domingo y no aplicar el estilo azul
+                    const currentDay = new Date(year, currentMonth, i).getDay();
+                    if (currentDay === 0 || currentDay === 6) { // Domingo o Sábado
                         day.classList.add('weekend');
+                    } else {
+                        setTimeout(() => {
+                            // Identificar si this.diasComedor no es null y luego filtrar los días marcados
+                            if (this.diasComedor !== null) {
+                                const comedorHijo = this.diasComedor.filter(item => item.idPersona === hijo.id && item.dia === i);
+                                if (comedorHijo.length > 0) {
+                                    day.classList.add('blue-day');
+                                    hasMarkedDays = true; // Hay al menos un día marcado
+                                }
+                            }
+    
+                            // Verificar si todos los días han sido procesados y mostrar el mensaje de error si no hay días marcados
+                            if (i === daysInMonth) {
+                                if (!hasMarkedDays) {
+                                    // Si no hay ningún día marcado en ningún calendario, mostrar mensaje de error
+                                    const errorMessage = document.createElement('p');
+                                    errorMessage.textContent = 'No hay ningún día marcado en el calendario.';
+                                    this.calendarContainer.appendChild(errorMessage);
+                                }
+                            }
+                        }, 2000);
                     }
     
                     daysList.appendChild(day);
                 }
+    
                 childCalendar.appendChild(daysList);
                 this.calendarContainer.appendChild(childCalendar);
             });
         }
-    this.monthYearHeader.textContent = `${this.currentYear} - ${this.currentMonth + 1}`;
+    
+        this.monthYearHeader.textContent = `${this.currentYear} - ${this.currentMonth + 1}`;
     }
+    
+    
 }
