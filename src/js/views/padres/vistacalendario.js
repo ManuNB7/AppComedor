@@ -15,9 +15,8 @@ export class VistaCalendario extends Vista {
         this.diasComedor = null;
         this.festivos = null;
         this.hijos = null;
-        setTimeout(() => {
-            this.renderCalendars();
-        }, 2000);
+        this.renderCalendars();
+    
         
 
         this.prevMonthBtn.addEventListener('click', () => {
@@ -157,5 +156,8 @@ export class VistaCalendario extends Vista {
         this.monthYearHeader.textContent = `${this.currentYear} - ${this.currentMonth + 1}`;
     }
     
-    
+    mostrar(ver) {
+        super.mostrar(ver);
+        if (ver) this.renderCalendars(); 
+    }
 }
