@@ -40,32 +40,25 @@ export class VistaCalendario extends Vista {
 
     obtenerPadre(datos) {
         this.idPadre = datos.id;
+        
+    }
+    obtenerDiasComedor(datos) {
+        this.diasComedor =datos;
+      
     }
 
     obtenerFestivos(festivos) {
         this.festivos = festivos;
         this.controlador.dameHijosCalendarioGestion(this.idPadre);
+        
     }
 
     actualizar(datos) {
         this.idUsuario = datos.id;
         this.controlador.dameHijosGestion(this.idUsuario);
-    }
-
-    inicializar(hijos) {
-        this.hijos = hijos;
-        let idHijos = [];
-
-        if (this.hijos.length > 0) {
-            for (let hijo of this.hijos)  
-                idHijos.push(hijo.id);
         
-            this.controlador.obtenerDiasComedorGestion(idHijos);
-        }
-        else {
-            this.renderCalendars(); 
-        }
     }
+
 
     renderCalendars(hijos) {
      
@@ -125,5 +118,6 @@ export class VistaCalendario extends Vista {
             });
         }
     this.monthYearHeader.textContent = `${this.currentYear} - ${this.currentMonth + 1}`;
+ 
     }
 }

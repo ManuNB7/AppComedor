@@ -621,14 +621,15 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log("El contador de semanas ha llegado a cero");
             return;
         }
+        var semanaSiguienteBtn = document.getElementById('semanaSiguiente');
+
+        semanaSiguienteBtn.addEventListener('click', function() {     
+            // Restablecer el contador de semanas al hacer clic en el botón
+            contadorSemanas = 100;
+        });
         capturarCheckboxes();
         actualizarContador();
     }, 2000); // Ejecutar cada 2 segundos
 
-    var semanaSiguienteBtn = document.getElementById('semanaSiguiente');
-
-    semanaSiguienteBtn.addEventListener('click', function() {     
-        // Restablecer el contador de semanas al hacer clic en el botón
-        contadorSemanas = 100;
-    });
+  
 });

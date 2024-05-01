@@ -43,8 +43,8 @@ class ControladorPadres {
         this.vistaModificacion.actualizarCampos(this.#usuario);
         this.vistaGestionHijos.actualizar(this.#usuario);
         this.vistaInicio.obtenerPadre(this.#usuario);
-        this.vistaCalendario.obtenerPadre(this.#usuario);
         this.vistaCalendario.actualizar(this.#usuario);
+        
         this.verVistaInicio();
     }
 
@@ -234,28 +234,13 @@ class ControladorPadres {
         this.modelo.obtenerDiasComedor(idHijos)
          .then(dias => {
             this.vistaInicio.montarCalendario(dias);
-             
+            this.vistaCalendario.obtenerDiasComedor(dias)
          })
          .catch(e => {
              console.error(e);
          })
     }
 
-    /**
-     * Obtiene los días de comedor de los hijos.
-     * @param {Array} idHijos Array con los IDs de los hijos.
-     */
-    
-    obtenerDiasComedorGestion(idHijos) {
-        this.modelo.obtenerDiasComedor(idHijos)
-         .then(dias => {
-            this.vistaCalendario.renderCalendars(dias);
-            console.log(dias)
-         })
-         .catch(e => {
-             console.error(e);
-         })
-    }
 
     /**
      * Desmarcar día del comedor.
