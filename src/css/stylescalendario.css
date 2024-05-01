@@ -27,6 +27,11 @@ h2{
     background-color: #dddddd; /* Color de fondo gris para días festivos */
 }
 
+.blue-day {
+    background-color: blue;
+    color: white; /* Esto es opcional, dependiendo del contraste que desees */
+}
+
 body {
     font-family: 'Open Sans', sans-serif;
 }

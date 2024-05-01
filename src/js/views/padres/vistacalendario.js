@@ -15,7 +15,10 @@ export class VistaCalendario extends Vista {
         this.diasComedor = null;
         this.festivos = null;
         this.hijos = null;
-        this.renderCalendars();
+        setTimeout(() => {
+            this.renderCalendars();
+        }, 2000);
+        
 
         this.prevMonthBtn.addEventListener('click', () => {
             this.changeMonth(-1);
@@ -61,7 +64,6 @@ export class VistaCalendario extends Vista {
 
 
     renderCalendars(hijos) {
-     
         if (hijos != null) {
             hijos.forEach(hijo => {
                 const childCalendar = document.createElement('div');
@@ -105,7 +107,12 @@ export class VistaCalendario extends Vista {
                     const day = document.createElement('div');
                     day.classList.add('day');
                     day.textContent = i;
-    
+                    setTimeout(() => {
+                        // Identificar si el día está en la lista de días de comedor y aplicar estilo azul después de 2 segundos
+                        if (this.diasComedor && this.diasComedor.includes(i)) {
+                            day.classList.add('blue-day');
+                        }
+                    }, 2000);
                     // Identificar fines de semana (Sábado y Domingo)
                     if (new Date(year, currentMonth, i).getDay() === 0 || new Date(year, currentMonth, i).getDay() === 6) { // Domingo o Sábado
                         day.classList.add('weekend');
@@ -118,6 +125,9 @@ export class VistaCalendario extends Vista {
             });
         }
     this.monthYearHeader.textContent = `${this.currentYear} - ${this.currentMonth + 1}`;
- 
+    setTimeout(() => {
+        console.log(this.diasComedor);
+    }, 2000);
+    
     }
 }
