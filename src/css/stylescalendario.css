@@ -14,11 +14,6 @@ h2{
     text-align: center;
 }
 
-.reserved-day {
-    background-color: #00adc4;
-    color: white;
-}
-
 .weekend {
     background-color: #dddddd; /* Color de fondo gris para fines de semana */
 }
@@ -28,7 +23,7 @@ h2{
 }
 
 .blue-day {
-    background-color: blue;
+    background-color: #00adc4;
     color: white; /* Esto es opcional, dependiendo del contraste que desees */
 }
 
