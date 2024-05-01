@@ -46,8 +46,10 @@ export class VistaCalendario extends Vista {
         
     }
     obtenerDiasComedor(datos) {
-        this.diasComedor =datos;
-      
+        // Extraer el idPersona y el día de los objetos en la lista de días de comedor
+        this.diasComedor = datos.map(item => {
+            return { idPersona: item.idPersona, dia: new Date(item.dia).getDate() };
+        });
     }
 
     obtenerFestivos(festivos) {
@@ -61,7 +63,6 @@ export class VistaCalendario extends Vista {
         this.controlador.dameHijosGestion(this.idUsuario);
         
     }
-
 
     renderCalendars(hijos) {
         if (hijos != null) {
@@ -107,12 +108,15 @@ export class VistaCalendario extends Vista {
                     const day = document.createElement('div');
                     day.classList.add('day');
                     day.textContent = i;
+                    
                     setTimeout(() => {
-                        // Identificar si el día está en la lista de días de comedor y aplicar estilo azul después de 2 segundos
-                        if (this.diasComedor && this.diasComedor.includes(i)) {
+                        // Identificar si el día está en la lista de días de comedor y aplicar estilo azul
+                        const comedorHijo = this.diasComedor.filter(item => item.idPersona === hijo.id && item.dia === i);
+                        if (comedorHijo.length > 0) {
                             day.classList.add('blue-day');
                         }
                     }, 2000);
+                    
                     // Identificar fines de semana (Sábado y Domingo)
                     if (new Date(year, currentMonth, i).getDay() === 0 || new Date(year, currentMonth, i).getDay() === 6) { // Domingo o Sábado
                         day.classList.add('weekend');
@@ -125,9 +129,5 @@ export class VistaCalendario extends Vista {
             });
         }
     this.monthYearHeader.textContent = `${this.currentYear} - ${this.currentMonth + 1}`;
-    setTimeout(() => {
-        console.log(this.diasComedor);
-    }, 2000);
-    
     }
 }
