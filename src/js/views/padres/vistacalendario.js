@@ -15,9 +15,7 @@ export class VistaCalendario extends Vista {
         this.diasComedor = null;
         this.festivos = null;
         this.hijos = null;
-        this.renderCalendars();
-    
-        
+      
 
         this.prevMonthBtn.addEventListener('click', () => {
             this.changeMonth(-1);
@@ -29,6 +27,7 @@ export class VistaCalendario extends Vista {
     }
 
     changeMonth(change) {
+        console.log
         this.currentMonth += change;
         if (this.currentMonth < 0) {
             this.currentYear -= 1;
@@ -37,7 +36,8 @@ export class VistaCalendario extends Vista {
             this.currentYear += 1;
             this.currentMonth = 0;
         }
-        this.renderCalendars();
+      
+        this.renderCalendars(this.hijos);
     }
 
     obtenerPadre(datos) {
@@ -45,18 +45,10 @@ export class VistaCalendario extends Vista {
         
     }
     obtenerDiasComedor(datos) {
-        // Verificar si datos es un array antes de intentar mapearlo
-        if (Array.isArray(datos)) {
-            // Extraer el idPersona y el día de los objetos en la lista de días de comedor
-            this.diasComedor = datos.map(item => {
-                return { idPersona: item.idPersona, dia: new Date(item.dia).getDate() };
-            });
-        } else {
-            // Si datos no es un array, asignar null a this.diasComedor o manejarlo según corresponda
-            this.diasComedor = null; // O cualquier otra lógica de manejo de errores
-        }
+        this.diasComedor =datos;
+       
+      
     }
-    
 
     obtenerFestivos(festivos) {
         this.festivos = festivos;
@@ -67,97 +59,83 @@ export class VistaCalendario extends Vista {
     actualizar(datos) {
         this.idUsuario = datos.id;
         this.controlador.dameHijosGestion(this.idUsuario);
+      
         
     }
+    cargarHijos(hijos){
+        this.hijos = hijos;
+    }
 
-    renderCalendars(hijos) {
-        if (hijos != null) {
-            let hasMarkedDays = false; // Variable para verificar si hay algún día marcado
-    
-            hijos.forEach(hijo => {
-                const childCalendar = document.createElement('div');
-                childCalendar.classList.add('child-calendar');
-    
-                // Obtener el nombre del mes actual
-                const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-                const currentDate = new Date();
-                const currentMonth = currentDate.getMonth();
-                const monthName = monthNames[currentMonth];
-    
-                // Agregar el nombre del hijo y el nombre del mes al título del calendario
-                const childMonthYearHeader = document.createElement('h2');
-                childMonthYearHeader.textContent = `${hijo.nombre} - ${monthName} Calendario`;
-                childCalendar.appendChild(childMonthYearHeader);
-    
-                const daysOfWeek = ['L', 'M', 'X', 'J', 'V', 'S', 'D']; // Lunes a Domingo
-                const year = currentDate.getFullYear(); // Año actual
-                const daysInMonth = new Date(year, currentMonth + 1, 0).getDate();
-                const firstDayIndex = new Date(year, currentMonth, 1).getDay();
-                const adjustedFirstDayIndex = (firstDayIndex === 0) ? 6 : firstDayIndex - 1;
-    
-                const weekRow = document.createElement('div');
-                weekRow.classList.add('calendar', 'week-row');
-                daysOfWeek.forEach(day => {
-                    const weekDay = document.createElement('div');
-                    weekDay.classList.add('day', 'week-day');
-                    weekDay.textContent = day;
-                    weekRow.appendChild(weekDay);
-                });
-                childCalendar.appendChild(weekRow);
-    
-                const daysList = document.createElement('div');
-                daysList.classList.add('calendar');
-                for (let i = 0; i < adjustedFirstDayIndex; i++) {
-                    const emptyDay = document.createElement('div');
-                    emptyDay.classList.add('day');
-                    emptyDay.textContent = '';
-                    daysList.appendChild(emptyDay);
-                }
-                for (let i = 1; i <= daysInMonth; i++) {
-                    const day = document.createElement('div');
-                    day.classList.add('day');
-                    day.textContent = i;
-    
-                    // Identificar si el día es un sábado o domingo y no aplicar el estilo azul
-                    const currentDay = new Date(year, currentMonth, i).getDay();
-                    if (currentDay === 0 || currentDay === 6) { // Domingo o Sábado
-                        day.classList.add('weekend');
-                    } else {
-                        setTimeout(() => {
-                            // Identificar si this.diasComedor no es null y luego filtrar los días marcados
-                            if (this.diasComedor !== null) {
-                                const comedorHijo = this.diasComedor.filter(item => item.idPersona === hijo.id && item.dia === i);
-                                if (comedorHijo.length > 0) {
-                                    day.classList.add('blue-day');
-                                    hasMarkedDays = true; // Hay al menos un día marcado
-                                }
-                            }
-    
-                            // Verificar si todos los días han sido procesados y mostrar el mensaje de error si no hay días marcados
-                            if (i === daysInMonth) {
-                                if (!hasMarkedDays) {
-                                    // Si no hay ningún día marcado en ningún calendario, mostrar mensaje de error
-                                    const errorMessage = document.createElement('p');
-                                    errorMessage.textContent = 'No hay ningún día marcado en el calendario.';
-                                    this.calendarContainer.appendChild(errorMessage);
-                                }
-                            }
-                        }, 2000);
-                    }
-    
-                    daysList.appendChild(day);
-                }
-    
-                childCalendar.appendChild(daysList);
-                this.calendarContainer.appendChild(childCalendar);
+
+  renderCalendars(hijos) {
+    if (hijos != null) {
+        this.calendarContainer.innerHTML = ''; // Limpiar el contenedor antes de renderizar
+        
+        hijos.forEach(child => {
+            const childCalendar = document.createElement('div');
+            childCalendar.classList.add('child-calendar');
+
+            // Obtener el nombre del mes actual
+            const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            const monthName = monthNames[this.currentMonth]; // Utilizar this.currentMonth
+            // Agregar el nombre del hijo y el nombre del mes al título del calendario
+            const childMonthYearHeader = document.createElement('h2');
+            childMonthYearHeader.textContent = `${child.nombre} - ${monthName} Calendario`; // Utilizar child.currentMonth
+            childCalendar.appendChild(childMonthYearHeader);
+
+            const daysOfWeek = ['D', 'L', 'M', 'X', 'J', 'V', 'S']; // Domingo a Sábado
+            const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
+            const firstDayIndex = new Date(this.currentYear, this.currentMonth, 1).getDay();
+
+            const weekRow = document.createElement('div');
+            weekRow.classList.add('calendar', 'week-row');
+            daysOfWeek.forEach(day => {
+                const weekDay = document.createElement('div');
+                weekDay.classList.add('day', 'week-day');
+                weekDay.textContent = day;
+                weekRow.appendChild(weekDay);
             });
-        }
-    
-        this.monthYearHeader.textContent = `${this.currentYear} - ${this.currentMonth + 1}`;
+            childCalendar.appendChild(weekRow);
+
+            const daysList = document.createElement('div');
+            daysList.classList.add('calendar');
+            for (let i = 0; i < firstDayIndex; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.classList.add('day');
+                emptyDay.textContent = '';
+                daysList.appendChild(emptyDay);
+            }
+            for (let i = 1; i <= daysInMonth; i++) {
+                const day = document.createElement('div');
+                day.classList.add('day');
+                day.textContent = i;
+
+                // Identificar fines de semana (Sábado y Domingo)
+                if (new Date(this.currentYear, this.currentMonth, i).getDay() === 0 || new Date(this.currentYear, this.currentMonth, i).getDay() === 6) { // Domingo o Sábado
+                    day.classList.add('weekend');
+                }
+                setTimeout(() => {
+                    console.log(day); // suponiendo que 'day' es un elemento DOM
+                    console.log(this.diasComedor); // suponiendo que 'this.diasComedor' es un array de objetos
+                    this.diasComedor.forEach((objeto) => {
+                        const dia = objeto.dia.split("-")[2]; // obtener el día del objeto
+                     
+                   console.log(day.textContent)
+                    
+                    if (day.textContent == dia) {
+                        day.classList.add('blue-day');
+                    }
+                });
+                    daysList.appendChild(day); // suponiendo que 'daysList' es un elemento DOM
+                }, 2000);
+                
+            }
+           
+            childCalendar.appendChild(daysList);
+            this.calendarContainer.appendChild(childCalendar);
+        });
     }
-    
-    mostrar(ver) {
-        super.mostrar(ver);
-        if (ver) this.renderCalendars(); 
-    }
+    this.monthYearHeader.textContent = `${this.currentYear} - ${this.currentMonth + 1}`;
+}
+
 }

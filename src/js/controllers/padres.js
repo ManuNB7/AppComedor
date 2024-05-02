@@ -298,21 +298,7 @@ class ControladorPadres {
          })
     }
 
-    /**
-     * Devuelve los hijos de un padre a la vista de inicio.
-     * @param {Number} id ID del padre. 
-     */
-    dameHijosCalendarioGestion(id) {
-        this.modelo.dameHijos(id)
-         .then(hijos => {
-             this.vistaCalendario.inicializar(hijos);
-         })
-         .catch(e => {
-             console.error(e)
-         })
-         
-    }
-
+  
     /**
      * Devuelve los hijos de un padre a la vista de gestión de hijos.
      * @param {Number} id ID del padre. 
@@ -334,7 +320,8 @@ class ControladorPadres {
     dameHijosGestion(id) {
         this.modelo.dameHijos(id)
          .then(hijos => {
-             this.vistaCalendario.renderCalendars(hijos);
+             this.vistaCalendario.cargarHijos(hijos);
+             this.vistaCalendario.renderCalendars(hijos)
          })
          .catch(e => {
              console.error(e)
