@@ -30,10 +30,10 @@ export class Vista {
     */
      eliminarHijos(nodo){
     	while (nodo.firstChild)
-    		nodo.removeChild(myNode.lastChild)
+    		nodo.removeChild(nodo.lastChild)
     }
     eliminarHijos(nodo){
     	while (nodo.firstChild)
-    		nodo.removeChild(myNode.lastChild)
+    		nodo.removeChild(nodo.lastChild)
     }
 }

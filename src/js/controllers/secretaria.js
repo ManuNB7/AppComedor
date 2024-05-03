@@ -71,7 +71,15 @@ class ControladorSecretaria {
              console.error(e);
          })
     }
-    
+    obtenerTupper(fecha) {
+        this.modelo.obtenerTupper(fecha)
+         .then(tupper => {
+             this.vistaGestionDiaria.cargarTuppers(tupper);
+         })
+         .catch(e => {
+             console.error(e);
+         })
+    }
     /**
      * Obtiene las incidencias de un mes.
      * @param {Number} mes Mes.
@@ -102,6 +110,13 @@ class ControladorSecretaria {
          })
     }
 
+    insertarTupper(datos) {
+        this.modelo.insertarTupper(datos)
+         .catch(e => {
+             console.error(e);
+         })
+    }
+
     /**
      * Obtiene los usuarios que van al comedor de una fecha.
      * @param {String} fecha String de la fecha.
@@ -110,6 +125,8 @@ class ControladorSecretaria {
         this.modelo.obtenerUsuariosApuntados(fecha)
          .then(usuarios => {
              this.vistaGestionDiaria.cargarIncidencias(usuarios);
+             this.vistaGestionDiaria.cargarTupper(usuarios)
+             
          })
          .catch(e => {
              console.error(e);
@@ -198,9 +215,32 @@ class ControladorSecretaria {
 			this.modelo.obtenerQ19(mes)
 			.then ( q19 => {
 				this.verVistaQ19()
+             
 				this.vistaQ19.iniciar(q19, mes)
 			} )
 		}
+        //pasar constantes a la vista ver si llegan primero 
+        
+        constanteTupper(){
+           
+            this.modelo.obtenerConstanteTupper()
+            .then ( c => {  
+				this.vistaQ19.inicializarTupper(c)
+			} )
+             .catch(e => {
+                 console.error(e);
+             })
+        }
+        constanteMenu(){
+           
+            this.modelo.obtenerConstanteMenu()
+            .then ( c => {  
+				this.vistaQ19.inicializarMenu(c)
+			} )
+             .catch(e => {
+                 console.error(e);
+             })
+        }
 }
 
 new ControladorSecretaria();

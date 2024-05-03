@@ -220,7 +220,7 @@ class ControladorPadres {
         })
         .catch(error => {
             {
-                pConfirmacion.textContent = 'Error en la solicitud. Consulta la consola para más detalles.';
+                pConfirmacion.textContent = 'No puedes marcar un día desabilitado.';
             }
         });
 }
@@ -252,7 +252,7 @@ class ControladorPadres {
         })         	
          .catch(error => {
             {
-                pConfirmacion.textContent = 'Error en la solicitud. Consulta la consola para más detalles.';
+                pConfirmacion.textContent = 'No puedes desmarcar un día desabilitado.';
             }
         });
          

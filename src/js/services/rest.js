@@ -42,6 +42,7 @@ export class Rest {
 		  // No es json
 		  return respuesta.text()
 		})
+	
 	}
   
 	/**
@@ -60,6 +61,7 @@ export class Rest {
 	  }
 
 	  // Construimos la petición
+	  
 	  return fetch(Rest._construirURL(path, pathParams), opciones) // Hacemos la petición
 		.then(respuesta => {
 		  // Control de Errores
@@ -138,6 +140,7 @@ export class Rest {
 		url = url.substring(0, url.length - 1)
 	  }
 	  url = encodeURI(url.replace('//', '/null/')) // aseguramos los parámetros nulos.
+	  console.log(url)
 	  return url
 	}
 }

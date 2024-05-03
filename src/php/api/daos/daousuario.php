@@ -56,6 +56,13 @@
 
             return BD::seleccionar($sql, $params);
         }
+        public static function obtenerTupper($fecha) {
+            $sql = 'SELECT idPersona, campo_tupper FROM Dias';
+            $sql .= ' WHERE dia=:fecha';
+            $params = array('fecha' => $fecha);
+
+            return BD::seleccionar($sql, $params);
+        }
 
         /**
          * Obtener las incidencias de un mes.
@@ -88,6 +95,19 @@
                 'dia' => $fecha,
                 'incidencia' => $datos->incidencia,
                 'idPersona' => $datos->idPersona
+            );
+
+            BD::actualizar($sql, $params);
+        }
+        public static function insertarTupper($datos) {
+            $sql = 'UPDATE dias SET campo_tupper = :campo_tupper WHERE idPersona = :idPersona AND dia = :dia';
+            
+    
+
+            $params = array(
+                'idPersona' => $datos->idPersona,
+                'campo_tupper' => $datos->tupper,
+                'dia' => $datos->dia
             );
 
             BD::actualizar($sql, $params);
@@ -151,6 +171,7 @@
                 $sql .= $resultado['idPersona'] . ',';
             
             $sql = substr_replace($sql, ")", -1);
+            $sql .= ' ORDER BY apellidos';
             $usuarios = BD::seleccionar($sql, null);
             
             if (!BD::commit())
@@ -596,7 +617,7 @@
 
             return BD::insertar($sql, $params);
         }
-
+        
         /**
          * Genera un listado de los días que tiene de comedor un usuario.
          * @param array $listaDias Array de datos.
@@ -727,15 +748,16 @@
          * @return array Devuelve los registros de la remesa. 
          */
         public static function obtenerQ19($mes) {
-            $sql  = 'SELECT Persona.titular, Persona.correo, Persona.iban, Persona.referenciaUnicaMandato, Persona.fechaFirmaMandato, COUNT(Dias.dia) AS dias ';
-						$sql .= 'FROM Persona ';
-						$sql .= 'JOIN Dias ON Dias.idPadre = Persona.id ';
+            $sql  = 'SELECT Persona.titular, Persona.correo, Persona.iban, Persona.referenciaUnicaMandato, Persona.fechaFirmaMandato, COUNT(Dias.dia) AS dias, SUM(Dias.campo_tupper) AS dias_tupper ';
+            $sql .= 'FROM Persona ';
+            $sql .= 'JOIN Dias ON Dias.idPadre = Persona.id ';
             $sql .= 'WHERE MONTH(Dias.dia) = :mes ';
             $sql .= 'GROUP BY Persona.id ';
             $params = array('mes' => $mes);
-
+        
             return BD::seleccionar($sql, $params);
         }
+        
 
     }
 ?>

@@ -160,6 +160,13 @@ obtenerDiasMarcadosComedor(year, month) {
         return Rest.get('secretaria', [], queryParams);
     }
 
+    obtenerTupper(fecha) {
+        const queryParams = new Map();
+        queryParams.set('proceso', 'tupper');
+        queryParams.set('fecha', fecha.getDate() + '-' + (fecha.getMonth()+1) + '-' + fecha.getFullYear());
+        return Rest.get('secretaria', [], queryParams);
+    }
+
     /**
      * Llamada para obtener a los usuarios apuntados al comedor en un mes.
      * @param {Number} mes Nº del mes.
@@ -191,6 +198,9 @@ obtenerDiasMarcadosComedor(year, month) {
      */
     insertarIncidencia(datos) {
         return Rest.put('secretaria', ['incidencia'], datos, false);
+    }
+    insertarTupper(datos) {
+        return Rest.put('secretaria', ['tupper'], datos, false);
     }
 
     obtenerListadoPadres(busqueda){
@@ -226,5 +236,15 @@ obtenerDiasMarcadosComedor(year, month) {
         queryParams.set('mes', mes);
         return Rest.get('secretaria', [], queryParams);
     }
-
+    obtenerConstanteTupper() {
+        const queryParams = new Map();
+        queryParams.set('proceso', 'tupper');
+        return Rest.get('constantes', [],queryParams);
+    }
+    obtenerConstanteMenu() {
+        const queryParams = new Map();
+        queryParams.set('proceso', 'menu');
+        return Rest.get('constantes', [],queryParams);
+    }
+ 
 }
