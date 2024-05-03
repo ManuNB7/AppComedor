@@ -617,7 +617,7 @@
 
             return BD::insertar($sql, $params);
         }
-
+        
         /**
          * Genera un listado de los días que tiene de comedor un usuario.
          * @param array $listaDias Array de datos.

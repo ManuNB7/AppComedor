@@ -17,8 +17,8 @@
                 case 'tupper':
                     $this->obtenerTupper(self::$precioTupper);
                     break;
-                    case 'menu':
-                    $this->obtenerMenu(  self::$precioMenu);
+                case 'menu':
+                    $this->obtenerMenu(self::$precioMenu);
                     break;
         }
     }

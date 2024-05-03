@@ -18,7 +18,7 @@
         'clave_bd' => '',
 
 
-				// Hora límite para modificaciones
+			
         'hora_limite' => 14,
         'PrecioTupper' => 0.60,
        	'PRECIO_MENU' => [7.5, 6.5]
