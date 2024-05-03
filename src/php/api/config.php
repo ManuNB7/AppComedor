@@ -20,8 +20,8 @@
 
 			
         'hora_limite' => 14,
-        'PrecioTupper' => 0.60,
-       	'PRECIO_MENU' => [7.5, 6.5]
+        'precio_tupper' => 0.60,
+       	'precio_menu' => [7.5, 6.5]
     );
     
 

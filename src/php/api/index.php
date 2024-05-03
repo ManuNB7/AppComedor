@@ -150,8 +150,8 @@
 
                 case 'constantes':
                 require_once('./controllers/constantes.php');
-                Constantes::$precioTupper = $config['PrecioTupper'];
-                Constantes::$precioMenu = $config['PRECIO_MENU'];
+                Constantes::$precioTupper = $config['precio_tupper'];
+                Constantes::$precioMenu = $config['precio_menu'];
                     $controlador = new Constantes();
                 break;
 
