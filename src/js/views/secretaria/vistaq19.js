@@ -123,7 +123,7 @@ inicializarMenu(c) {
 		this.datatable.activarCelda(td, null, this.actualizarCampo.bind(this, td), null)
 
 		td = document.createElement('td')
-		tr.append(td)
+		tr.append(td) 	
 		let precio = this.#PRECIO_MENU[0]
 		if (/@fundacionloyola.es$/.test(recibo.correo))
 			precio = this.#PRECIO_MENU[1]
