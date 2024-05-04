@@ -1,14 +1,14 @@
-import {Vista} from '../vista.js';
+import { Vista } from '../vista.js';
 
 /**
  * Contiene la vista de gestión diaria de secretaría.
  */
 export class VistaGestionDiaria extends Vista {
     /**
-	 *	Constructor de la clase.
-	 *	@param {ControladorSecretaria} controlador Controlador de la vista.
-	 *	@param {HTMLDivElement} div Div de HTML en el que se desplegará la vista.
-	 */
+     *	Constructor de la clase.
+     *	@param {ControladorSecretaria} controlador Controlador de la vista.
+     *	@param {HTMLDivElement} div Div de HTML en el que se desplegará la vista.
+     */
     constructor(controlador, div) {
         super(controlador, div);
 
@@ -26,10 +26,10 @@ export class VistaGestionDiaria extends Vista {
 
         this.btnDiaAnterior.addEventListener('click', this.diaAnterior.bind(this));
         this.btnDiaSiguiente.addEventListener('click', this.diaSiguiente.bind(this));
-        
-         
-         document.getElementById("imprimir").addEventListener("click", () => {
-            window.print() 
+
+
+        document.getElementById("imprimir").addEventListener("click", () => {
+            window.print()
         });
     }
 
@@ -38,6 +38,10 @@ export class VistaGestionDiaria extends Vista {
      */
     inicializar() {
         this.controlador.obtenerUsuarios(this.fechaActual);
+        setTimeout(() => {
+            this.iniciarTabla();
+        }, 100);
+    
     }
 
     /**
@@ -47,13 +51,18 @@ export class VistaGestionDiaria extends Vista {
     cargarIncidencias(usuarios) {
         this.usuarios = usuarios;
         if (this.usuarios) this.controlador.obtenerIncidencias(this.fechaActual);
-        else this.iniciarTabla();
+    
     }
+    /**
+     * Carga los registros de tupperware para los usuarios especificados.
+     * @param {Array} usuarios - Lista de usuarios para los cuales cargar los registros de tupperware.
+     */
+
     cargarTupper(usuarios) {
-        
+
         this.usuarios = usuarios;
         if (this.usuarios) this.controlador.obtenerTupper(this.fechaActual);
-        else this.iniciarTabla();
+       
     }
 
 
@@ -63,12 +72,15 @@ export class VistaGestionDiaria extends Vista {
      */
     cargarListado(incidencias) {
         this.incidencias = incidencias;
-        this.iniciarTabla();
+        
     }
-    cargarTuppers(tupper) {
-        this.tupper = tupper;
-      
-        this.iniciarTabla();
+    /**
+     * Obtiene 1 o 0 dependiendo si tiene tupepr o no con el idPersona
+     */
+    cargarTuppers(tuppers) {
+        this.tupper = tuppers;
+
+       
     }
     /**
      * Generar tabla por partes.
@@ -90,13 +102,13 @@ export class VistaGestionDiaria extends Vista {
 
         let thTotales = document.createElement('th');
         thTotales.id = 'pedidosTotales';
-        thTotales.textContent = this.usuarios 
-            ? 'Pedidos totales: ' + this.usuarios.length 
+        thTotales.textContent = this.usuarios
+            ? 'Pedidos totales: ' + this.usuarios.length
             : 'Sin pedidos';
 
         let thFechaActual = document.createElement('th');
         thFechaActual.id = 'fechaDia';
-        thFechaActual.textContent = this.fechaActual.getDate() + '/' + (this.fechaActual.getMonth()+1) + '/' + this.fechaActual.getFullYear();
+        thFechaActual.textContent = this.fechaActual.getDate() + '/' + (this.fechaActual.getMonth() + 1) + '/' + this.fechaActual.getFullYear();
 
         trDatos.appendChild(thTotales);
         trDatos.appendChild(document.createElement('th'));
@@ -145,7 +157,7 @@ export class VistaGestionDiaria extends Vista {
             let tdNombre = document.createElement('td');
             tdNombre.textContent = usuario.nombre + " " + usuario.apellidos;
 
-            if(tdNombre.textContent.length > 40){
+            if (tdNombre.textContent.length > 40) {
                 tdNombre.textContent = usuario.nombre + "(...)";
                 tdNombre.setAttribute('title', usuario.nombre + " " + usuario.apellidos)
             }
@@ -165,23 +177,23 @@ export class VistaGestionDiaria extends Vista {
                         textarea.value = incidencia.incidencia;
                 }
             }
-          
+
 
             // Bloquear edición si la fecha de hoy es superior.
             if (fechaHoy.valueOf() > this.fechaActual.valueOf()) {
                 textarea.disabled = true;
-            } 
+            }
             else {
                 textarea.addEventListener('change', () => this.insertarIncidencia(usuario.id, textarea));
             }
-                
+
             tdIncidencia.appendChild(textarea);
             let tdTuppers = document.createElement('td');
             let checkboxTuppers = document.createElement('input');
             checkboxTuppers.type = 'checkbox';
-            
+
             tdTuppers.appendChild(checkboxTuppers);
-          
+
             tr.appendChild(tdNombre);
             tr.appendChild(tdCurso);
             tr.appendChild(tdTuppers);
@@ -190,55 +202,65 @@ export class VistaGestionDiaria extends Vista {
             tr.appendChild(tdIncidencia);
 
             this.tbody.appendChild(tr);
-          
+
             if (this.tupper) {
                 for (const check of this.tupper) {
-                    
-                    if (check.idPersona == usuario.id && check.campo_tupper == true) {
-                       
-                        checkboxTuppers.checked = true; 
-                    } 
+
+                    if (check.idPersona == usuario.id && check.tupper == true) {
+
+                        checkboxTuppers.checked = true;
+                    }
                 }
             }
-            
+
         }
     }
+    /**
+ * Marca o desmarca un registro de tupperware para un usuario en la base de datos.
+ * @param {string} IdUsuario - El identificador del usuario.
+ * @param {boolean} valor - Indica si se va a marcar (true) o desmarcar (false) el tupperware.
+ */
+
     marcarTupper(IdUsuario, valor) {
-        if (valor) {
+      
             this.insertarTupper(IdUsuario, valor);
-        } else {
-            this.insertarTupper(IdUsuario, valor);
-        }
+   
     }
+    /**
+ * Inserta un registro de tupperware en la base de datos.
+ * @param {string} id - El identificador de la persona.
+ * @param {boolean} checkbox - Indica si se ha marcado el checkbox de tupperware.
+ */
+
     insertarTupper(id, checkbox) {
         let valor = checkbox ? 1 : 0;
-    
-    
+
+
         // Obtener el contenido del campo de fecha
         const fechaTexto = document.getElementById('fechaDia').textContent;
-    
+
         // Dividir la cadena de texto en partes para obtener el día, el mes y el año
         const partesFecha = fechaTexto.split('/');
         const dia = partesFecha[0];
         const mes = partesFecha[1];
         const anio = partesFecha[2];
-    
+
         // Formar la nueva fecha con el formato deseado (dd-mm-yyyy)
         const fechaFormateada = `${anio}-${mes}-${dia}`;
-    
+
         // Crear el objeto de datos
         const datos = {
             'idPersona': id,
             'tupper': valor,
             'dia': fechaFormateada // Utilizamos la fecha formateada
         };
-    
-   
-    
+
+
+
         // Llamar al método para insertar en la base de datos, pasando los datos
         this.controlador.insertarTupper(datos);
     }
-    
+
 
 
     /**
@@ -294,7 +316,7 @@ export class VistaGestionDiaria extends Vista {
         if (valor == '') valor = null;
 
         const datos = {
-            'dia': this.fechaActual.getDate() + '-' + (this.fechaActual.getMonth()+1) + '-' + this.fechaActual.getFullYear(),
+            'dia': this.fechaActual.getDate() + '-' + (this.fechaActual.getMonth() + 1) + '-' + this.fechaActual.getFullYear(),
             'idPersona': id,
             'incidencia': valor
         };
@@ -363,9 +385,11 @@ export class VistaGestionDiaria extends Vista {
     }
 
     mostrar(ver) {
+      
+       
         super.mostrar(ver);
         if (ver) this.inicializar();    // Al volver a mostrar la vista, refrescar listado.
     }
-  
-   
+
+
 }

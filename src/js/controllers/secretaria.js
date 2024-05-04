@@ -15,6 +15,7 @@ class ControladorSecretaria {
     constructor() {
         window.onload = this.iniciar.bind(this);
         window.onerror = (error) => console.error('Error capturado. ' + error);
+      
     }
 
     /**
@@ -73,8 +74,8 @@ class ControladorSecretaria {
     }
     obtenerTupper(fecha) {
         this.modelo.obtenerTupper(fecha)
-         .then(tupper => {
-             this.vistaGestionDiaria.cargarTuppers(tupper);
+         .then(tuppers => {
+             this.vistaGestionDiaria.cargarTuppers(tuppers);
          })
          .catch(e => {
              console.error(e);
@@ -219,8 +220,11 @@ class ControladorSecretaria {
 				this.vistaQ19.iniciar(q19, mes)
 			} )
 		}
-        //pasar constantes a la vista ver si llegan primero 
-        
+       
+        /**
+ * Obtiene la constante de tupperware desde el modelo y la inicializa en la vista.
+ */
+
         constanteTupper(){
            
             this.modelo.obtenerConstanteTupper()
@@ -231,6 +235,10 @@ class ControladorSecretaria {
                  console.error(e);
              })
         }
+        /**
+ * Obtiene la constante de menú desde el modelo y la inicializa en la vista.
+ */
+
         constanteMenu(){
            
             this.modelo.obtenerConstanteMenu()

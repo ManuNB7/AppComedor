@@ -49,8 +49,8 @@ export class Modelo {
      */
     obtenerFestivos(inicioMes, finMes) {
         const queryParams = new Map();
-        queryParams.set('inicio', inicioMes.getDate() + '-' + (inicioMes.getMonth()+1) + '-' + inicioMes.getFullYear());
-        queryParams.set('final', finMes.getDate() + '-' + (finMes.getMonth()+1) + '-' + finMes.getFullYear());
+        queryParams.set('inicio', inicioMes.getDate() + '-' + (inicioMes.getMonth() + 1) + '-' + inicioMes.getFullYear());
+        queryParams.set('final', finMes.getDate() + '-' + (finMes.getMonth() + 1) + '-' + finMes.getFullYear());
         return Rest.get('festivos', [], queryParams);
     }
 
@@ -123,17 +123,17 @@ export class Modelo {
     }
 
     /**
- * Llamada para obtener los días marcados del comedor para un mes específico.
- * @param {Number} year Año.
- * @param {Number} month Mes.
- * @returns {Promise} Devuelve la promesa asociada a la petición.
- */
-obtenerDiasMarcadosComedor(year, month) {
-    const queryParams = new Map();
-    queryParams.set('year', year);
-    queryParams.set('month', month);
-    return Rest.get('comedor', ['diasMarcados'], queryParams);
-}
+     * Llamada para obtener los días marcados del comedor para un mes específico.
+     * @param {Number} year Año.
+     * @param {Number} month Mes.
+     * @returns {Promise} Devuelve la promesa asociada a la petición.
+     */
+    obtenerDiasMarcadosComedor(year, month) {
+        const queryParams = new Map();
+        queryParams.set('year', year);
+        queryParams.set('month', month);
+        return Rest.get('comedor', ['diasMarcados'], queryParams);
+    }
 
 
     /**
@@ -144,7 +144,7 @@ obtenerDiasMarcadosComedor(year, month) {
     obtenerUsuariosApuntados(fecha) {
         const queryParams = new Map();
         queryParams.set('proceso', 'usuarios');
-        queryParams.set('fecha', fecha.getDate() + '-' + (fecha.getMonth()+1) + '-' + fecha.getFullYear());
+        queryParams.set('fecha', fecha.getDate() + '-' + (fecha.getMonth() + 1) + '-' + fecha.getFullYear());
         return Rest.get('secretaria', [], queryParams);
     }
 
@@ -156,14 +156,18 @@ obtenerDiasMarcadosComedor(year, month) {
     obtenerIncidencias(fecha) {
         const queryParams = new Map();
         queryParams.set('proceso', 'incidencias');
-        queryParams.set('fecha', fecha.getDate() + '-' + (fecha.getMonth()+1) + '-' + fecha.getFullYear());
+        queryParams.set('fecha', fecha.getDate() + '-' + (fecha.getMonth() + 1) + '-' + fecha.getFullYear());
         return Rest.get('secretaria', [], queryParams);
     }
-
+    /**
+     * Obtiene los registros de tupperware para una fecha específica.
+     * @param {Date} fecha La fecha para la cual se desean obtener los registros de tupperware.
+     * @returns {Promise} Una promesa que se resolverá con los registros de tupperware para la fecha especificada.
+     */
     obtenerTupper(fecha) {
         const queryParams = new Map();
         queryParams.set('proceso', 'tupper');
-        queryParams.set('fecha', fecha.getDate() + '-' + (fecha.getMonth()+1) + '-' + fecha.getFullYear());
+        queryParams.set('fecha', fecha.getDate() + '-' + (fecha.getMonth() + 1) + '-' + fecha.getFullYear());
         return Rest.get('secretaria', [], queryParams);
     }
 
@@ -199,11 +203,20 @@ obtenerDiasMarcadosComedor(year, month) {
     insertarIncidencia(datos) {
         return Rest.put('secretaria', ['incidencia'], datos, false);
     }
+    /**
+ * Inserta un registro de tupperware en la base de datos.
+ * @param {Object} datos Los datos del registro de tupperware a insertar.
+ * @returns {Promise} Una promesa que se resolverá después de que se haya completado la inserción.
+ */
     insertarTupper(datos) {
         return Rest.put('secretaria', ['tupper'], datos, false);
     }
-
-    obtenerListadoPadres(busqueda){
+    /**
+     * Obtiene un listado de padres según el término de búsqueda proporcionado.
+     * @param {string} busqueda El término de búsqueda para filtrar el listado de padres.
+     * @returns {Promise} Una promesa que se resolverá con el listado de padres que coincidan con la búsqueda.
+     */
+    obtenerListadoPadres(busqueda) {
         const queryParams = new Map();
 
         queryParams.set('proceso', 'padres');
@@ -211,7 +224,11 @@ obtenerDiasMarcadosComedor(year, month) {
 
         return Rest.get('secretaria', [], queryParams);
     }
-
+    /**
+     * Modifica los datos de un padre en la base de datos de la secretaría.
+     * @param {Object} datos Los nuevos datos del padre a modificar.
+     * @returns {Promise} Una promesa que se resolverá después de que se haya completado la modificación.
+     */
     modificarPadreSecretaria(datos) {
         return Rest.put('secretaria', ['modificarPadre'], datos);
     }
@@ -224,8 +241,8 @@ obtenerDiasMarcadosComedor(year, month) {
     borrarCuentaPadre(id) {
         return Rest.delete('padres', [id]);
     }
-    
-		/**
+
+    /**
      * Llamada para obtener los registros del Q19 de un mes.
      * @param {Number} mes Nº del mes.
      * @returns {Promise} Devuelve la promesa asociada a la petición.
@@ -236,15 +253,24 @@ obtenerDiasMarcadosComedor(year, month) {
         queryParams.set('mes', mes);
         return Rest.get('secretaria', [], queryParams);
     }
+    /**
+ * Obtiene la constante relacionada con los registros de tupperware.
+ * @returns {Promise} Una promesa que se resolverá con la constante relacionada con los registros de tupperware.
+ */
     obtenerConstanteTupper() {
         const queryParams = new Map();
         queryParams.set('proceso', 'tupper');
-        return Rest.get('constantes', [],queryParams);
+        return Rest.get('constantes', [], queryParams);
     }
+
+    /**
+     * Obtiene la constante relacionada con el menú.
+     * @returns {Promise} Una promesa que se resolverá con la constante relacionada con el menú.
+     */
     obtenerConstanteMenu() {
         const queryParams = new Map();
         queryParams.set('proceso', 'menu');
-        return Rest.get('constantes', [],queryParams);
+        return Rest.get('constantes', [], queryParams);
     }
- 
+
 }

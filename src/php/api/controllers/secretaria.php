@@ -162,7 +162,10 @@
             die();
         }
 
-        
+        /**
+         * Obtener padres.
+         * @param string $busqueda Busqueda.
+         */
         function obtenerTupper($date) {
             $fecha = new DateTime($date);
             $fecha = $fecha->format('Y-m-d');
@@ -174,7 +177,7 @@
             echo json_encode($tupper);
             die();
         }
-          /**
+        /**
          * Obtener padres.
          * @param string $busqueda Busqueda.
          */
