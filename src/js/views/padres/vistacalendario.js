@@ -46,7 +46,7 @@ export class VistaCalendario extends Vista {
     }
     obtenerDiasComedor(datos) {
         this.diasComedor =datos;
-       
+       console.log(datos)
       
     }
 
@@ -70,7 +70,7 @@ export class VistaCalendario extends Vista {
     renderCalendars(hijos) {
         if (hijos != null) {
             this.calendarContainer.innerHTML = ''; // Limpiar el contenedor antes de renderizar
-            
+    
             hijos.forEach(child => {
                 const childCalendar = document.createElement('div');
                 childCalendar.classList.add('child-calendar');
@@ -99,30 +99,32 @@ export class VistaCalendario extends Vista {
     
                 const daysList = document.createElement('div');
                 daysList.classList.add('calendar');
-                setTimeout(() => {
-                // Filtrar los días reservados que pertenecen al mes actual
-                const reservedDaysThisMonth = this.diasComedor.filter(objeto => {
-                    const dayMonth = new Date(objeto.dia).getMonth();
-                    return dayMonth === this.currentMonth;
-                });
-            
-                for (let i = 0; i < firstDayIndex; i++) {
-                    const emptyDay = document.createElement('div');
-                    emptyDay.classList.add('day');
-                    emptyDay.textContent = '';
-                    daysList.appendChild(emptyDay);
-                }
-                for (let i = 1; i <= daysInMonth; i++) {
-                    const day = document.createElement('div');
-                    day.classList.add('day');
-                    day.textContent = i;
     
-                    // Identificar fines de semana (Sábado y Domingo)
-                    if (new Date(this.currentYear, this.currentMonth, i).getDay() === 0 || new Date(this.currentYear, this.currentMonth, i).getDay() === 6) { // Domingo o Sábado
-                        day.classList.add('weekend');
+                setTimeout(() => {
+                    // Filtrar los días reservados que pertenecen al mes actual y al hijo actual
+                    const reservedDaysThisMonth = this.diasComedor.filter(objeto => {
+                        const dayMonth = new Date(objeto.dia).getMonth();
+                        const dayYear = new Date(objeto.dia).getFullYear();
+                        return dayMonth === this.currentMonth && dayYear === this.currentYear && objeto.idPersona === child.id;
+                    });
+    
+                    for (let i = 0; i < firstDayIndex; i++) {
+                        const emptyDay = document.createElement('div');
+                        emptyDay.classList.add('day');
+                        emptyDay.textContent = '';
+                        daysList.appendChild(emptyDay);
                     }
     
-                    setTimeout(() => {
+                    for (let i = 1; i <= daysInMonth; i++) {
+                        const day = document.createElement('div');
+                        day.classList.add('day');
+                        day.textContent = i;
+    
+                        // Identificar fines de semana (Sábado y Domingo)
+                        if (new Date(this.currentYear, this.currentMonth, i).getDay() === 0 || new Date(this.currentYear, this.currentMonth, i).getDay() === 6) { // Domingo o Sábado
+                            day.classList.add('weekend');
+                        }
+    
                         // Verificar si el día está reservado y agregar la clase correspondiente
                         reservedDaysThisMonth.forEach(objeto => {
                             const dia = new Date(objeto.dia).getDate();
@@ -132,15 +134,16 @@ export class VistaCalendario extends Vista {
                         });
     
                         daysList.appendChild(day);
-                    }, 2000);
-                }
-            }, 2000);
+                    }
+                }, 2000);
+    
                 childCalendar.appendChild(daysList);
                 this.calendarContainer.appendChild(childCalendar);
             });
         }
         this.monthYearHeader.textContent = `${this.currentYear} - ${this.currentMonth + 1}`;
     }
+    
     
 
 }
