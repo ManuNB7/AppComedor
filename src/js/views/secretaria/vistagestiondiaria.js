@@ -26,6 +26,11 @@ export class VistaGestionDiaria extends Vista {
 
         this.btnDiaAnterior.addEventListener('click', this.diaAnterior.bind(this));
         this.btnDiaSiguiente.addEventListener('click', this.diaSiguiente.bind(this));
+        
+         
+         document.getElementById("imprimir").addEventListener("click", () => {
+            window.print() 
+        });
     }
 
     /**
@@ -362,4 +367,5 @@ export class VistaGestionDiaria extends Vista {
         if (ver) this.inicializar();    // Al volver a mostrar la vista, refrescar listado.
     }
   
+   
 }
