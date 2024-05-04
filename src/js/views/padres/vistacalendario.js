@@ -27,7 +27,6 @@ export class VistaCalendario extends Vista {
     }
 
     changeMonth(change) {
-        console.log
         this.currentMonth += change;
         if (this.currentMonth < 0) {
             this.currentYear -= 1;
@@ -45,32 +44,26 @@ export class VistaCalendario extends Vista {
         
     }
     obtenerDiasComedor(datos) {
-        this.diasComedor =datos;
-       console.log(datos)
-      
+        this.diasComedor =datos;      
     }
 
     obtenerFestivos(festivos) {
         this.festivos = festivos;
         this.controlador.dameHijosCalendarioGestion(this.idPadre);
-        
     }
 
     actualizar(datos) {
         this.idUsuario = datos.id;
         this.controlador.dameHijosGestion(this.idUsuario);
-      
-        
     }
     cargarHijos(hijos){
         this.hijos = hijos;
     }
 
-
     renderCalendars(hijos) {
         if (hijos != null) {
             this.calendarContainer.innerHTML = ''; // Limpiar el contenedor antes de renderizar
-    
+
             hijos.forEach(child => {
                 const childCalendar = document.createElement('div');
                 childCalendar.classList.add('child-calendar');
@@ -83,9 +76,16 @@ export class VistaCalendario extends Vista {
                 childMonthYearHeader.textContent = `${child.nombre} - ${monthName} Calendario`; // Utilizar child.currentMonth
                 childCalendar.appendChild(childMonthYearHeader);
     
-                const daysOfWeek = ['D', 'L', 'M', 'X', 'J', 'V', 'S']; // Domingo a Sábado
+                // Cambiar los días de la semana para que empiecen en lunes
+                const daysOfWeek = ['L', 'M', 'X', 'J', 'V', 'S', 'D']; // Lunes a Domingo
                 const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
-                const firstDayIndex = new Date(this.currentYear, this.currentMonth, 1).getDay();
+                // Obtener el índice del primer día del mes, ajustando si es necesario para que sea lunes
+                let firstDayIndex = new Date(this.currentYear, this.currentMonth, 1).getDay();
+                if (firstDayIndex === 0) {
+                    firstDayIndex = 6; // Si es domingo, cambiar a 6 (último día de la semana)
+                } else {
+                    firstDayIndex -= 1; // Restar 1 para que el lunes sea el primer día
+                }
     
                 const weekRow = document.createElement('div');
                 weekRow.classList.add('calendar', 'week-row');
@@ -121,7 +121,7 @@ export class VistaCalendario extends Vista {
                         day.textContent = i;
     
                         // Identificar fines de semana (Sábado y Domingo)
-                        if (new Date(this.currentYear, this.currentMonth, i).getDay() === 0 || new Date(this.currentYear, this.currentMonth, i).getDay() === 6) { // Domingo o Sábado
+                        if (new Date(this.currentYear, this.currentMonth, i).getDay() === 6 || new Date(this.currentYear, this.currentMonth, i).getDay() === 0) { // Sábado o Domingo
                             day.classList.add('weekend');
                         }
     
@@ -144,6 +144,9 @@ export class VistaCalendario extends Vista {
         this.monthYearHeader.textContent = `${this.currentYear} - ${this.currentMonth + 1}`;
     }
     
-    
-
+    mostrar(ver) {
+        console.log("ENTRANDO EN MOSTRAR")
+        super.mostrar(ver);
+        if (ver) this.renderCalendars();    // Al volver a mostrar la vista, refrescar calendario.
+    }
 }
