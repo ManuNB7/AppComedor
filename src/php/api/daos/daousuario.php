@@ -116,7 +116,7 @@ class DAOUsuario
     }
     public static function insertarTupper($datos)
     {
-        $sql = 'UPDATE dias SET tupper = :tupper WHERE idPersona = :idPersona AND dia = :dia';
+        $sql = 'UPDATE Dias SET tupper = :tupper WHERE idPersona = :idPersona AND dia = :dia';
 
 
 
