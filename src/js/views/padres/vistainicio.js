@@ -36,6 +36,10 @@ export class VistaInicioPadres extends Vista {
         this.thead = this.div.getElementsByTagName('thead')[0];
         this.tbody = this.div.getElementsByTagName('tbody')[0];
         this.pConfirmacion = document.getElementById('pConfirmacion')
+
+        // Constantes para el funcionamiento de las notificaciones
+        this.DURACION_NOTIFICACION = 3000; // Duración en milisegundos
+        this.verticalPosition = 80; // Posición vertical inicial
     }
 
     /**
@@ -491,25 +495,21 @@ marcarDesmarcarMes(marcado, mes, idHijo) {
 //// FUNCIONAMIENTO NOTIFICACIONES
 // Definir una constante para la duración de la notificación en milisegundos
 const DURACION_NOTIFICACION = 3000; // 3000 milisegundos = 3 segundos
-// Ancho fijo para las notificaciones
-const NOTIFICACION_WIDTH = 220; // Ancho fijo en píxeles
-// Altura fija para las notificaciones
-const NOTIFICACION_HEIGHT = 55; // Altura fija en píxeles
-
 // Variable para controlar la posición vertical de las notificaciones
-let verticalPosition = 80; // Empezar en 20px desde la parte superior
-const MAX_VERTICAL_POSITION = 800; // Reiniciar la posición vertical después de alcanzar los 300px
+var verticalPosition = 80;
 
 // Función para mostrar la notificación
 function mostrarNotificacion(estado, checkboxId) {
     // Obtener el elemento divnotificacion
-    var divNotificacion = document.getElementById('divnotificacion');
+    var divNotificacion = document.getElementById('divNotificacion');
 
     // Crear un elemento de notificación
     var notificacion = document.createElement('div');
 
     // Establecer el texto de acuerdo al estado de la casilla
     if (estado === 'marcada') {
+        // Agregar la clase 'marcado'
+        notificacion.classList.add('marcado');
         if (checkboxId.startsWith('fecha')) {
             // Si es una fecha, obtener el día del ID del checkbox
             var dia = checkboxId.slice(-2); // Extraer los dos últimos caracteres correspondientes al día
@@ -521,8 +521,9 @@ function mostrarNotificacion(estado, checkboxId) {
             // Si no es ni una fecha ni un mes, interpretarlo como una semana marcada
             notificacion.textContent = `Ha marcado una semana.`;
         }
-        notificacion.style.background = 'linear-gradient(to right, #2C95FF, #53D7FF)'; // Gradiente de azul a verde
     } else if (estado === 'desmarcada') {
+        // Agregar la clase 'desmarcado'
+        notificacion.classList.add('desmarcado');
         if (checkboxId.startsWith('fecha')) {
             // Si es una fecha, obtener el día del ID del checkbox
             var dia = checkboxId.slice(-2); // Extraer los dos caracteres correspondientes al día
@@ -534,35 +535,15 @@ function mostrarNotificacion(estado, checkboxId) {
             // Si no es ni una fecha ni un mes, interpretarlo como una semana marcada
             notificacion.textContent = `Ha desmarcado una semana.`;
         }
-        notificacion.style.background = 'linear-gradient(to right, #FFC3A0, #FF6F91)'; // Gradiente de rojo claro a naranja
     } else {
         return;
     }
-    // Establecer estilos de la notificación
-    notificacion.style.padding = '8px 12px'; // Ajustar el relleno
-    notificacion.style.color = 'white'; // Establecer el color de texto
-    notificacion.style.borderRadius = '4px'; // Añadir esquinas redondeadas
-    notificacion.style.fontSize = '16px'; // Ajustar el tamaño de fuente
-    notificacion.style.fontWeight = 'bold'; // Hacer el texto en negrita
-    notificacion.style.position = 'fixed'; // Fijar la posición
-    notificacion.style.width = NOTIFICACION_WIDTH + 'px'; // Establecer ancho fijo
-    notificacion.style.height = NOTIFICACION_HEIGHT + 'px'; // Establecer altura fija
-    notificacion.style.top = verticalPosition + 'px'; // Establecer la posición vertical
-    notificacion.style.right = '20px'; // Establecer la posición horizontal
-    notificacion.style.zIndex = '9999'; // Asegurar que esté sobre otros elementos
-    notificacion.style.transition = 'top 0.3s ease-out'; // Añadir transición suave al cambiar la posición
+
+    // Establecer la posición vertical de la notificación
+    notificacion.style.top = verticalPosition + 'px';
 
     // Incrementar la posición vertical para la próxima notificación
-    verticalPosition += notificacion.offsetHeight + 60; // Altura de la notificación más espacio entre ellas
-
-    // Reiniciar la posición vertical si se alcanza la posición máxima
-    if (verticalPosition > MAX_VERTICAL_POSITION) {
-        verticalPosition = 20; // Reiniciar en la parte superior
-        // Eliminar las notificaciones anteriores para evitar el desbordamiento
-        while (divNotificacion.firstChild) {
-            divNotificacion.removeChild(divNotificacion.firstChild);
-        }
-    }
+    verticalPosition += notificacion.offsetHeight + 50; // Agregar margen inferior
 
     // Agregar la notificación al divnotificacion
     divNotificacion.appendChild(notificacion);
@@ -576,6 +557,7 @@ function mostrarNotificacion(estado, checkboxId) {
         }
     }, DURACION_NOTIFICACION);
 }
+
 
 
 // Función para manejar el clic del botón
