@@ -412,7 +412,7 @@ marcarDesmarcarMes(marcado, mes, idHijo) {
      */
     marcarDesmarcarDia(marcado, idHijo, idPadre, validarFecha, fecha) {
         let fechaValida = null;
-
+    
         if (validarFecha) {
             fechaValida = fecha.toString();
             fechaValida = fechaValida.replace('fecha-' + idHijo + '-', '');  // Quitar 'fecha-id-' del string.
@@ -426,14 +426,20 @@ marcarDesmarcarMes(marcado, mes, idHijo) {
             'idPersona': idHijo,
             'idPadre': idPadre
         };
-
+    
         if (marcado) {
             this.controlador.marcarDiaComedor(datos, this.pConfirmacion);
         }
         else {
             this.controlador.desmarcarDiaComedor(datos, this.pConfirmacion);
         }
+    
+        // Mostrar notificación
+        const estado = marcado ? 'marcada' : 'desmarcada';
+        const checkboxId = 'fecha-' + idHijo + '-' + fechaValida;
+        this.mostrarNotificacion(estado, checkboxId);
     }
+    
 
     /**
      * Obtener la fecha que corresponde al lunes de esta semana.
@@ -475,6 +481,131 @@ marcarDesmarcarMes(marcado, mes, idHijo) {
         
         this.refrescarCalendario();
     }
+    /**
+     * Muestra una notificación visual según el estado y el ID de la casilla.
+     * @param {String} estado Estado de la casilla ('marcada' o 'desmarcada').
+     * @param {String} checkboxId ID de la casilla de verificación.
+     */
+    mostrarNotificacion(estado, checkboxId) {
+        // Obtener el elemento divnotificacion
+        let divNotificacion = document.getElementById('divNotificacion');
+
+        // Crear un elemento de notificación
+        let notificacion = document.createElement('div');
+
+        // Establecer el texto de acuerdo al estado de la casilla
+        if (estado === 'marcada') {
+            // Agregar la clase 'marcado'
+            notificacion.classList.add('marcado');
+            if (checkboxId.startsWith('fecha')) {
+                // Si es una fecha, obtener el día del ID del checkbox
+                let dia = checkboxId.slice(-2); // Extraer los dos últimos caracteres correspondientes al día
+                notificacion.textContent = `Ha marcado día ${dia}.`;
+            } else if (checkboxId.startsWith('mes')) {
+                // Si es un mes, simplemente indicar que se ha marcado un mes
+                notificacion.textContent = `Ha marcado un mes.`;
+            } else {
+                // Si no es ni una fecha ni un mes, interpretarlo como una semana marcada
+                notificacion.textContent = `Ha marcado una semana.`;
+            }
+        } else if (estado === 'desmarcada') {
+            // Agregar la clase 'desmarcado'
+            notificacion.classList.add('desmarcado');
+            if (checkboxId.startsWith('fecha')) {
+                // Si es una fecha, obtener el día del ID del checkbox
+                let dia = checkboxId.slice(-2); // Extraer los dos caracteres correspondientes al día
+                notificacion.textContent = `Ha desmarcado día ${dia}.`;
+            } else if (checkboxId.startsWith('mes')) {
+                // Si es un mes, simplemente indicar que se ha desmarcado un mes
+                notificacion.textContent = `Ha desmarcado un mes.`;
+            } else {
+                // Si no es ni una fecha ni un mes, interpretarlo como una semana marcada
+                notificacion.textContent = `Ha desmarcado una semana.`;
+            }
+        } else {
+            return;
+        }
+
+        // Establecer la posición vertical de la notificación
+        notificacion.style.top = this.verticalPosition + 'px';
+        // Incrementar la posición vertical para la próxima notificación
+        this.verticalPosition += notificacion.offsetHeight + 50; // Agregar margen inferior
+
+        // Agregar la notificación al divnotificacion
+        divNotificacion.appendChild(notificacion);
+
+        // Quitar la notificación después de unos segundos
+        setTimeout(() => {
+            divNotificacion.removeChild(notificacion);
+            // Reiniciar la posición vertical si no hay más notificaciones presentes
+            if (!divNotificacion.firstChild) {
+                this.verticalPosition = 80;
+            }
+        }, this.DURACION_NOTIFICACION);
+    }
+    /**
+         * Manejar el clic del botón.
+         */
+    botonClicado() {
+        console.log("clicado");
+        this.mostrarNotificacion();
+    }
+
+    /**
+     * Manejar el cambio en las casillas de verificación.
+     * @param {Event} event Evento de cambio en la casilla de verificación.
+     */
+    checkboxCambiado(event) {
+        // Obtener el estado actual de la casilla
+        const estado = event.target.checked ? 'marcada' : 'desmarcada';
+        const checkboxId = event.target.id; // Obtener el ID del checkbox
+        this.mostrarNotificacion(estado, checkboxId); // Pasar el ID del checkbox al método mostrarNotificacion
+    }
+
+    /**
+     * Método para capturar las casillas de verificación y agregar event listeners.
+     */
+    capturarCheckboxes() {
+        const checkboxes = this.div.querySelectorAll('tbody input[type=checkbox]');
+        checkboxes.forEach((checkbox) => {
+            checkbox.addEventListener('change', this.botonClicado.bind(this));
+            checkbox.addEventListener('change', this.checkboxCambiado.bind(this)); // Agregar manejo de cambio para desmarcar también
+        });
+    }
+
+    /**
+     * Método para actualizar el contador de semanas.
+     */
+    actualizarContador() {
+        if (this.contadorSemanas === 0) {
+            // Detener el bucle
+            clearInterval(this.intervalo);
+            return;
+        }
+        this.contadorSemanas--;
+    }
+
+    /**
+     * Método para iniciar el bucle y manejar eventos de clic.
+     */
+    iniciarBucle() {
+        this.intervalo = setInterval(() => {
+            if (this.contadorSemanas === 0) {
+                // Detener el bucle si el contador llega a cero
+                clearInterval(this.intervalo);
+                console.log("El contador de semanas ha llegado a cero");
+                return;
+            }
+            const semanaSiguienteBtn = this.div.getElementById('semanaSiguiente');
+
+            semanaSiguienteBtn.addEventListener('click', () => {     
+                // Restablecer el contador de semanas al hacer clic en el botón
+                this.contadorSemanas = 100;
+            });
+            this.capturarCheckboxes();
+            this.actualizarContador();
+        }, 2000); // Ejecutar cada 2 segundos
+    }
 
     /**
      * Refrescar calendario.
@@ -490,127 +621,3 @@ marcarDesmarcarMes(marcado, mes, idHijo) {
         if (ver) this.refrescarCalendario();    // Al volver a mostrar la vista, refrescar calendario.
     }
 }
-
-
-//// FUNCIONAMIENTO NOTIFICACIONES
-// Definir una constante para la duración de la notificación en milisegundos
-const DURACION_NOTIFICACION = 3000; // 3000 milisegundos = 3 segundos
-// Variable para controlar la posición vertical de las notificaciones
-var verticalPosition = 80;
-
-// Función para mostrar la notificación
-function mostrarNotificacion(estado, checkboxId) {
-    // Obtener el elemento divnotificacion
-    var divNotificacion = document.getElementById('divNotificacion');
-
-    // Crear un elemento de notificación
-    var notificacion = document.createElement('div');
-
-    // Establecer el texto de acuerdo al estado de la casilla
-    if (estado === 'marcada') {
-        // Agregar la clase 'marcado'
-        notificacion.classList.add('marcado');
-        if (checkboxId.startsWith('fecha')) {
-            // Si es una fecha, obtener el día del ID del checkbox
-            var dia = checkboxId.slice(-2); // Extraer los dos últimos caracteres correspondientes al día
-            notificacion.textContent = `Ha marcado día ${dia}.`;
-        } else if (checkboxId.startsWith('mes')) {
-            // Si es un mes, simplemente indicar que se ha marcado un mes
-            notificacion.textContent = `Ha marcado un mes.`;
-        } else {
-            // Si no es ni una fecha ni un mes, interpretarlo como una semana marcada
-            notificacion.textContent = `Ha marcado una semana.`;
-        }
-    } else if (estado === 'desmarcada') {
-        // Agregar la clase 'desmarcado'
-        notificacion.classList.add('desmarcado');
-        if (checkboxId.startsWith('fecha')) {
-            // Si es una fecha, obtener el día del ID del checkbox
-            var dia = checkboxId.slice(-2); // Extraer los dos caracteres correspondientes al día
-            notificacion.textContent = `Ha desmarcado día ${dia}.`;
-        } else if (checkboxId.startsWith('mes')) {
-            // Si es un mes, simplemente indicar que se ha desmarcado un mes
-            notificacion.textContent = `Ha desmarcado un mes.`;
-        } else {
-            // Si no es ni una fecha ni un mes, interpretarlo como una semana marcada
-            notificacion.textContent = `Ha desmarcado una semana.`;
-        }
-    } else {
-        return;
-    }
-
-    // Establecer la posición vertical de la notificación
-    notificacion.style.top = verticalPosition + 'px';
-    // Incrementar la posición vertical para la próxima notificación
-    verticalPosition += notificacion.offsetHeight + 50; // Agregar margen inferior
-
-    // Agregar la notificación al divnotificacion
-    divNotificacion.appendChild(notificacion);
-
-    // Quitar la notificación después de unos segundos
-    setTimeout(function () {
-        divNotificacion.removeChild(notificacion);
-        // Reiniciar la posición vertical si no hay más notificaciones presentes
-        if (!divNotificacion.firstChild) {
-            verticalPosition = 80;
-        }
-    }, DURACION_NOTIFICACION);
-}
-
-
-
-// Función para manejar el clic del botón
-function botonClicado() {
-    console.log("clicado");
-    mostrarNotificacion();
-}
-
-// Función para manejar el cambio en las casillas de verificación
-function checkboxCambiado(event) {
-    // Obtener el estado actual de la casilla
-    var estado = event.target.checked ? 'marcada' : 'desmarcada';
-    var checkboxId = event.target.id; // Obtener el ID del checkbox
-    mostrarNotificacion(estado, checkboxId); // Pasar el ID del checkbox a la función mostrarNotificacion
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-    var contadorSemanas = 10000; // Contador inicial de semanas
-
-    function capturarCheckboxes() {
-        var checkboxes = document.querySelectorAll('tbody input[type=checkbox]');
-        checkboxes.forEach(function (checkbox) {
-            checkbox.addEventListener('change', botonClicado);
-            checkbox.addEventListener('change', checkboxCambiado); // Agregar manejo de cambio para desmarcar también
-        });
-    }
-
-    // Función para actualizar el contador de semanas
-    function actualizarContador() {
-        if (contadorSemanas === 0) {
-            // Detener el bucle
-            clearInterval(intervalo);
-            return;
-        }
-        contadorSemanas--;
-    }
-
-    // Iniciar el bucle
-    var intervalo = setInterval(function() {
-        if (contadorSemanas === 0) {
-            // Detener el bucle si el contador llega a cero
-            clearInterval(intervalo);
-            console.log("El contador de semanas ha llegado a cero");
-            return;
-        }
-        var semanaSiguienteBtn = document.getElementById('semanaSiguiente');
-
-        semanaSiguienteBtn.addEventListener('click', function() {     
-            // Restablecer el contador de semanas al hacer clic en el botón
-            contadorSemanas = 100;
-        });
-        capturarCheckboxes();
-        actualizarContador();
-    }, 2000); // Ejecutar cada 2 segundos
-
-  
-});
