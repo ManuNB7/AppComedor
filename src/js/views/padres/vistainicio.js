@@ -541,7 +541,6 @@ function mostrarNotificacion(estado, checkboxId) {
 
     // Establecer la posición vertical de la notificación
     notificacion.style.top = verticalPosition + 'px';
-
     // Incrementar la posición vertical para la próxima notificación
     verticalPosition += notificacion.offsetHeight + 50; // Agregar margen inferior
 
