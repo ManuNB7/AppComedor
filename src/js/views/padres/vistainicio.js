@@ -37,9 +37,10 @@ export class VistaInicioPadres extends Vista {
         this.tbody = this.div.getElementsByTagName('tbody')[0];
         this.pConfirmacion = document.getElementById('pConfirmacion')
 
-        // Constantes para el funcionamiento de las notificaciones
+        // Constante para el funcionamiento de las notificaciones
         this.DURACION_NOTIFICACION = 3000; // Duración en milisegundos
-        this.verticalPosition = 80; // Posición vertical inicial
+        this.VERTICAL_POSITION = 80;
+        this.NOTIFICACIONES_GENERADAS = 0;
     }
 
     /**
@@ -481,12 +482,22 @@ marcarDesmarcarMes(marcado, mes, idHijo) {
         
         this.refrescarCalendario();
     }
+
+ 
     /**
      * Muestra una notificación visual según el estado y el ID de la casilla.
      * @param {String} estado Estado de la casilla ('marcada' o 'desmarcada').
      * @param {String} checkboxId ID de la casilla de verificación.
      */
     mostrarNotificacion(estado, checkboxId) {
+        // Incrementa el contador de notificaciones
+    this.NOTIFICACIONES_GENERADAS++;
+
+    // Si se han generado 5 notificaciones, reinicia la posición vertical y el contador
+    if (this.NOTIFICACIONES_GENERADAS === 7) {
+        this.VERTICAL_POSITION=80;
+        this.NOTIFICACIONES_GENERADAS=0;
+    }
         // Obtener el elemento divnotificacion
         let divNotificacion = document.getElementById('divNotificacion');
 
@@ -527,9 +538,9 @@ marcarDesmarcarMes(marcado, mes, idHijo) {
         }
 
         // Establecer la posición vertical de la notificación
-        notificacion.style.top = this.verticalPosition + 'px';
+        notificacion.style.top = this.VERTICAL_POSITION + 'px';
         // Incrementar la posición vertical para la próxima notificación
-        this.verticalPosition += notificacion.offsetHeight + 50; // Agregar margen inferior
+        this.VERTICAL_POSITION += notificacion.offsetHeight + 50; // Agregar margen inferior
 
         // Agregar la notificación al divnotificacion
         divNotificacion.appendChild(notificacion);
@@ -539,10 +550,11 @@ marcarDesmarcarMes(marcado, mes, idHijo) {
             divNotificacion.removeChild(notificacion);
             // Reiniciar la posición vertical si no hay más notificaciones presentes
             if (!divNotificacion.firstChild) {
-                this.verticalPosition = 80;
+                this.VERTICAL_POSITION;
             }
         }, this.DURACION_NOTIFICACION);
     }
+    
     /**
          * Manejar el clic del botón.
          */
@@ -550,63 +562,7 @@ marcarDesmarcarMes(marcado, mes, idHijo) {
         console.log("clicado");
         this.mostrarNotificacion();
     }
-
-    /**
-     * Manejar el cambio en las casillas de verificación.
-     * @param {Event} event Evento de cambio en la casilla de verificación.
-     */
-    checkboxCambiado(event) {
-        // Obtener el estado actual de la casilla
-        const estado = event.target.checked ? 'marcada' : 'desmarcada';
-        const checkboxId = event.target.id; // Obtener el ID del checkbox
-        this.mostrarNotificacion(estado, checkboxId); // Pasar el ID del checkbox al método mostrarNotificacion
-    }
-
-    /**
-     * Método para capturar las casillas de verificación y agregar event listeners.
-     */
-    capturarCheckboxes() {
-        const checkboxes = this.div.querySelectorAll('tbody input[type=checkbox]');
-        checkboxes.forEach((checkbox) => {
-            checkbox.addEventListener('change', this.botonClicado.bind(this));
-            checkbox.addEventListener('change', this.checkboxCambiado.bind(this)); // Agregar manejo de cambio para desmarcar también
-        });
-    }
-
-    /**
-     * Método para actualizar el contador de semanas.
-     */
-    actualizarContador() {
-        if (this.contadorSemanas === 0) {
-            // Detener el bucle
-            clearInterval(this.intervalo);
-            return;
-        }
-        this.contadorSemanas--;
-    }
-
-    /**
-     * Método para iniciar el bucle y manejar eventos de clic.
-     */
-    iniciarBucle() {
-        this.intervalo = setInterval(() => {
-            if (this.contadorSemanas === 0) {
-                // Detener el bucle si el contador llega a cero
-                clearInterval(this.intervalo);
-                console.log("El contador de semanas ha llegado a cero");
-                return;
-            }
-            const semanaSiguienteBtn = this.div.getElementById('semanaSiguiente');
-
-            semanaSiguienteBtn.addEventListener('click', () => {     
-                // Restablecer el contador de semanas al hacer clic en el botón
-                this.contadorSemanas = 100;
-            });
-            this.capturarCheckboxes();
-            this.actualizarContador();
-        }, 2000); // Ejecutar cada 2 segundos
-    }
-
+    
     /**
      * Refrescar calendario.
      */
