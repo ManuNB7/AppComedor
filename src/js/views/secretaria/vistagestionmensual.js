@@ -30,9 +30,7 @@ export class VistaGestionMensual extends Vista {
 				this.btnQ19.onclick = this.verQ19.bind(this)
        
         this.mes = document.getElementById('mes');
-        this.div.querySelectorAll("div.container > button:nth-of-type(4)")[0].addEventListener("click", () => {
-            window.print()
-        });
+      
     }
 
     /**
