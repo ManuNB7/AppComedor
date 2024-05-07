@@ -37,7 +37,7 @@ export class VistaInicioPadres extends Vista {
         this.tbody = this.div.getElementsByTagName('tbody')[0];
         this.pConfirmacion = document.getElementById('pConfirmacion')
 
-        // Constante para el funcionamiento de las notificaciones
+        // Constantes para el funcionamiento de las notificaciones
         this.DURACION_NOTIFICACION = 3000; // Duración en milisegundos
         this.VERTICAL_POSITION = 80;
         this.NOTIFICACIONES_GENERADAS = 0;
