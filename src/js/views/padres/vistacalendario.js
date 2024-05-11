@@ -13,7 +13,6 @@ export class VistaCalendario extends Vista {
         this.idPadre = 0;
         this.currentYear = currentDate.getFullYear();
         this.diasComedor = null;
-        this.festivos = null;
         this.hijos = null;
       
 
@@ -45,11 +44,6 @@ export class VistaCalendario extends Vista {
     }
     obtenerDiasComedor(datos) {
         this.diasComedor =datos;      
-    }
-
-    obtenerFestivos(festivos) {
-        this.festivos = festivos;
-        this.controlador.dameHijosCalendarioGestion(this.idPadre);
     }
 
     actualizar(datos) {
@@ -135,7 +129,7 @@ export class VistaCalendario extends Vista {
     
                         daysList.appendChild(day);
                     }
-                }, 2000);
+                }, 100);
     
                 childCalendar.appendChild(daysList);
                 this.calendarContainer.appendChild(childCalendar);
