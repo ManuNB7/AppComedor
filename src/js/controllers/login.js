@@ -39,30 +39,49 @@ class Login {
     /**
      * Realiza el proceso de login.
      */
-    login() {
-        this.divCargando.style.display = 'block';
+    /**
+ * Realiza el proceso de login.
+ */
+login() {
+    this.divCargando.style.display = 'block';
 
-        if (this.divError.style.display == 'block')
-            this.divError.style.display = 'none';
+    if (this.divError.style.display == 'block')
+        this.divError.style.display = 'none';
 
-        const login = {
-            usuario: this.email.value,
-            clave: this.clave.value
-        };
+    const login = {
+        usuario: this.email.value,
+        clave: this.clave.value
+    };
 
-        Rest.post('login', [], login, true)
-         .then(usuario => {
-             this.btnAceptar.disabled = false;
-             this.divCargando.style.display = 'none';
-             sessionStorage.setItem('usuario', JSON.stringify(usuario));
-             window.location.href = 'index.html';
-         })
-         .catch(e => {
-             this.btnAceptar.disabled = false;
-             this.divCargando.style.display = 'none';
-             this.error(e);
-         })
+    Rest.post('login', [], login, true)
+     .then(usuario => {
+         this.btnAceptar.disabled = false;
+         this.divCargando.style.display = 'none';
+         sessionStorage.setItem('usuario', JSON.stringify(usuario));
+         
+         // Redirige según el dominio del correo electrónico
+         this.redireccionar(this.email.value);
+     })
+     .catch(e => {
+         this.btnAceptar.disabled = false;
+         this.divCargando.style.display = 'none';
+         this.error(e);
+     })
+}
+
+/**
+ * Redirecciona según el tipo de usuario.
+ * @param {string} correo Correo electrónico del usuario.
+ */
+redireccionar(correo) {
+    if (correo.endsWith('@fundacionloyola.es') || correo.endsWith('@alumnado.fundacionloyola.net')) {
+        window.location.href = 'login_google.html'; // Redirige a index.html
+    } else {
+        // Redirige a otra página para otros dominios de correo
+        window.location.href = 'index.html';
     }
+}
+
 
     /**
      * Aviso de errores al usuario.
