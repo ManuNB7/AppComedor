@@ -180,6 +180,12 @@ export class VistaCalendario extends Vista {
         this.monthYearHeader.textContent = `${this.currentYear} - ${this.currentMonth + 1}`;
     }
     
+    refrescarCalendario() {
+        let inicioMes = new Date(this.inicioSemana.getFullYear(), this.inicioSemana.getMonth(), 1);
+        let finMes = new Date(this.inicioSemana.getFullYear(), this.inicioSemana.getMonth() + 2, 0);
+        this.controlador.obtenerFestivos(inicioMes, finMes);
+    }
+
     /**
      * Método para mostrar la vista.
      * @param {boolean} ver - Indica si se debe mostrar o no la vista.
@@ -187,6 +193,6 @@ export class VistaCalendario extends Vista {
     mostrar(ver) {
         console.log("ENTRANDO EN MOSTRAR")
         super.mostrar(ver); // Llama al método mostrar de la clase padre
-        if (ver) this.renderCalendars();    // Al volver a mostrar la vista, refrescar calendario.
+        if (ver) this.refrescarCalendario();    // Al volver a mostrar la vista, refrescar calendario.
     }
 }
