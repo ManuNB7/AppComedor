@@ -93,20 +93,23 @@ export class VistaCalendario extends Vista {
         // Verifica si hay hijos para renderizar los calendarios
         if (hijos != null) {
             this.calendarContainer.innerHTML = ''; // Limpia el contenedor antes de renderizar
+    
+        // Obtiene el nombre del mes actual
+        const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        const monthName = monthNames[this.currentMonth];
 
+        // Actualizar el título del mes y año del calendario con el nombre del mes y el año actual
+        this.monthYearHeader.textContent = `${monthName} ${this.currentYear}`;
+    
             // Itera sobre cada hijo para renderizar su calendario
             hijos.forEach(child => {
                 // Crea un elemento div para el calendario del hijo
                 const childCalendar = document.createElement('div');
                 childCalendar.classList.add('child-calendar');
     
-                // Obtiene el nombre del mes actual
-                const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-                const monthName = monthNames[this.currentMonth];
-                
                 // Crea un título para el calendario con el nombre del hijo y el nombre del mes
                 const childMonthYearHeader = document.createElement('h2');
-                childMonthYearHeader.textContent = `${child.nombre} - ${monthName} Calendario`;
+                childMonthYearHeader.textContent = `${child.nombre}`;
                 childCalendar.appendChild(childMonthYearHeader);
     
                 // Cambia los días de la semana para que empiecen en lunes
@@ -177,13 +180,7 @@ export class VistaCalendario extends Vista {
                 this.calendarContainer.appendChild(childCalendar);
             });
         }
-        this.monthYearHeader.textContent = `${this.currentYear} - ${this.currentMonth + 1}`;
-    }
-    
-    refrescarCalendario() {
-        let inicioMes = new Date(this.inicioSemana.getFullYear(), this.inicioSemana.getMonth(), 1);
-        let finMes = new Date(this.inicioSemana.getFullYear(), this.inicioSemana.getMonth() + 2, 0);
-        this.controlador.obtenerFestivos(inicioMes, finMes);
+      
     }
 
     /**
@@ -193,6 +190,6 @@ export class VistaCalendario extends Vista {
     mostrar(ver) {
         console.log("ENTRANDO EN MOSTRAR")
         super.mostrar(ver); // Llama al método mostrar de la clase padre
-        if (ver) this.refrescarCalendario();    // Al volver a mostrar la vista, refrescar calendario.
+        if (ver) this.renderCalendars();    // Al volver a mostrar la vista, refrescar calendario.
     }
 }
