@@ -189,7 +189,10 @@ export class VistaCalendario extends Vista {
      */
     mostrar(ver) {
         console.log("ENTRANDO EN MOSTRAR")
+        
         super.mostrar(ver); // Llama al método mostrar de la clase padre
-        if (ver) this.renderCalendars();    // Al volver a mostrar la vista, refrescar calendario.
+        this.controlador.dameHijosGestion(this.idUsuario);
+        this.renderCalendars();    // Al volver a mostrar la vista, refrescar calendario.
+    
     }
 }
