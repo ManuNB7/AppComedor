@@ -192,6 +192,7 @@ export class VistaCalendario extends Vista {
         
         super.mostrar(ver); // Llama al método mostrar de la clase padre
         this.controlador.dameHijosGestion(this.idUsuario);
+        this.actualizar();
         this.renderCalendars();    // Al volver a mostrar la vista, refrescar calendario.
     
     }
