@@ -1,18 +1,11 @@
 import { Rest } from "../services/rest.js";
 
-/**
- * Controlador de login de padres
- */
 class Login {
     constructor() {
         window.onload = this.iniciar.bind(this);
         window.onerror = (error) => console.error('Error capturado. ' + error);
     }
 
-    /**
-     * Inicia el login.
-     * Se llama al cargar la página.
-     */
     iniciar() {
         this.form = document.getElementsByTagName('form')[0];
         this.email = document.getElementsByTagName('input')[0];
@@ -25,12 +18,9 @@ class Login {
         this.email.addEventListener('change', this.comprobarCorreo.bind(this));
     }
 
-    /**
-     * Comprueba si el correo es corporativo o de alumno.
-     */
     comprobarCorreo() {
         const correo = this.email.value.trim().toLowerCase();
-
+    
         if (correo.endsWith('@fundacionloyola.es')) {
             this.btnAceptar.disabled = true;
             this.mostrarMensaje('El personal de la Escuela Virgen de Guadalupe debe acceder con su correo corporativo a través del login de Google', 'login_google.html');
@@ -42,27 +32,13 @@ class Login {
             this.ocultarMensaje();
         }
     }
+    
 
-    /**
-     * Muestra un mensaje al usuario y desactiva el botón de login.
-     * @param {string} mensaje Mensaje a mostrar.
-     * @param {string} enlace Enlace para redirigir.
-     */
     mostrarMensaje(mensaje, enlace) {
-        this.divError.innerHTML = `<p>${mensaje}</p><p><a href="${enlace}">Ir al otro login</a></p>`;
+        this.divError.innerHTML = `<p>${mensaje}</p><a href="${enlace}">Haz clic aquí</a>`;
         this.divError.style.display = 'block';
     }
 
-    /**
-     * Oculta el mensaje y activa el botón de login.
-     */
-    ocultarMensaje() {
-        this.divError.style.display = 'none';
-    }
-
-    /**
-     * Comprobar que el campo de correo y contraseña sean válidos.
-     */
     validarFormulario() {
         this.form.classList.add('was-validated');
 
@@ -71,10 +47,6 @@ class Login {
             this.login();
         }
     }
-
-    /**
-     * Realiza el proceso de login.
-     */
 
     login() {
         this.divCargando.style.display = 'block';
@@ -85,28 +57,22 @@ class Login {
         const login = {
             usuario: this.email.value,
             clave: this.clave.value
-        }
+        };
 
         Rest.post('login', [], login, true)
-            .then(usuario => {
-                this.btnAceptar.disabled = false;
-                this.divCargando.style.display = 'none';
-                sessionStorage.setItem('usuario', JSON.stringify(usuario));
-
-                // Redirige según el dominio del correo electrónico
-                this.redireccionar(this.email.value);
-            })
-            .catch(e => {
-                this.btnAceptar.disabled = false;
-                this.divCargando.style.display = 'none';
-                this.error(e);
-            })
+         .then(usuario => {
+             this.btnAceptar.disabled = false;
+             this.divCargando.style.display = 'none'; 
+             sessionStorage.setItem('usuario', JSON.stringify(usuario));
+             window.location.href = 'index.html';
+         })
+         .catch(e => {
+             this.btnAceptar.disabled = false;
+             this.divCargando.style.display = 'none';
+             this.error(e);
+         })
     }
 
-    /**
-     * Aviso de errores al usuario.
-     * @param {Object} e Error.
-     */
     error(e) {
         if (e != null) {
             if (e == 'Error: 401 - Unauthorized') {
