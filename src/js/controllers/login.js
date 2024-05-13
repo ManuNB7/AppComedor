@@ -22,6 +22,42 @@ class Login {
         this.divError = document.getElementById('divError');
 
         this.btnAceptar.addEventListener('click', this.validarFormulario.bind(this));
+        this.email.addEventListener('change', this.comprobarCorreo.bind(this));
+    }
+
+    /**
+     * Comprueba si el correo es corporativo o de alumno.
+     */
+    comprobarCorreo() {
+        const correo = this.email.value.trim().toLowerCase();
+
+        if (correo.endsWith('@fundacionloyola.es')) {
+            this.btnAceptar.disabled = true;
+            this.mostrarMensaje('El personal de la Escuela Virgen de Guadalupe debe acceder con su correo corporativo a través del login de Google', 'login_google.html');
+        } else if (correo.endsWith('@alumnado.fundacionloyola.net')) {
+            this.btnAceptar.disabled = true;
+            this.mostrarMensaje('Los alumnos de la Escuela Virgen de Guadalupe deben acceder con su correo corporativo a través del login de Google', 'login_google.html');
+        } else {
+            this.btnAceptar.disabled = false;
+            this.ocultarMensaje();
+        }
+    }
+
+    /**
+     * Muestra un mensaje al usuario y desactiva el botón de login.
+     * @param {string} mensaje Mensaje a mostrar.
+     * @param {string} enlace Enlace para redirigir.
+     */
+    mostrarMensaje(mensaje, enlace) {
+        this.divError.innerHTML = `<p>${mensaje}</p><p><a href="${enlace}">Ir al otro login</a></p>`;
+        this.divError.style.display = 'block';
+    }
+
+    /**
+     * Oculta el mensaje y activa el botón de login.
+     */
+    ocultarMensaje() {
+        this.divError.style.display = 'none';
     }
 
     /**
@@ -39,49 +75,33 @@ class Login {
     /**
      * Realiza el proceso de login.
      */
-    /**
- * Realiza el proceso de login.
- */
-login() {
-    this.divCargando.style.display = 'block';
 
-    if (this.divError.style.display == 'block')
-        this.divError.style.display = 'none';
+    login() {
+        this.divCargando.style.display = 'block';
 
-    const login = {
-        usuario: this.email.value,
-        clave: this.clave.value
-    };
+        if (this.divError.style.display == 'block')
+            this.divError.style.display = 'none';
 
-    Rest.post('login', [], login, true)
-     .then(usuario => {
-         this.btnAceptar.disabled = false;
-         this.divCargando.style.display = 'none';
-         sessionStorage.setItem('usuario', JSON.stringify(usuario));
-         
-         // Redirige según el dominio del correo electrónico
-         this.redireccionar(this.email.value);
-     })
-     .catch(e => {
-         this.btnAceptar.disabled = false;
-         this.divCargando.style.display = 'none';
-         this.error(e);
-     })
-}
+        const login = {
+            usuario: this.email.value,
+            clave: this.clave.value
+        }
 
-/**
- * Redirecciona según el tipo de usuario.
- * @param {string} correo Correo electrónico del usuario.
- */
-redireccionar(correo) {
-    if (correo.endsWith('@fundacionloyola.es') || correo.endsWith('@alumnado.fundacionloyola.net')) {
-        window.location.href = 'login_google.html'; // Redirige a index.html
-    } else {
-        // Redirige a otra página para otros dominios de correo
-        window.location.href = 'index.html';
+        Rest.post('login', [], login, true)
+            .then(usuario => {
+                this.btnAceptar.disabled = false;
+                this.divCargando.style.display = 'none';
+                sessionStorage.setItem('usuario', JSON.stringify(usuario));
+
+                // Redirige según el dominio del correo electrónico
+                this.redireccionar(this.email.value);
+            })
+            .catch(e => {
+                this.btnAceptar.disabled = false;
+                this.divCargando.style.display = 'none';
+                this.error(e);
+            })
     }
-}
-
 
     /**
      * Aviso de errores al usuario.
