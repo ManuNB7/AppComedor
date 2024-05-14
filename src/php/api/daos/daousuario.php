@@ -395,9 +395,53 @@ class DAOUsuario
             'iban' => $datos->iban,
             'titular' => $datos->titular
         );
-
-        return BD::insertar($sql, $params);
+        if (strpos($datos->correo, '@fundacionloyola.es') !== false || strpos($datos->correo, '@alumnado.fundacionloyola.net') !== false) {
+        
+            return self::insertarPersonal($params,$sql);
+        
+         
+        }else{
+            return BD::insertar($sql, $params);
+        }
+        
+        
+        
     }
+
+    public static function insertarPersonal($params,$sql)
+    {
+        
+        $id = BD::insertar($sql, $params);
+        
+
+        self::altaPadre($id);
+        
+        // Insertar en Hijo
+        $sql = 'INSERT INTO Hijo(id, idPadreAlta, idCurso, pin)';
+        $sql .= ' VALUES(:id, :idPadreAlta, :idCurso, :pin)';
+        $params = array(
+            'id' => $id,
+            'idPadreAlta' =>  $id,
+            'idCurso' => 1,// NO PUEDE SER NULO Y NO SE QUE PONER
+            'pin' => self::generarUID(4)
+        );
+
+           BD::insertar($sql, $params);
+
+        // Insertar en Hijo_Padre
+        $sql = 'INSERT INTO Hijo_Padre(idPadre, idHijo)';
+        $sql .= ' VALUES(:idPadre, :idHijo)';
+        $params = array(
+            'idPadre' => $id,
+            'idHijo' => $id
+        );
+
+          BD::insertar($sql, $params);
+      return $id;
+        if (!BD::commit())
+            throw new Exception('No se pudo confirmar la transacción.');
+    }
+   
 
     /**
      * Inserta fila en la tabla 'Persona' solo de varios campos.
@@ -512,6 +556,7 @@ class DAOUsuario
         if (!BD::commit())
             throw new Exception('No se pudo confirmar la transacción.');
     }
+   
 
     /**
      * Añade a un hijo existente relación con un padre.
