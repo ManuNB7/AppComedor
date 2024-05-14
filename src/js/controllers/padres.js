@@ -293,6 +293,7 @@ class ControladorPadres {
         this.modelo.dameHijos(id)
          .then(hijos => {
              this.vistaInicio.inicializar(hijos);
+             this.vistaCalendario.renderCalendars(hijos)
          })
          .catch(e => {
              console.error(e)

@@ -28,10 +28,14 @@ export class VistaCalendario extends Vista {
         // Event listeners para los botones de cambiar de mes
         this.prevMonthBtn.addEventListener('click', () => {
             this.changeMonth(-1);
+            this.controlador.dameHijosGestion(this.idUsuario);  
+        this.controlador.dameHijosCalendario(this.idUsuario);
         });
         
         this.nextMonthBtn.addEventListener('click', () => {
             this.changeMonth(1);
+            this.controlador.dameHijosGestion(this.idUsuario);  
+        this.controlador.dameHijosCalendario(this.idUsuario);
         });
     }
 
@@ -194,9 +198,8 @@ export class VistaCalendario extends Vista {
         
         super.mostrar(ver); // Llama al método mostrar de la clase padre
       
-        this.controlador.dameHijosGestion(this.idUsuario);
-     
-           // Al volver a mostrar la vista, refrescar calendario.
+        this.controlador.dameHijosGestion(this.idUsuario);  
+        this.controlador.dameHijosCalendario(this.idUsuario);
        
     }
 }
