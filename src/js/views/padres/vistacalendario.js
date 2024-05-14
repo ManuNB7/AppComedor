@@ -29,13 +29,13 @@ export class VistaCalendario extends Vista {
         this.prevMonthBtn.addEventListener('click', () => {
             this.changeMonth(-1);
             this.controlador.dameHijosGestion(this.idUsuario);  
-        this.controlador.dameHijosCalendario(this.idUsuario);
+            this.controlador.dameHijosCalendario(this.idUsuario);
         });
         
         this.nextMonthBtn.addEventListener('click', () => {
             this.changeMonth(1);
             this.controlador.dameHijosGestion(this.idUsuario);  
-        this.controlador.dameHijosCalendario(this.idUsuario);
+            this.controlador.dameHijosCalendario(this.idUsuario);
         });
     }
 
