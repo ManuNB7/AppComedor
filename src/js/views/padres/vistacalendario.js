@@ -65,6 +65,7 @@ export class VistaCalendario extends Vista {
      * @param {object} datos - Los datos de los días de comedor.
      */
     obtenerDiasComedor(datos) {
+        console.log("AAAAAAA IDAS")
         this.diasComedor = datos;      
     }
 
@@ -73,6 +74,7 @@ export class VistaCalendario extends Vista {
      * @param {object} datos - Los nuevos datos.
      */
     actualizar(datos) {
+        console.log("EEEEA",datos)
         this.idUsuario = datos.id;
         this.controlador.dameHijosGestion(this.idUsuario); // Llama al controlador para obtener los hijos del usuario
     }
@@ -191,9 +193,10 @@ export class VistaCalendario extends Vista {
         console.log("ENTRANDO EN MOSTRAR")
         
         super.mostrar(ver); // Llama al método mostrar de la clase padre
+      
         this.controlador.dameHijosGestion(this.idUsuario);
-        this.actualizar();
-        this.renderCalendars();    // Al volver a mostrar la vista, refrescar calendario.
-    
+     
+           // Al volver a mostrar la vista, refrescar calendario.
+       
     }
 }

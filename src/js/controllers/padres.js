@@ -123,6 +123,7 @@ class ControladorPadres {
         this.vistaGestionHijos.mostrar(false);
         this.vistaModificacion.mostrar(false);
         this.vistaCalendario.mostrar(true);
+        this.vistaCalendario.actualizar(this.#usuario);
     }
 
     /**
@@ -212,15 +213,15 @@ class ControladorPadres {
      * @param {Object} datos Datos del día a marcar.
        @param {HTMLElement} pConfirmacion párrafo para el texto de confirmación.
      */
-   marcarDiaComedor(datos, pConfirmacion) {
+   marcarDiaComedor(datos/*, pConfirmacion*/) {
     this.modelo.marcarDiaComedor(datos)
         .then(resp => {
             // Si la solicitud se completó correctamente
-            pConfirmacion.textContent = 'Marcado correctamente el día ' + datos.dia;
+            //pConfirmacion.textContent = 'Marcado correctamente el día ' + datos.dia;
         })
         .catch(error => {
             {
-                pConfirmacion.textContent = 'No puedes marcar un día desabilitado.';
+                //pConfirmacion.textContent = 'No puedes marcar un día desabilitado.';
             }
         });
 }
@@ -246,15 +247,15 @@ class ControladorPadres {
      * Desmarcar día del comedor.
      * @param {Object} datos Datos del día.
      */
-    desmarcarDiaComedor(datos, pConfirmacion) {
+    desmarcarDiaComedor(datos/*, pConfirmacion*/) {
         this.modelo.desmarcarDiaComedor(datos)
-         .then( resp => {pConfirmacion.textContent = 'Desmarcado correctamente el día ' + datos.dia
+         /*.then( resp => {pConfirmacion.textContent = 'Desmarcado correctamente el día ' + datos.dia
         })         	
          .catch(error => {
             {
-                pConfirmacion.textContent = 'No puedes desmarcar un día desabilitado.';
+                //pConfirmacion.textContent = 'No puedes desmarcar un día desabilitado.';
             }
-        });
+        });*/
          
     }
 
