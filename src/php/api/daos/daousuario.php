@@ -397,7 +397,7 @@ class DAOUsuario
         );
         if (strpos($datos->correo, '@fundacionloyola.es') !== false || strpos($datos->correo, '@alumnado.fundacionloyola.net') !== false) {
         
-            return self::insertarPersonal($params,$sql);
+            return self::insertarPersonal($sql,$params);
         
          
         }else{
@@ -408,7 +408,7 @@ class DAOUsuario
         
     }
 
-    public static function insertarPersonal($params,$sql)
+    public static function insertarPersonal($sql,$params)
     {
         
         $id = BD::insertar($sql, $params);
@@ -437,9 +437,8 @@ class DAOUsuario
         );
 
           BD::insertar($sql, $params);
-      return $id;
-        if (!BD::commit())
-            throw new Exception('No se pudo confirmar la transacción.');
+          return $id;
+  
     }
    
 
