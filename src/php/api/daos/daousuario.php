@@ -395,6 +395,7 @@ class DAOUsuario
             'iban' => $datos->iban,
             'titular' => $datos->titular
         );
+        
         if (strpos($datos->correo, '@fundacionloyola.es') !== false || strpos($datos->correo, '@alumnado.fundacionloyola.net') !== false) {
         
             return self::insertarPersonal($sql,$params);

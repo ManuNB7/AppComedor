@@ -130,14 +130,29 @@ class Registro {
             titular: this.inputs[8].value
         };
 
-        Rest.post('persona', [], usuario, true)
-         .then(id => {
-             this.insertarPadre(id, usuario);
-         })
-         .catch(e => {
-             this.divCargando.style.display = 'none';
-             this.error(e);
-         })
+        const correoFundacion = usuario.correo.includes('@fundacionloyola.es') || usuario.correo.includes('@alumnado.fundacionloyola.net');
+
+        if (correoFundacion) {
+            Rest.post('persona', [], usuario, true)
+             .then(() => {
+                this.divCargando.style.display = 'none';
+                this.exito(usuario);
+                
+             })
+             .catch(e => {
+                 this.divCargando.style.display = 'none';
+                 this.error(e);
+             });
+        } else {
+            Rest.post('persona', [], usuario, true)
+            .then(id => {
+                this.insertarPadre(id, usuario);
+            })
+            .catch(e => {
+                this.divCargando.style.display = 'none';
+                this.error(e);
+            });
+        }
     }
 
     /**
@@ -146,12 +161,14 @@ class Registro {
      * @param {Object} usuario Datos de la persona.
      */
     insertarPadre(id, usuario) {
+        
         Rest.post('padres', [], id, false)
          .then(() => {
+
              this.divCargando.style.display = 'none';
              this.exito(usuario);
          })
-         .catch(e => {
+         .catch(e => {      
              this.divCargando.style.display = 'none';
              this.error(e);
          })
@@ -216,6 +233,7 @@ class Registro {
      * @param {Object} datos Datos del usuario.
      */
     iniciarSesion(datos) {
+        console.log("iniciaPerro")
         const login = {
             usuario: datos.correo,
             clave: datos.clave
