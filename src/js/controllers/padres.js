@@ -316,20 +316,6 @@ class ControladorPadres {
     }
 
     /**
-     * Devuelve los hijos de un padre a la vista de gestión de hijos.
-     * @param {Number} id ID del padre. 
-     */
-    dameHijosGestion(id) {
-        this.modelo.dameHijos(id)
-         .then(hijos => {
-             this.vistaCalendario.cargarHijos(hijos)
-         })
-         .catch(e => {
-             console.error(e)
-         })
-    }
-
-    /**
      * Elimina cuenta de un padre.
      * @param {Number} id ID padre.
      */
