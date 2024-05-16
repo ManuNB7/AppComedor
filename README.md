@@ -14,6 +14,7 @@ Este proyecto busca mejorar la forma en que la Escuela Virgen de Guadalupe gesti
 - **Planificación Eficiente:** Evita cambios de último minuto planificando con anticipación antes de las 14:00 para el día siguiente.
 - **Acceso Simplificado:** Padres, alumnos y personal pueden acceder fácilmente a un resumen mensual de los menús seleccionados, mejorando la comunicación y planificación familiar.
 - **Mayor Organización:** Los resultados de la gestión diaria se presentarán ordenados por apellido, ofreciendo una experiencia más organizada y fácil de seguir.
+- **Gestión mensual:** Obtén una visión general del mes para ver los días reservados en el comedor.
 - **Opciones Adicionales:** Agrega la posibilidad de incluir tuppers al menú diario, brindando más flexibilidad a los usuarios.
 - **Beneficios para el Personal:** Ofrecemos precios reducidos para hijos de empleados, promoviendo beneficios adicionales para el personal de la escuela.
 - **Acceso Seguro:** Implementamos un acceso seguro para empleados y alumnos, garantizando precios reducidos para aquellos elegibles.
