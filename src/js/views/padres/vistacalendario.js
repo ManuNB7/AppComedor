@@ -28,13 +28,11 @@ export class VistaCalendario extends Vista {
         // Event listeners para los botones de cambiar de mes
         this.prevMonthBtn.addEventListener('click', () => {
             this.changeMonth(-1);
-            this.controlador.dameHijosGestion(this.idUsuario);  
             this.controlador.dameHijosCalendario(this.idUsuario);
         });
         
         this.nextMonthBtn.addEventListener('click', () => {
             this.changeMonth(1);
-            this.controlador.dameHijosGestion(this.idUsuario);  
             this.controlador.dameHijosCalendario(this.idUsuario);
         });
     }
@@ -69,7 +67,6 @@ export class VistaCalendario extends Vista {
      * @param {object} datos - Los datos de los días de comedor.
      */
     obtenerDiasComedor(datos) {
-        console.log("AAAAAAA IDAS")
         this.diasComedor = datos;      
     }
 
@@ -78,9 +75,7 @@ export class VistaCalendario extends Vista {
      * @param {object} datos - Los nuevos datos.
      */
     actualizar(datos) {
-        console.log("EEEEA",datos)
         this.idUsuario = datos.id;
-        this.controlador.dameHijosGestion(this.idUsuario); // Llama al controlador para obtener los hijos del usuario
     }
 
     /**
@@ -145,12 +140,11 @@ export class VistaCalendario extends Vista {
     
                 setTimeout(() => {
                     // Filtra los días reservados que pertenecen al mes actual y al hijo actual
-                    const reservedDaysThisMonth = this.diasComedor.filter(objeto => {
+                    const reservedDaysThisMonth = this.diasComedor.filter(objeto => {                     
                         const dayMonth = new Date(objeto.dia).getMonth();
                         const dayYear = new Date(objeto.dia).getFullYear();
                         return dayMonth === this.currentMonth && dayYear === this.currentYear && objeto.idPersona === child.id;
                     });
-    
                     // Agrega días vacíos al principio del calendario para que el primer día sea el día correcto de la semana
                     for (let i = 0; i < firstDayIndex; i++) {
                         const emptyDay = document.createElement('div');
@@ -194,12 +188,7 @@ export class VistaCalendario extends Vista {
      * @param {boolean} ver - Indica si se debe mostrar o no la vista.
      */
     mostrar(ver) {
-        console.log("ENTRANDO EN MOSTRAR")
-        
         super.mostrar(ver); // Llama al método mostrar de la clase padre
-      
-        this.controlador.dameHijosGestion(this.idUsuario);  
-        this.controlador.dameHijosCalendario(this.idUsuario);
-       
+        this.controlador.dameHijosCalendario(this.idUsuario);       
     }
 }
