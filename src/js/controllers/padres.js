@@ -292,7 +292,7 @@ class ControladorPadres {
     dameHijosCalendario(id) {
         this.modelo.dameHijos(id)
          .then(hijos => {
-             this.vistaInicio.inicializar(hijos);
+             this.vistaInicio.inicializar(hijos); 
              this.vistaCalendario.renderCalendars(hijos)
          })
          .catch(e => {
@@ -322,8 +322,7 @@ class ControladorPadres {
     dameHijosGestion(id) {
         this.modelo.dameHijos(id)
          .then(hijos => {
-             this.vistaCalendario.cargarHijos(hijos);
-             this.vistaCalendario.renderCalendars(hijos)
+             this.vistaCalendario.cargarHijos(hijos)
          })
          .catch(e => {
              console.error(e)
