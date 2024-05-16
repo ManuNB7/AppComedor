@@ -74,6 +74,7 @@ div#loadingImgPin {
 }
 
 /* ----- CALENDARIO HIJOS ----- */
+
 img#btnAnadir {
     width: 40px;
     height: 40px;
@@ -81,25 +82,24 @@ img#btnAnadir {
 }
 
 table#menuHijos {
-	margin: 50px auto;
-	width: 60%;
+    margin: 50px auto;
+    width: 60%;
     max-width: 1000px;
     min-width: 320px;
-	border-collapse: collapse;
-	border: 1px black solid;
-	font-size: 18px;
-	font-weight: bold;
+    border-collapse: collapse;
+    border: 1px solid #ddd; /* Cambio el color del borde a un gris más suave */
+    font-size: 18px;
+    font-weight: bold;
     text-align: center;
 }
 
 #menuHijos thead {
-    background-color: #014179;
+    background-color: #014179; /* Azul oscuro para el encabezado */
     color: white;
 }
 
 #menuHijos thead th {
     width: 11.4%;
-    border-right: 1px solid black;
     padding: 10px;
 }
 
@@ -118,12 +118,12 @@ table#menuHijos {
 }
 
 #menuHijos td {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #ddd; /* Cambio el color del borde inferior */
 }
 
 #menuHijos .tdHijos {
-    border-bottom: 1px solid black;
-    border-right: 1px solid black;
+    border-bottom: 1px solid #ddd; /* Cambio el color del borde inferior */
+    border-right: 1px solid #ddd; /* Cambio el color del borde derecho */
     word-break: break-all;
     padding: 0 5px;
 }
@@ -135,7 +135,7 @@ table#menuHijos {
 }
 
 #menuHijos .tdBotones {
-    border-top: 1px solid black;
+    border-top: 1px solid #ddd; /* Cambio el color del borde superior */
 }
 
 #menuHijos .diaSemana {
@@ -148,7 +148,9 @@ table#menuHijos {
     margin: 5px 10%;
     border: 0;
     border-radius: 5px;
-    background-color: #408CCE;
+    background-color: #408CCE; /* Azul para los botones */
+    color: white;
+    font-weight: bold;
 }
 
 #menuHijos button i {
@@ -156,8 +158,9 @@ table#menuHijos {
 }
 
 #menuHijos button:active {
-    background-color: #459ce9;
+    background-color: #0056b3; /* Azul más oscuro al presionar */
 }
+
 
 
 /* MODIFICACIÓN PADRE */
@@ -214,4 +217,34 @@ div#divErrorBorrado {
     #tablaHijos {
         font-size: 0.85em;
     }
+}
+
+/* Estilos comunes para todas las notificaciones */
+#inicioPadres > #divNotificacion > div {
+    padding: 8px 12px;
+    color: white;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    position: absolute; /* Cambiar de fixed a absolute */
+    width: 220px;
+    z-index: 9999;
+    transition: top 0.3s ease-out;
+    margin-bottom: 20px; /* Ajustar el margen inferior según sea necesario */
+    top: 50%; /* Centrar verticalmente */
+    transform: translateY(-50%); /* Centrar verticalmente */
+    right: 20px; /* Ajustar la distancia desde el borde derecho */
+}
+
+
+
+
+/* Estilos específicos para notificaciones de marcado */
+#inicioPadres > #divNotificacion > div.marcado {
+    background: linear-gradient(to right, #2C95FF, #53D7FF);
+}
+
+/* Estilos específicos para notificaciones de desmarcado */
+#inicioPadres > #divNotificacion > div.desmarcado {
+    background: linear-gradient(to right, #FFC3A0, #FF6F91);
 }
