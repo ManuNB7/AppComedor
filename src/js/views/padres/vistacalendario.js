@@ -55,14 +55,6 @@ export class VistaCalendario extends Vista {
     }
 
     /**
-     * Método para obtener el padre.
-     * @param {object} datos - Los datos del padre.
-     */
-    obtenerPadre(datos) {
-        this.idPadre = datos.id;
-    }
-
-    /**
      * Método para obtener los días de comedor.
      * @param {object} datos - Los datos de los días de comedor.
      */
