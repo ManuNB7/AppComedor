@@ -163,44 +163,45 @@ class DAOUsuario
         return DAOUsuario::crearDias($resultado);
     }
     public static function obtenerDiasCalendario($idPadre)
-{
-    // Consulta SQL actualizada
-    $sql = '
-        SELECT 
-            h.id AS id_hijo, 
-            p.nombre, 
-            GROUP_CONCAT(DISTINCT DAY(d.dia) ORDER BY d.dia ASC) AS dias
-        FROM 
-            hijo h
-        JOIN 
-            persona p ON h.id = p.id
-        JOIN 
-            dias d ON h.id = d.idPersona
-        JOIN 
-            hijo_padre hp ON h.id = hp.idHijo
-        WHERE 
-            h.activo = 1 AND hp.idPadre = ?
-        GROUP BY 
-            h.id, p.nombre
-        ORDER BY 
-            h.id;
-    ';
+    {
+        // Consulta SQL actualizada
+        $sql = '
+            SELECT 
+                h.id AS id_hijo, 
+                p.nombre, 
+                GROUP_CONCAT(DISTINCT DATE_FORMAT(d.dia, "%d-%m-%Y") ORDER BY d.dia ASC) AS dias
+            FROM 
+                hijo h
+            JOIN 
+                persona p ON h.id = p.id
+            JOIN 
+                dias d ON h.id = d.idPersona
+            JOIN 
+                hijo_padre hp ON h.id = hp.idHijo
+            WHERE 
+                h.activo = 1 AND hp.idPadre = ?
+            GROUP BY 
+                h.id, p.nombre
+            ORDER BY 
+                h.id;
+        ';
+        
+        // Ejecutar la consulta con el parámetro idPadre
+        $resultado = BD::seleccionar($sql, $idPadre);
     
-    // Ejecutar la consulta con el parámetro idPadre
-    $resultado = BD::seleccionar($sql, $idPadre);
-
-    // Procesar el resultado para crear los datos en el formato deseado
-    $datos = [];
-    foreach ($resultado as $fila) {
-        $datos[] = [
-            'id_hijo' => $fila['id_hijo'],
-            'nombre' => $fila['nombre'],
-            'dias' => explode(',', $fila['dias'])
-        ];
+        // Procesar el resultado para crear los datos en el formato deseado
+        $datos = [];
+        foreach ($resultado as $fila) {
+            $datos[] = [
+                'id_hijo' => $fila['id_hijo'],
+                'nombre' => $fila['nombre'],
+                'dias' => explode(',', $fila['dias'])
+            ];
+        }
+    
+        return $datos;
     }
-
-    return $datos;
-}
+    
 
     /**
      * Obtener los datos de las personas que tienen 'x' día asignado.
