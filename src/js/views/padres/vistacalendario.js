@@ -28,12 +28,13 @@ export class VistaCalendario extends Vista {
         // Event listeners para los botones de cambiar de mes
         this.prevMonthBtn.addEventListener('click', () => {
             this.changeMonth(-1);
-            this.controlador.dameHijosCalendario(this.idUsuario);
+          
+        
         });
         
         this.nextMonthBtn.addEventListener('click', () => {
             this.changeMonth(1);
-            this.controlador.dameHijosCalendario(this.idUsuario);
+         
         }); 
         
     }
@@ -53,23 +54,7 @@ export class VistaCalendario extends Vista {
         } 
     }
 
-    /**
-     * Método para obtener los días de comedor.
-     * @param {object} datos - Los datos de los días de comedor.
-     */
-    obtenerDiasComedor(datos) {
-        this.diasComedor = datos; 
-    }
-
-    /**
-     * Método para actualizar datos.
-     * @param {object} datos - Los nuevos datos.
-     */
-    actualizar(datos) {
-        this.idUsuario = datos.id;
-    }
-
-
+    
 
     /**
      * Método para renderizar los calendarios.
@@ -170,6 +155,6 @@ export class VistaCalendario extends Vista {
      */
     mostrar(ver) {
         super.mostrar(ver);   
-        this.controlador.dameHijosCalendario(this.idUsuario);   
+      
     }
 }

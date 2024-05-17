@@ -102,7 +102,12 @@ export class Modelo {
      */
     obtenerDiasComedor(ids) {
         return Rest.get('dias', [], ids);
+     
+           
+          
+      
     }
+  
 
     /**
      * Llamada para insertar fila a la tabla dias.
@@ -272,5 +277,12 @@ export class Modelo {
         queryParams.set('proceso', 'menu');
         return Rest.get('constantes', [], queryParams);
     }
+    obtenerDiasCalendario(idPadre) {
+   
+        // const queryParams = new Map();
+        // queryParams.set ('idPadre', idPadre)
 
+        return Rest.get('calendario', [], [idPadre]);
+     
+    }
 }

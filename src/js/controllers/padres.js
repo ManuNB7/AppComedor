@@ -15,6 +15,7 @@ class ControladorPadres {
     constructor() {
         window.onload = this.iniciar.bind(this);
         window.onerror = (error) => console.error('Error capturado. ' + error);
+       
     }
 
     /**
@@ -43,7 +44,7 @@ class ControladorPadres {
         this.vistaModificacion.actualizarCampos(this.#usuario);
         this.vistaGestionHijos.actualizar(this.#usuario);
         this.vistaInicio.obtenerPadre(this.#usuario);
-        this.vistaCalendario.actualizar(this.#usuario);
+      
         
         this.verVistaInicio();
     }
@@ -73,7 +74,18 @@ class ControladorPadres {
              console.error(e);
          })
     }
-
+       /**
+     * Devuelve array de cursos a vista de gestión de hijos.
+     */
+       obtenerDatosCalendario() {
+        this.modelo.obtenerDiasCalendario(this.#usuario.id)
+         .then(cursos => {
+            console.log(cursos)
+         })
+         .catch(e => {
+             console.error(e);
+         })
+    }
     /**
      * Cambia a la vista de inicio.
      */
@@ -111,7 +123,7 @@ class ControladorPadres {
         this.vistaInicio.mostrar(false);
         this.vistaGestionHijos.mostrar(false);
         this.vistaModificacion.mostrar(false);   
-
+        this.obtenerDatosCalendario();
         this.vistaCalendario.mostrar(true)
    
     }
@@ -214,7 +226,7 @@ class ControladorPadres {
                 //pConfirmacion.textContent = 'No puedes marcar un día desabilitado.';
             }
         });
-}
+    }
 
 
     /**
@@ -225,7 +237,8 @@ class ControladorPadres {
         this.modelo.obtenerDiasComedor(idHijos)
          .then(dias => {
             this.vistaInicio.montarCalendario(dias);
-            this.vistaCalendario.obtenerDiasComedor(dias)
+         
+          
          })
          .catch(e => {
              console.error(e);
@@ -279,16 +292,18 @@ class ControladorPadres {
      * Devuelve los hijos de un padre a la vista de inicio.
      * @param {Number} id ID del padre. 
      */
-    dameHijosCalendario(id) {
+    dameHijosCalendario(id) { 
         this.modelo.dameHijos(id)
         .then(hijos => {
+            
             this.vistaInicio.inicializar(hijos)
-            this.vistaCalendario.renderCalendars(hijos)
+      
         })
         .catch(e => {
             console.error(e);
             this.vistaCalendario.calendarContainer.innerHTML = '<p>Error al cargar los datos.</p>';
         });
+
     }
     
 
