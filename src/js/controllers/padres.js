@@ -79,12 +79,13 @@ class ControladorPadres {
      */
        obtenerDatosCalendario() {
         this.modelo.obtenerDiasCalendario(this.#usuario.id)
-         .then(cursos => {
-            console.log(cursos)
-         })
-         .catch(e => {
-             console.error(e);
-         })
+            .then(cursos => {
+                console.log(cursos);
+                this.vistaCalendario.renderCalendars(cursos);
+            })
+            .catch(e => {
+                console.error(e);
+            });
     }
     /**
      * Cambia a la vista de inicio.
