@@ -60,18 +60,7 @@ class ControladorPadres {
              console.error(e);
          })
     }
-    /**
-     * Devuelve array de días festivos a vista de gestión de hijos.
-     */
-    obtenerFestivosGestion(inicioMes, finMes) {
-        this.modelo.obtenerFestivosGestion(inicioMes, finMes)
-        .then(festivos => {
-            this.vistaCalendario.obtenerFestivos(festivos);
-        })
-        .catch(e => {
-            console.error(e);
-        })
-    }
+   
     /**
      * Devuelve array de cursos a vista de gestión de hijos.
      */
@@ -121,9 +110,10 @@ class ControladorPadres {
     verVistaCalendario() {
         this.vistaInicio.mostrar(false);
         this.vistaGestionHijos.mostrar(false);
-        this.vistaModificacion.mostrar(false);
-        this.vistaCalendario.mostrar(true);
-        this.vistaCalendario.actualizar(this.#usuario);
+        this.vistaModificacion.mostrar(false);   
+
+        this.vistaCalendario.mostrar(true)
+   
     }
 
     /**
@@ -291,14 +281,16 @@ class ControladorPadres {
      */
     dameHijosCalendario(id) {
         this.modelo.dameHijos(id)
-         .then(hijos => {
-             this.vistaInicio.inicializar(hijos); 
-             this.vistaCalendario.renderCalendars(hijos)
-         })
-         .catch(e => {
-             console.error(e)
-         })
+        .then(hijos => {
+            this.vistaInicio.inicializar(hijos)
+            this.vistaCalendario.renderCalendars(hijos)
+        })
+        .catch(e => {
+            console.error(e);
+            this.vistaCalendario.calendarContainer.innerHTML = '<p>Error al cargar los datos.</p>';
+        });
     }
+    
 
   
     /**
