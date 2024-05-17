@@ -403,14 +403,13 @@ class DAOUsuario
          
         }else{
             return BD::insertar($sql, $params);
-        }
-        
-        
-        
+        } 
     }
 
     public static function insertarPersonal($sql,$params)
     {
+        if (!BD::iniciarTransaccion())
+        throw new Exception('No es posible iniciar la transacción.');
         
         $id = BD::insertar($sql, $params);
         
@@ -438,6 +437,9 @@ class DAOUsuario
         );
 
           BD::insertar($sql, $params);
+          if (!BD::commit())
+          throw new Exception('No se pudo confirmar la transacción.');
+        
           return $id;
   
     }
