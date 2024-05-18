@@ -82,19 +82,21 @@ export class VistaCalendario extends Vista {
                     const day = document.createElement('div');
                     day.classList.add('day');
                     day.textContent = i;
-    
+                
                     const date = new Date(this.currentYear, this.currentMonth, i);
                     if (date.getDay() === 6 || date.getDay() === 0) {
                         day.classList.add('weekend');
                     }
-    
+                
                     // Comprobar si el día actual está marcado para este hijo
-                    if (child.dias.includes(i.toString())) {
+                    const formattedDate = `${('0' + i).slice(-2)}-${('0' + (this.currentMonth + 1)).slice(-2)}-${this.currentYear}`;
+                    if (child.dias.includes(formattedDate)) {
                         day.classList.add('blue-day');
                     }
-    
+                
                     daysList.appendChild(day);
                 }
+                
     
                 childCalendar.appendChild(daysList);
                 this.calendarContainer.appendChild(childCalendar);
@@ -103,6 +105,8 @@ export class VistaCalendario extends Vista {
             this.calendarContainer.innerHTML = '<p>No hay días marcados para mostrar.</p>';
         }
     }
+    
+    
     
     
     
