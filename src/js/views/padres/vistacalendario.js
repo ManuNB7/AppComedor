@@ -5,6 +5,10 @@ export class VistaCalendario extends Vista {
         super(controlador, div);
         
         this.calendarContainer = document.getElementById('calendarGestion-container');
+        this.loadingMessage = document.createElement('p');
+        this.loadingMessage.textContent = 'Cargando...';
+        this.calendarContainer.appendChild(this.loadingMessage);
+
         this.prevMonthBtn = document.getElementById('prevMonth');
         this.nextMonthBtn = document.getElementById('nextMonth');
         this.monthYearHeader = document.getElementById('monthYear');
@@ -35,6 +39,16 @@ export class VistaCalendario extends Vista {
         }
         this.renderCalendars(this.hijos);
     }
+
+    loadCalendarData(hijos) {
+        // Mostrar el mensaje de "Cargando..."
+        this.calendarContainer.innerHTML = '';
+        this.calendarContainer.appendChild(this.loadingMessage);
+    
+        // Renderizar los datos
+        this.renderCalendars(hijos);
+    }
+    
 
     renderCalendars(hijos) {
         this.hijos = hijos;
@@ -88,7 +102,6 @@ export class VistaCalendario extends Vista {
                         day.classList.add('weekend');
                     }
                 
-                    // Comprobar si el día actual está marcado para este hijo
                     const formattedDate = `${('0' + i).slice(-2)}-${('0' + (this.currentMonth + 1)).slice(-2)}-${this.currentYear}`;
                     if (child.dias.includes(formattedDate)) {
                         day.classList.add('blue-day');
@@ -105,13 +118,6 @@ export class VistaCalendario extends Vista {
             this.calendarContainer.innerHTML = '<p>No hay días marcados para mostrar.</p>';
         }
     }
-    
-    
-    
-    
-    
-    
-    
 
     mostrar(ver) {
         super.mostrar(ver);

@@ -74,19 +74,20 @@ class ControladorPadres {
              console.error(e);
          })
     }
-       /**
+    /**
      * Devuelve array de cursos a vista de gestión de hijos.
      */
-       obtenerDatosCalendario() {
-        this.modelo.obtenerDiasCalendario(this.#usuario.id)
-            .then(cursos => {
-                console.log(cursos);
-                this.vistaCalendario.renderCalendars(cursos);
-            })
-            .catch(e => {
-                console.error(e);
-            });
+    obtenerDatosCalendario() {
+    this.modelo.obtenerDiasCalendario(this.#usuario.id)
+        .then(cursos => {
+            console.log(cursos);
+            this.vistaCalendario.loadCalendarData(cursos);
+        })
+        .catch(e => {
+            console.error(e);
+        });
     }
+
     /**
      * Cambia a la vista de inicio.
      */
