@@ -277,12 +277,12 @@ export class Modelo {
         queryParams.set('proceso', 'menu');
         return Rest.get('constantes', [], queryParams);
     }
-    obtenerDiasCalendario(idPadre) {
-   
-        // const queryParams = new Map();
-        // queryParams.set ('idPadre', idPadre)
 
+    /**
+     * Obtiene los datos de la gestión mensual.
+     * @returns {Promise} Una promesa que se resolverá con la constante relacionada con el calendario.
+     */
+    obtenerDiasCalendario(idPadre) {
         return Rest.get('calendario', [], [idPadre]);
-     
     }
 }
