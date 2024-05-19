@@ -74,6 +74,7 @@ class ControladorPadres {
              console.error(e);
          })
     }
+    
     /**
      * Devuelve array de cursos a vista de gestión de hijos.
      */
