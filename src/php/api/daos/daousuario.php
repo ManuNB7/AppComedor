@@ -162,13 +162,8 @@ class DAOUsuario
 
         return DAOUsuario::crearDias($resultado);
     }
-    // Modificar la función obtenerDiasCalendario para que acepte año y mes como parámetros adicionales
-    public static function obtenerDiasCalendario($queryParams)
-    {
- 
-	
-        // Consulta SQL actualizada con filtro por año y mes
 
+    public static function obtenerDiasCalendario($queryParams) {
         $sql = '
             SELECT 
                 h.id AS id_hijo, 
@@ -189,11 +184,8 @@ class DAOUsuario
             ORDER BY 
                 h.id;
         ';
-        // Ejecutar la consulta con los parámetros idPadre, año y mes
-        $resultado = BD::seleccionar($sql, $queryParams);
-        
-    
-        // Procesar el resultado para crear los datos en el formato deseado
+        // Ejecutar la consulta con los parámetros idPadre, anio, mes
+        $resultado = BD::seleccionar($sql, [$queryParams['idPadre'], $queryParams['anio'], $queryParams['mes']]);
         $datos = [];
         foreach ($resultado as $fila) {
             $datos[] = [
@@ -202,11 +194,9 @@ class DAOUsuario
                 'dias' => explode(',', $fila['dias'])
             ];
         }
-    
         return $datos;
     }
     
-
     /**
      * Obtener los datos de las personas que tienen 'x' día asignado.
      * @param DateTime $fecha Fecha.

@@ -83,6 +83,7 @@ class ControladorPadres {
     obtenerDatosCalendario(anio, mes) {
         this.modelo.obtenerDiasCalendario(this.#usuario.id, anio, mes)
             .then(cursos => {
+                console.log(cursos)
                 this.vistaCalendario.loadCalendarData(cursos);
             })
             .catch(e => {

@@ -18,13 +18,14 @@ export class VistaCalendario extends Vista {
         this.hijos = [];
         this.prevMonthBtn.addEventListener('click', () => {
             this.changeMonth(-1);
-            this.controlador.obtenerDatosCalendario(currentYear, currentMonth+1);
+            this.controlador.obtenerDatosCalendario(this.currentYear, this.currentMonth + 1); // Cambiado a this.currentYear y this.currentMonth
         });
         
         this.nextMonthBtn.addEventListener('click', () => {
             this.changeMonth(1);
-            this.controlador.obtenerDatosCalendario(currentYear, currentMonth+1);
+            this.controlador.obtenerDatosCalendario(this.currentYear, this.currentMonth + 1); // Cambiado a this.currentYear y this.currentMonth
         });
+        
     }
 
     changeMonth(change) {
@@ -120,6 +121,6 @@ export class VistaCalendario extends Vista {
 
     mostrar(ver) {
         super.mostrar(ver);
-        this.controlador.obtenerDatosCalendario(this.currentYear,this.currentMonth+1);
+        this.controlador.obtenerDatosCalendario(this.currentYear, this.currentMonth + 1);
     }
 }
