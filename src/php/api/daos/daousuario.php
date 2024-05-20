@@ -162,9 +162,13 @@ class DAOUsuario
 
         return DAOUsuario::crearDias($resultado);
     }
-    public static function obtenerDiasCalendario($idPadre)
+    // Modificar la función obtenerDiasCalendario para que acepte año y mes como parámetros adicionales
+    public static function obtenerDiasCalendario($queryParams)
     {
-        // Consulta SQL actualizada
+ 
+	
+        // Consulta SQL actualizada con filtro por año y mes
+
         $sql = '
             SELECT 
                 h.id AS id_hijo, 
@@ -179,15 +183,15 @@ class DAOUsuario
             JOIN 
                 hijo_padre hp ON h.id = hp.idHijo
             WHERE 
-                h.activo = 1 AND hp.idPadre = ?
+                h.activo = 1 AND hp.idPadre = ? AND YEAR(d.dia) = ? AND MONTH(d.dia) = ?
             GROUP BY 
                 h.id, p.nombre
             ORDER BY 
                 h.id;
         ';
+        // Ejecutar la consulta con los parámetros idPadre, año y mes
+        $resultado = BD::seleccionar($sql, $queryParams);
         
-        // Ejecutar la consulta con el parámetro idPadre
-        $resultado = BD::seleccionar($sql, $idPadre);
     
         // Procesar el resultado para crear los datos en el formato deseado
         $datos = [];

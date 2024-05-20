@@ -16,15 +16,14 @@ export class VistaCalendario extends Vista {
         this.currentMonth = currentDate.getMonth();
         this.currentYear = currentDate.getFullYear();
         this.hijos = [];
-
         this.prevMonthBtn.addEventListener('click', () => {
             this.changeMonth(-1);
-            this.controlador.obtenerDatosCalendario();
+            this.controlador.obtenerDatosCalendario(currentYear, currentMonth+1);
         });
         
         this.nextMonthBtn.addEventListener('click', () => {
             this.changeMonth(1);
-            this.controlador.obtenerDatosCalendario();
+            this.controlador.obtenerDatosCalendario(currentYear, currentMonth+1);
         });
     }
 
@@ -121,5 +120,6 @@ export class VistaCalendario extends Vista {
 
     mostrar(ver) {
         super.mostrar(ver);
+        this.controlador.obtenerDatosCalendario(this.currentYear,this.currentMonth+1);
     }
 }

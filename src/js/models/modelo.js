@@ -282,7 +282,11 @@ export class Modelo {
      * Obtiene los datos de la gestión mensual.
      * @returns {Promise} Una promesa que se resolverá con la constante relacionada con el calendario.
      */
-    obtenerDiasCalendario(idPadre) {
-        return Rest.get('calendario', [], [idPadre]);
+    obtenerDiasCalendario(idPadre,anio,mes) {
+        const queryParams = new Map();
+        queryParams.set('idPadre', idPadre);
+        queryParams.set('anio', anio);
+        queryParams.set('mes', mes);
+        return Rest.get('calendario', [], queryParams);       
     }
 }

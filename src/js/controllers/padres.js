@@ -78,15 +78,16 @@ class ControladorPadres {
     /**
      * Devuelve array de cursos a vista de gestión de hijos.
      */
-    obtenerDatosCalendario() {
-    this.modelo.obtenerDiasCalendario(this.#usuario.id)
-        .then(cursos => {
-            console.log(cursos);
-            this.vistaCalendario.loadCalendarData(cursos);
-        })
-        .catch(e => {
-            console.error(e);
-        });
+  
+    // Modificar la función obtenerDatosCalendario para pasar el año y el mes actual
+    obtenerDatosCalendario(anio, mes) {
+        this.modelo.obtenerDiasCalendario(this.#usuario.id, anio, mes)
+            .then(cursos => {
+                this.vistaCalendario.loadCalendarData(cursos);
+            })
+            .catch(e => {
+                console.error(e);
+            });
     }
 
     /**
@@ -126,7 +127,6 @@ class ControladorPadres {
         this.vistaInicio.mostrar(false);
         this.vistaGestionHijos.mostrar(false);
         this.vistaModificacion.mostrar(false);   
-        this.obtenerDatosCalendario();
         this.vistaCalendario.mostrar(true)
    
     }
@@ -241,7 +241,7 @@ class ControladorPadres {
          .then(dias => {
             this.vistaInicio.montarCalendario(dias);
          
-          
+
          })
          .catch(e => {
              console.error(e);
