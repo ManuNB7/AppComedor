@@ -99,6 +99,7 @@
 
             case 'login_google':
                 require_once('./controllers/logingoogle.php');
+                LoginGoogle::$secretaria = $config["correo_secretaria"];
                 $controlador = new LoginGoogle();
                 break;
 
