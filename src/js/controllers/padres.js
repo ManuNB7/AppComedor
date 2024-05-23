@@ -28,7 +28,7 @@ class ControladorPadres {
             window.location.href = 'login.html';
 
         // Comprobar rol de usuario padre
-        if (this.#usuario.rol != 'P' && this.#usuario.rol != 'G' )
+        if (this.#usuario.rol != 'P' || this.#usuario.rol != 'G' )
             window.location.href = 'login.html';
 
        
