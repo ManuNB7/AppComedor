@@ -71,8 +71,9 @@ class LoginGoogle {
         }
         // PAS o profesores
         else if (usuario.rol == 'G') {
-            window.location.href = 'index.html';   
             sessionStorage.setItem('usuario', JSON.stringify(usuario));
+            window.location.href = 'index.html';   
+         
         }
     }
 
