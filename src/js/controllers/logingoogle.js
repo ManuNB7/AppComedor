@@ -70,7 +70,7 @@ class LoginGoogle {
         }
         // PAS o profesores
         else if (usuario.rol == 'G') {
-            window.location.href = 'index_personal.html';   
+            window.location.href = 'index.html';   
         }
     }
 

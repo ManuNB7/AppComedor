@@ -28,11 +28,10 @@ class ControladorPadres {
             window.location.href = 'login.html';
 
         // Comprobar rol de usuario padre
-        if (this.#usuario.rol != 'P')
+        if (this.#usuario.rol != 'P' && this.#usuario.rol != 'G' )
             window.location.href = 'login.html';
-        
-        if (this.#usuario.rol != 'G')
-            window.location.href = 'index.html';
+
+       
 
         Rest.setAutorizacion(this.#usuario.autorizacion);
 
