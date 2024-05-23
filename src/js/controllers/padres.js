@@ -24,9 +24,14 @@ class ControladorPadres {
         this.#usuario = JSON.parse(sessionStorage.getItem('usuario'));
 
         // Comprobar login
-     
-     
-        
+        if (!this.#usuario)
+            window.location.href = 'login.html';
+
+        // Comprobar rol de usuario padre
+        if (this.#usuario.rol != 'P')
+            window.location.href = 'login.html';
+
+        Rest.setAutorizacion(this.#usuario.autorizacion);
 
         this.modelo = new Modelo();
         this.vistaMenu = new VistaMenuPadres(this, document.getElementById('menuPadres'));
