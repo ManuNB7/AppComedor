@@ -27,7 +27,9 @@ class ControladorPadres {
         if (!this.#usuario)
             window.location.href = 'login.html';
 
-     
+       /* // Comprobar rol de usuario padre o profe
+        if (this.#usuario.rol != 'P' || this.#usuario.rol != 'G' )
+            window.location.href = 'login.html';*/
 
         Rest.setAutorizacion(this.#usuario.autorizacion);
 
