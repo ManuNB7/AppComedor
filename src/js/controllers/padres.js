@@ -33,7 +33,7 @@ class ControladorPadres {
         
        
 
-        Rest.setAutorizacion(this.#usuario.autorizacion);
+     
 
         this.modelo = new Modelo();
         this.vistaMenu = new VistaMenuPadres(this, document.getElementById('menuPadres'));
