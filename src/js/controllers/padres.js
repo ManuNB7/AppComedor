@@ -15,6 +15,7 @@ class ControladorPadres {
     constructor() {
         window.onload = this.iniciar.bind(this);
         window.onerror = (error) => console.error('Error capturado. ' + error);
+       
     }
 
     /**
@@ -43,7 +44,7 @@ class ControladorPadres {
         this.vistaModificacion.actualizarCampos(this.#usuario);
         this.vistaGestionHijos.actualizar(this.#usuario);
         this.vistaInicio.obtenerPadre(this.#usuario);
-        this.vistaCalendario.actualizar(this.#usuario);
+      
         
         this.verVistaInicio();
     }
@@ -60,18 +61,7 @@ class ControladorPadres {
              console.error(e);
          })
     }
-    /**
-     * Devuelve array de días festivos a vista de gestión de hijos.
-     */
-    obtenerFestivosGestion(inicioMes, finMes) {
-        this.modelo.obtenerFestivosGestion(inicioMes, finMes)
-        .then(festivos => {
-            this.vistaCalendario.obtenerFestivos(festivos);
-        })
-        .catch(e => {
-            console.error(e);
-        })
-    }
+   
     /**
      * Devuelve array de cursos a vista de gestión de hijos.
      */
@@ -83,6 +73,22 @@ class ControladorPadres {
          .catch(e => {
              console.error(e);
          })
+    }
+    
+    /**
+     * Devuelve array de cursos a vista de gestión de hijos.
+     */
+  
+    // Modificar la función obtenerDatosCalendario para pasar el año y el mes actual
+    obtenerDatosCalendario(anio, mes) {
+        this.modelo.obtenerDiasCalendario(this.#usuario.id, anio, mes)
+            .then(cursos => {
+                console.log(cursos)
+                this.vistaCalendario.loadCalendarData(cursos);
+            })
+            .catch(e => {
+                console.error(e);
+            });
     }
 
     /**
@@ -121,9 +127,9 @@ class ControladorPadres {
     verVistaCalendario() {
         this.vistaInicio.mostrar(false);
         this.vistaGestionHijos.mostrar(false);
-        this.vistaModificacion.mostrar(false);
-        this.vistaCalendario.mostrar(true);
-        this.vistaCalendario.actualizar(this.#usuario);
+        this.vistaModificacion.mostrar(false);   
+        this.vistaCalendario.mostrar(true)
+   
     }
 
     /**
@@ -224,7 +230,7 @@ class ControladorPadres {
                 //pConfirmacion.textContent = 'No puedes marcar un día desabilitado.';
             }
         });
-}
+    }
 
 
     /**
@@ -235,7 +241,8 @@ class ControladorPadres {
         this.modelo.obtenerDiasComedor(idHijos)
          .then(dias => {
             this.vistaInicio.montarCalendario(dias);
-            this.vistaCalendario.obtenerDiasComedor(dias)
+         
+
          })
          .catch(e => {
              console.error(e);
@@ -289,16 +296,20 @@ class ControladorPadres {
      * Devuelve los hijos de un padre a la vista de inicio.
      * @param {Number} id ID del padre. 
      */
-    dameHijosCalendario(id) {
+    dameHijosCalendario(id) { 
         this.modelo.dameHijos(id)
-         .then(hijos => {
-             this.vistaInicio.inicializar(hijos); 
-             this.vistaCalendario.renderCalendars(hijos)
-         })
-         .catch(e => {
-             console.error(e)
-         })
+        .then(hijos => {
+            
+            this.vistaInicio.inicializar(hijos)
+      
+        })
+        .catch(e => {
+            console.error(e);
+            this.vistaCalendario.calendarContainer.innerHTML = '<p>Error al cargar los datos.</p>';
+        });
+
     }
+    
 
   
     /**

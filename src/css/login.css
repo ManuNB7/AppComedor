@@ -19,3 +19,12 @@ form h3{
 .btn-info{
 	min-width: 210px;
 }
+
+.toggle-password {
+	position: fixed;
+	margin-left: 5px;  /* Ajusta el margen izquierdo según sea necesario */
+	margin-top: 27px;
+	width: 30px;  /* Ajusta el tamaño según sea necesario */
+	height: 30px; /* Ajusta el tamaño según sea necesario */
+	cursor: pointer;
+}

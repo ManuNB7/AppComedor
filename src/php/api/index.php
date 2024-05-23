@@ -155,6 +155,10 @@
                 Constantes::$precioMenu = $config['precio_menu'];
                     $controlador = new Constantes();
                 break;
+                case 'calendario':
+                    require_once('./controllers/calendario.php');                       
+                    $controlador = new Calendario();
+                    break;
 
 
             default:
