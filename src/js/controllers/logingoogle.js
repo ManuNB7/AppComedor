@@ -69,7 +69,7 @@ class LoginGoogle {
             window.location.href = 'index_evg.html';        
         }
         // PAS o profesores
-        else if (usuario.rol == 'G') {
+        else if (usuario.rol == 'G' || usuario.rol == 'P' ) {
             window.location.href = 'index.html';   
         }
     }
