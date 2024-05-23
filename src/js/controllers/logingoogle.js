@@ -89,7 +89,7 @@ class LoginGoogle {
                 this.divError.innerHTML = '<p>' + e + '</p>';
             }
             if (e == 'Error: 401 - Unauthorized') {
-                this.divError.innerHTML = '<p>No existe un usuario.</p>';
+                this.divError.innerHTML = '<p>No existe un usuario. <a href="registro.html">Regístrate aquí</a>.</p>';
             }
             this.divError.style.display = 'block';
             window.scrollTo(0, document.body.scrollHeight);
