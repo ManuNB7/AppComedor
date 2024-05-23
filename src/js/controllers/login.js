@@ -10,12 +10,14 @@ class Login {
         this.form = document.getElementsByTagName('form')[0];
         this.email = document.getElementsByTagName('input')[0];
         this.clave = document.getElementsByTagName('input')[1];
+        this.verClave = document.querySelector('.toggle-password'); // Usar la clase para seleccionar la imagen
         this.btnAceptar = document.getElementsByTagName('button')[0];
         this.divCargando = document.getElementById('loadingImg');
         this.divError = document.getElementById('divError');
-
+    
         this.btnAceptar.addEventListener('click', this.validarFormulario.bind(this));
         this.email.addEventListener('change', this.comprobarCorreo.bind(this));
+        this.verClave.addEventListener('click', this.mostrarClave.bind(this));
     }
 
     comprobarCorreo() {
@@ -27,12 +29,21 @@ class Login {
         } else if (correo.endsWith('@alumnado.fundacionloyola.net')) {
             this.btnAceptar.disabled = true;
             this.mostrarMensaje('Los alumnos de la Escuela Virgen de Guadalupe deben acceder con su correo corporativo a través del login de Google', 'login_google.html');
-        } else {
-            this.btnAceptar.disabled = false;
-            this.ocultarMensaje();
         }
     }
-    
+
+    /**
+        Cambia la visibilidad del campo de clave y alterna la imagen del ojo
+    **/
+    mostrarClave() {
+        if (this.clave.type === 'password') {
+            this.clave.type = 'text';
+            this.verClave.src = 'img/icons/eye-closed.svg'; 
+        } else {
+            this.clave.type = 'password';
+            this.verClave.src = 'img/icons/eye-open.svg'; 
+        }
+    }
 
     mostrarMensaje(mensaje, enlace) {
         this.divError.innerHTML = `<p>${mensaje}</p><a href="${enlace}">Haz clic aquí</a>`;
