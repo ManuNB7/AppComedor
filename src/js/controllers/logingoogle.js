@@ -50,7 +50,7 @@ class LoginGoogle {
          .then(usuario => {
              sessionStorage.setItem('usuario', JSON.stringify(usuario));
              this.divCargando.style.display = 'none';
-             this.redireccionar();
+             this.redireccionar(usuario);
          })
          .catch(e => {
              this.divCargando.style.display = 'none';
@@ -61,16 +61,18 @@ class LoginGoogle {
     /**
      * Redirecciona dependiendo del tipo de usuario que sea.
      */
-    redireccionar() {
-        let usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    redireccionar(usuario) {
+      
 
         // Secretaría
         if (usuario.rol == 'S') {
-            window.location.href = 'index_evg.html';        
+            window.location.href = 'index_evg.html';      
+            sessionStorage.setItem('usuario', JSON.stringify(usuario));  
         }
         // PAS o profesores
         else if (usuario.rol == 'G') {
-            window.location.href = 'index_personal.html';   
+            window.location.href = 'index.html';   
+            sessionStorage.setItem('usuario', JSON.stringify(usuario));
         }
     }
 
