@@ -53,18 +53,8 @@
             sleep(1);
 
             if (!$usuario) {
-                $id = DAOUsuario::altaUsuarioGoogle($payload);
-                sleep(1);
-
-                if (!$id) {
-                    header('HTTP/1.1 400 Bad Request');
-                    die();
-                }
-
-                DAOUsuario::altaUsuario($id);
-                sleep(1);
-
-                $usuario = new Usuario();
+                header('HTTP/1.1 401 Unauthorized');
+                die();
             }
 
             // Verificar el tipo de usuario que hace login
