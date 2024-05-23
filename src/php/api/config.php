@@ -18,7 +18,7 @@
         'clave_bd' => '',
 
 
-        'correo_secretaria' => ['antonioreyesrabel.guadalupe@alumnado.fundacionloyola.net'],
+        'correo_secretaria' => ['antonioreyesrabel.guadaleupe@alumnado.fundacionloyola.net'],
         'hora_limite' => 14,
         'precio_tupper' => 0.60,
        	'precio_menu' => [7.5, 6.5]
