@@ -16,13 +16,13 @@ class ControladorPadres {
         window.onload = this.iniciar.bind(this);
         window.onerror = (error) => console.error('Error capturado. ' + error);
     }
-
+ 
     /**
      * Inicia la aplicación.
      */
     iniciar() {
         this.#usuario = JSON.parse(sessionStorage.getItem('usuario'));
-
+        console.log(this.#usuario, "AAAAAAAAAAAAAA") // Usuario logueado.)
         // Comprobar login
         if (!this.#usuario)
             window.location.href = 'login.html';
@@ -30,6 +30,9 @@ class ControladorPadres {
         // Comprobar rol de usuario padre
         if (this.#usuario.rol != 'P')
             window.location.href = 'login.html';
+        
+        if (this.#usuario.rol != 'G')
+            window.location.href = 'index.html';
 
         Rest.setAutorizacion(this.#usuario.autorizacion);
 
