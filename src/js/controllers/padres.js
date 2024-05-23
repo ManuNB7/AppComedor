@@ -22,19 +22,9 @@ class ControladorPadres {
      */
     iniciar() {
         this.#usuario = JSON.parse(sessionStorage.getItem('usuario'));
-        console.log(this.#usuario, "AAAAAAAAAAAAAA") // Usuario logueado.)
-        // Comprobar login
-        if (!this.#usuario)
-            window.location.href = 'login.html';
+   
 
-        // Comprobar rol de usuario padre
-        if (this.#usuario == 'S')
-            window.location.href = 'login.html';
-        
-       
-
-     
-
+    
         this.modelo = new Modelo();
         this.vistaMenu = new VistaMenuPadres(this, document.getElementById('menuPadres'));
         this.vistaInicio = new VistaInicioPadres(this, document.getElementById('inicioPadres'));
