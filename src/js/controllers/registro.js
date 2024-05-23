@@ -242,7 +242,7 @@ class Registro {
         Rest.post('login', [], login, true)
          .then(usuario => {
              sessionStorage.setItem('usuario', JSON.stringify(usuario));
-             //window.location.href = 'index.html';
+             window.location.href = 'index.html';
          })
          .catch(e => {
              this.error(e);
