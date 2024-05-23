@@ -4,6 +4,7 @@ class Login {
     constructor() {
         window.onload = this.iniciar.bind(this);
         window.onerror = (error) => console.error('Error capturado. ' + error);
+        
     }
 
     iniciar() {
