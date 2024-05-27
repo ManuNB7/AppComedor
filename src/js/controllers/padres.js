@@ -28,10 +28,6 @@ class ControladorPadres {
         if (!this.#usuario)
             window.location.href = 'login.html';
 
-      /*  // Comprobar rol de usuario padre o profe
-        if (this.#usuario.rol != 'P' || this.#usuario.rol != 'G' )
-            window.location.href = 'login.html';*/
-
         Rest.setAutorizacion(this.#usuario.autorizacion);
 
         this.modelo = new Modelo();
@@ -76,10 +72,9 @@ class ControladorPadres {
     }
     
     /**
-     * Devuelve array de cursos a vista de gestión de hijos.
+     * Devuelve array de los dias resevados a vista de gestión mensual.
      */
-  
-    // Modificar la función obtenerDatosCalendario para pasar el año y el mes actual
+
     obtenerDatosCalendario(anio, mes) {
         this.modelo.obtenerDiasCalendario(this.#usuario.id, anio, mes)
             .then(cursos => {
@@ -221,15 +216,6 @@ class ControladorPadres {
      */
    marcarDiaComedor(datos/*, pConfirmacion*/) {
     this.modelo.marcarDiaComedor(datos)
-        .then(resp => {
-            // Si la solicitud se completó correctamente
-            //pConfirmacion.textContent = 'Marcado correctamente el día ' + datos.dia;
-        })
-        .catch(error => {
-            {
-                //pConfirmacion.textContent = 'No puedes marcar un día desabilitado.';
-            }
-        });
     }
 
 
@@ -255,15 +241,7 @@ class ControladorPadres {
      * @param {Object} datos Datos del día.
      */
     desmarcarDiaComedor(datos/*, pConfirmacion*/) {
-        this.modelo.desmarcarDiaComedor(datos)
-         /*.then( resp => {pConfirmacion.textContent = 'Desmarcado correctamente el día ' + datos.dia
-        })         	
-         .catch(error => {
-            {
-                //pConfirmacion.textContent = 'No puedes desmarcar un día desabilitado.';
-            }
-        });*/
-         
+        this.modelo.desmarcarDiaComedor(datos)         
     }
 
     /**
