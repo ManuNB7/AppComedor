@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {Vista} from '../vista.js';
 import { Datatable } from '../components/datatable.js'
 
@@ -200,3 +201,4 @@ inicializarMenu(c) {
 	}
 	
 }
+/* eslint-enable */

@@ -32,8 +32,4 @@ export class Vista {
     	while (nodo.firstChild)
     		nodo.removeChild(nodo.lastChild)
     }
-    eliminarHijos(nodo){
-    	while (nodo.firstChild)
-    		nodo.removeChild(nodo.lastChild)
-    }
 }

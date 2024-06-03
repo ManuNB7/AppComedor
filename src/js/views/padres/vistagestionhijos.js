@@ -372,15 +372,6 @@ export class VistaGestionHijos extends Vista {
     }
 
     /**
-     * Elimina un hijo de la lista.
-     */
-    eliminar(id) {
-        if (confirm("¿Estas seguro de que deseas eliminar a tu hijo/a?")) {
-            this.controlador.eliminarHijo(id);
-        }
-    }
-
-    /**
      * Limpia los campos del formulario modificación.
      */
     cancelarModificacion() {

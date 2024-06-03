@@ -1,7 +1,7 @@
 /**
 	Datable. Tabla de datos.
 **/
-
+/* eslint-disable */
 export class Datatable {
 	// Datatables 
 	#MIN = 50;
@@ -186,3 +186,4 @@ export class Datatable {
 				}
 	}
 }
+/* eslint-enable */

@@ -15,12 +15,12 @@ class LoginGoogle {
     iniciar() {
         this.divCargando = document.getElementById('loadingImg');
         this.divError = document.getElementById('divError');
-
+// eslint-disable-next-line no-undef
         google.accounts.id.initialize({
             client_id: '829640902680-48t2uq3us7qit3ehbusp2t6fldfeh6r6.apps.googleusercontent.com',
             callback: this.login.bind(this)
         });
-        
+        // eslint-disable-next-line no-undef
         google.accounts.id.renderButton(
             document.getElementById('divGoogleLogin'),
             { theme: 'outline', size: 'medium', text: "signin_with", shape: 'rectangular' }

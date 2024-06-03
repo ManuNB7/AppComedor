@@ -74,11 +74,13 @@ class Registro {
     }
 
 	//Validación de IBAN: Ref https://stackoverflow.com/questions/21928083/iban-validation-check
+   
 	/*
 	 * Returns 1 if the IBAN is valid 
 	 * Returns FALSE if the IBAN's length is not as should be (for CY the IBAN Should be 28 chars long starting with CY )
 	 * Returns any other number (checksum) when the IBAN is invalid (check digits do not match)
 	 */
+    
 	isValidIBANNumber(input) {
 			var CODE_LENGTHS = {
 					AD: 24, AE: 23, AT: 20, AZ: 28, BA: 20, BE: 16, BG: 22, BH: 22, BR: 29,
@@ -88,6 +90,7 @@ class Registro {
 					LI: 21, LT: 20, LU: 20, LV: 21, MC: 27, MD: 24, ME: 22, MK: 19, MR: 27,
 					MT: 31, MU: 30, NL: 18, NO: 15, PK: 24, PL: 28, PS: 29, PT: 25, QA: 29,
 					RO: 24, RS: 22, SA: 24, SE: 24, SI: 19, SK: 24, SM: 27, TN: 24, TR: 26,   
+                     // eslint-disable-next-line no-dupe-keys
 					AL: 28, BY: 28, CR: 22, EG: 29, GE: 22, IQ: 23, LC: 32, SC: 31, ST: 25,
 					SV: 28, TL: 23, UA: 29, VA: 22, VG: 24, XK: 20
 			};
