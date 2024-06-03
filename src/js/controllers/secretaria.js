@@ -71,7 +71,11 @@ class ControladorSecretaria {
              console.error(e);
          })
     }
-    
+    /**
+ * Obtiene los tuppers para una fecha específica y los carga en la vista de gestión diaria.
+ * @param {string} fecha - La fecha para la cual se desean obtener los tuppers.
+ * @returns {Promise<void>} - Una promesa que se resuelve cuando los tuppers han sido obtenidos y cargados en la vista.
+ */
     obtenerTuppers(fecha) {
         return this.modelo.obtenerTupper(fecha)
          .then(tuppers => {
@@ -111,7 +115,10 @@ class ControladorSecretaria {
              if (textarea) this.vistaGestionDiaria.insercionError(textarea);
          })
     }
-    
+    /**
+ * Inserta un tupper en el modelo.
+ * @param {Object} datos - Los datos del tupper a insertar.
+ */
     insertarTupper(datos) {
         this.modelo.insertarTupper(datos)
          .catch(e => {

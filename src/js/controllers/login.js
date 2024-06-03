@@ -1,11 +1,20 @@
 import { Rest } from "../services/rest.js";
-
+/**
+ * Clase que representa la funcionalidad de login.
+ */
 class Login {
+      /**
+     * Crea una instancia de Login.
+     * Vincula el método iniciar a window.onload y configura un manejador global de errores.
+     */
     constructor() {
         window.onload = this.iniciar.bind(this);
         window.onerror = (error) => console.error('Error capturado. ' + error);
         
     }
+    /**
+     * Inicializa los elementos del formulario de login y los event listeners.
+     */
 
     iniciar() {
         this.form = document.getElementsByTagName('form')[0];
@@ -21,6 +30,9 @@ class Login {
         this.verClave.addEventListener('click', this.mostrarClave.bind(this));
     }
 
+    /**
+     * Verifica el dominio del correo y muestra un mensaje si coincide con criterios específicos.
+     */
     comprobarCorreo() {
         const correo = this.email.value.trim().toLowerCase();
     
@@ -45,12 +57,18 @@ class Login {
             this.verClave.src = 'img/icons/eye-open.svg'; 
         }
     }
-
+ /**
+     * Muestra un mensaje y un enlace en el div de error.
+     * @param {string} mensaje - El mensaje a mostrar.
+     * @param {string} enlace - El enlace a incluir en el mensaje.
+     */
     mostrarMensaje(mensaje, enlace) {
         this.divError.innerHTML = `<p>${mensaje}</p><a href="${enlace}">Haz clic aquí</a>`;
         this.divError.style.display = 'block';
     }
-
+/**
+     * Valida el formulario y, si es válido, inicia el proceso de login.
+     */
     validarFormulario() {
         this.form.classList.add('was-validated');
 
@@ -59,7 +77,9 @@ class Login {
             this.login();
         }
     }
-
+ /**
+     * Realiza la solicitud de login y maneja la respuesta.
+     */
     login() {
         this.divCargando.style.display = 'block';
 
@@ -84,7 +104,10 @@ class Login {
              this.error(e);
          })
     }
-
+/**
+     * Maneja los errores de la solicitud de login y muestra un mensaje apropiado.
+     * @param {string} e - El mensaje de error.
+     */
     error(e) {
         if (e != null) {
             if (e == 'Error: 401 - Unauthorized') {
