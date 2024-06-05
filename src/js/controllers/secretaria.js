@@ -163,6 +163,7 @@ class ControladorSecretaria {
         this.vistaGestionDiaria.mostrar(false);
         this.vistaGestionMensual.mostrar(false);
         this.vistaGestionPadres.mostrar(false);
+        this.acerca.mostrar(false);
         this.vistaQ19.mostrar(false);
 		}
 
@@ -200,8 +201,6 @@ class ControladorSecretaria {
     acercade() {
         this.ocultarVistas()
         this.acerca.mostrar(true)
-      
-   
     }
     /**
      * Cierra la sesión del usuario.

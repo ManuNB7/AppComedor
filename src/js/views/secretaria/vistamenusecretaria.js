@@ -63,9 +63,11 @@ export class VistaMenuSecretaria {
         this.liGestionPadres.classList.add('active');
         this.acerca.classList.remove('active');
     }
+    /**
+     * Atención al evento acerca de.
+     */
     acercade() {
         this.controlador.acercade();
-
         this.liGestionDiaria.classList.remove('active');
         this.liGestionMensual.classList.remove('active');
         this.liGestionPadres.classList.remove('active');
