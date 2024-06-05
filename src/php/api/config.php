@@ -23,5 +23,3 @@
         'precio_tupper' => 0.60,
        	'precio_menu' => [7.5, 6.5]
     );
-    
-
