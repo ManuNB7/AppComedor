@@ -19,7 +19,7 @@ export class VistaMenuPadres {
         this.liModificacion.onclick = this.modificacion.bind(this);
         this.liGestionCalendario.onclick = this.gestionCalendario.bind(this);
         this.liCerrarSesion.onclick = this.cerrarSesion.bind(this);
-        this.acerca.onclick = this.acercade.bind(this);
+        this.acerca.onclick =   this.acercade.bind(this); 
     }
 
     /**
@@ -27,7 +27,7 @@ export class VistaMenuPadres {
      */
     inicio() {
         this.controlador.verVistaInicio();
-        this.acerca.classList.remove('active');
+       
         this.liInicio.classList.add('active');
         this.liGestionHijos.classList.remove('active');
         this.liGestionCalendario.classList.remove('active');
@@ -47,7 +47,7 @@ export class VistaMenuPadres {
      */
     gestionHijos() {
         this.controlador.verVistaGestionHijos();
-        this.acerca.classList.remove('active');
+      
         this.liInicio.classList.remove('active');
         this.liGestionHijos.classList.add('active');
         this.liGestionCalendario.classList.remove('active');
@@ -60,7 +60,7 @@ export class VistaMenuPadres {
      */
     modificacion() {
         this.controlador.verVistaModificacion();
-        this.acerca.classList.remove('active');
+     
         this.liInicio.classList.remove('active');
         this.liGestionHijos.classList.remove('active');
         this.liGestionCalendario.classList.remove('active');
@@ -69,20 +69,15 @@ export class VistaMenuPadres {
 
     gestionCalendario() {
         this.controlador.verVistaCalendario();
-        this.acerca.classList.remove('active');
+     
         this.liInicio.classList.remove('active');
         this.liGestionHijos.classList.remove('active');
         this.liModificacion.classList.remove('active');
         this.liGestionCalendario.classList.add('active');
     }
     acercade() {
-        this.controlador.acercade();
+        window.location.href = 'acerca_de.html';
 
-        this.liInicio.classList.remove('active');
-        this.liGestionHijos.classList.remove('active');
-        this.liModificacion.classList.remove('active');
-        this.liGestionCalendario.classList.remove('active');
-        this.acerca.classList.add('active');
     }
 
 

@@ -37,7 +37,8 @@ export class VistaMenuSecretaria {
         this.liGestionDiaria.classList.add('active');
         this.liGestionMensual.classList.remove('active');
         this.liGestionPadres.classList.remove('active');
-        this.acerca.classList.remove('active');
+      
+        
     }
 
     /**
@@ -49,7 +50,7 @@ export class VistaMenuSecretaria {
         this.liGestionDiaria.classList.remove('active');
         this.liGestionMensual.classList.add('active');
         this.liGestionPadres.classList.remove('active');
-        this.acerca.classList.remove('active');
+       
     }
 
     /**
@@ -61,19 +62,15 @@ export class VistaMenuSecretaria {
         this.liGestionDiaria.classList.remove('active');
         this.liGestionMensual.classList.remove('active');
         this.liGestionPadres.classList.add('active');
-        this.acerca.classList.remove('active');
+       
     }
     /**
      * Atención al evento acerca de.
      */
     acercade() {
-        this.controlador.acercade();
-        this.liGestionDiaria.classList.remove('active');
-        this.liGestionMensual.classList.remove('active');
-        this.liGestionPadres.classList.remove('active');
-        this.acerca.classList.add('active');
-    }
+        window.location.href = 'acerca_de.html';
 
+    }
     /**
      * Atención al evento de cerrar sesión.
      */

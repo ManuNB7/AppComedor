@@ -1,3 +1,14 @@
+/* acercade.css */
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
 #acercade {
     max-width: 800px;
     margin: 20px auto;
@@ -7,48 +18,50 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-#acercade h1 {
+h1, h2, h3 {
     color: #2c3e50;
+    margin-top: 0;
+}
+
+h1 {
     font-size: 2em;
     border-bottom: 2px solid #2c3e50;
     padding-bottom: 10px;
     margin-bottom: 20px;
 }
 
-#acercade p {
+h2 {
+    font-size: 1.5em;
+    margin-top: 30px;
+}
+
+h3 {
+    font-size: 1.2em;
+    margin-top: 20px;
+}
+
+p {
     margin: 10px 0;
 }
 
-#acercade h2 {
-    font-size: 1.5em;
-    margin-top: 30px;
-    color: #2c3e50;
-}
-
-#acercade h3 {
-    font-size: 1.2em;
-    margin-top: 20px;
-    color: #2c3e50;
-}
-
-#acercade ul {
+ul {
     list-style-type: disc;
     padding-left: 20px;
 }
 
-#acercade li {
+li {
     margin: 5px 0;
 }
 
-#acercade a {
+a {
     color: #2980b9;
     text-decoration: none;
 }
 
-#acercade a:hover {
+a:hover {
     text-decoration: underline;
 }
 
-#acercade strong {
+strong {
     font-weight: bold;
 }
