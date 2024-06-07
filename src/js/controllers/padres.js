@@ -37,7 +37,7 @@ class ControladorPadres {
         this.vistaGestionHijos = new VistaGestionHijos(this, document.getElementById('gestionHijosPadres'));
         this.vistaModificacion = new VistaModificarPadres(this, document.getElementById('modificacionPadres'));
         this.vistaCalendario = new VistaCalendario(this, document.getElementById('calendarioGestion'));
-        this.acerca = new Vista(this, document.getElementById('acercade'));
+        
         this.vistaModificacion.actualizarCampos(this.#usuario);
         this.vistaGestionHijos.actualizar(this.#usuario);
         this.vistaInicio.obtenerPadre(this.#usuario);
@@ -95,7 +95,7 @@ class ControladorPadres {
         this.vistaGestionHijos.mostrar(false);
         this.vistaModificacion.mostrar(false);
         this.vistaCalendario.mostrar(false);
-        this.acerca.mostrar(false)
+        
     }
 
     /**
@@ -106,7 +106,7 @@ class ControladorPadres {
         this.vistaGestionHijos.mostrar(true);
         this.vistaModificacion.mostrar(false);
         this.vistaCalendario.mostrar(false);
-        this.acerca.mostrar(false)
+  
     }
 
     /**
@@ -117,7 +117,7 @@ class ControladorPadres {
         this.vistaGestionHijos.mostrar(false);
         this.vistaModificacion.mostrar(true);
         this.vistaCalendario.mostrar(false);
-        this.acerca.mostrar(false)
+     
     }
 
     /**
@@ -128,18 +128,10 @@ class ControladorPadres {
         this.vistaGestionHijos.mostrar(false);
         this.vistaModificacion.mostrar(false);   
         this.vistaCalendario.mostrar(true)
-        this.acerca.mostrar(false)
+
    
     }
-    acercade() {
-        this.acerca.mostrar(true)
-        this.vistaInicio.mostrar(false);
-        this.vistaGestionHijos.mostrar(false);
-        this.vistaModificacion.mostrar(false);   
-        this.vistaCalendario.mostrar(false)
-      
    
-    }
     /**
      * Registra un hijo existente a un padre mediante un PIN.
      * @param {Object} datos Datos.

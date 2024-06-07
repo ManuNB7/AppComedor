@@ -40,7 +40,7 @@ class ControladorSecretaria {
         this.vistaGestionMensual = new VistaGestionMensual(this, document.getElementById('gestionMensual'));
         this.vistaGestionPadres = new VistaGestionPadres(this, document.getElementById('gestionPadres'));
         this.vistaQ19 = new VistaQ19(this, document.getElementById('divQ19'));
-        this.acerca = new Vista(this, document.getElementById('acercade'));
+      
    
         this.verVistaGestionDiaria();
     }
@@ -163,7 +163,7 @@ class ControladorSecretaria {
         this.vistaGestionDiaria.mostrar(false);
         this.vistaGestionMensual.mostrar(false);
         this.vistaGestionPadres.mostrar(false);
-        this.acerca.mostrar(false);
+       
         this.vistaQ19.mostrar(false);
 		}
 
@@ -198,10 +198,7 @@ class ControladorSecretaria {
 		this.ocultarVistas()
         this.vistaQ19.mostrar(true);
     }
-    acercade() {
-        this.ocultarVistas()
-        this.acerca.mostrar(true)
-    }
+    
     /**
      * Cierra la sesión del usuario.
      */
